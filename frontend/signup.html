@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account — URBAN THREADS</title>
+    <meta name="description" content="Join Urban Threads to access exclusive collections, member benefits, and order tracking.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            height: 100vh;
+            width: 100%;
+            background: #FDFBF7;
+            color: #1a1a1a;
+            overflow: hidden;
+        }
+
+        /* Split Layout */
+        .signup-image {
+            width: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .signup-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 26, 0.25);
+        }
+
+        .signup-image .brand-logo {
+            position: absolute;
+            top: 2.1rem;
+            left: 2.1rem;
+            z-index: 2;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(253, 251, 247, 0.96);
+            letter-spacing: 3px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .signup-form-side {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.75rem 2.6rem;
+            background: #FDFBF7;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .signup-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .signup-subtitle {
+            font-size: 0.88rem;
+            color: rgba(26, 26, 26, 0.5);
+            margin-bottom: 1.3rem;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+        }
+
+        .signup-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .signup-field label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .signup-form input[type="text"],
+        .signup-form input[type="email"],
+        .signup-form input[type="password"] {
+            padding: 0.85rem 0;
+            border: none;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.2);
+            outline: none;
+            font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: #1a1a1a;
+            transition: border-color 0.3s ease;
+        }
+
+        .signup-form input:focus {
+            border-color: #C9A96E;
+        }
+
+        .name-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .terms-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-top: 0.1rem;
+        }
+
+        .terms-row input[type="checkbox"] {
+            margin-top: 0.2rem;
+            accent-color: #C9A96E;
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .terms-row label {
+            font-size: 0.82rem;
+            color: rgba(26, 26, 26, 0.6);
+            line-height: 1.4;
+        }
+
+        .terms-row a {
+            color: #C9A96E;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-row a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-btn {
+            padding: 0.82rem;
+            border: 1px solid #C9A96E;
+            background: #C9A96E;
+            color: white;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 0.3rem;
+        }
+
+        .signup-btn:hover {
+            background: #b8963d;
+            border-color: #b8963d;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.3rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(26, 26, 26, 0.1);
+        }
+
+        .divider span {
+            font-size: 0.72rem;
+            color: rgba(26, 26, 26, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .google-btn {
+            padding: 0.85rem;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            background: transparent;
+            color: #1a1a1a;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .google-btn:hover {
+            border-color: #1a1a1a;
+        }
+
+        .signup-footer {
+            text-align: center;
+            margin-top: 1.15rem;
+            font-size: 0.85rem;
+            color: rgba(26, 26, 26, 0.5);
+        }
+
+        .signup-footer a {
+            color: #C9A96E;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .success-message i {
+            font-size: 3rem;
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        .success-message h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: rgba(26, 26, 26, 0.5);
+            font-size: 0.92rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-text {
+            font-size: 0.78rem;
+            color: #c0392b;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .signup-image {
+                width: 100%;
+                height: 220px;
+            }
+
+            .signup-form-side {
+                width: 100%;
+                padding: 2rem;
+            }
+
+            .signup-container h2 {
+                font-size: 1.8rem;
+            }
+
+            .name-row {
+                grid-template-columns: 1fr;
+                gap: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Left: Editorial Image -->
+    <div class="signup-image">
+        <a href="index.html" class="brand-logo">URBAN THREADS</a>
+        <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1200&q=80"
+            alt="Urban Threads Collection" loading="eager">
+    </div>
+
+    <!-- Right: Sign Up Form -->
+    <div class="signup-form-side">
+        <div class="signup-container">
+            <h2>Join Us</h2>
+            <p class="signup-subtitle">Create your account to get started</p>
+
+            <form class="signup-form" id="signup-form">
+                <div class="name-row">
+                    <div class="signup-field">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" placeholder="Your first name" required>
+                    </div>
+                    <div class="signup-field">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" placeholder="Your last name" required>
+                    </div>
+                </div>
+
+                <div class="signup-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="signup-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Create a password (min. 8 characters)" required minlength="8">
+                </div>
+
+                <div class="signup-field">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Re-enter your password" required>
+                    <span class="error-text" id="password-error">Passwords do not match</span>
+                </div>
+
+                <div class="terms-row">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
+                </div>
+
+                <button type="submit" class="signup-btn">Create Account</button>
+            </form>
+
+            <div class="success-message" id="success-message">
+                <h3>Welcome to Urban Threads!</h3>
+                <p>Your account has been created successfully. Redirecting you now...</p>
+            </div>
+
+            <div class="signup-footer">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.protocol === 'file:'
+            ? 'http://localhost:3000/api'
+            : `${window.location.origin}/api`;
+
+        document.getElementById("signup-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const errorText = document.getElementById("password-error");
+
+            if (password !== confirmPassword) {
+                errorText.style.display = "block";
+                document.getElementById("confirm-password").style.borderColor = "#c0392b";
+                return;
+            }
+
+            errorText.style.display = "none";
+            document.getElementById("confirm-password").style.borderColor = "";
+
+            const email = document.getElementById("email").value;
+            const firstName = document.getElementById("first-name").value;
+            const lastName = document.getElementById("last-name").value;
+
+            const submitBtn = document.querySelector('.signup-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data?.message || 'Signup failed.');
+                }
+
+                // Store user data
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("loggedInUser", data.user.email);
+                localStorage.setItem("userName", data.user.name || `${firstName} ${lastName}`.trim());
+                localStorage.setItem("userRole", data.user.role || 'user');
+                localStorage.setItem("authToken", data.token);
+
+                const authHeaders = {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${data.token}`
+                };
+
+                const accountCartKey = `cart_${data.user.email}`;
+                const accountWishlistKey = `wishlist_${data.user.email}`;
+
+                const guestCart = JSON.parse(localStorage.getItem("cart_guest") || '[]');
+                const accountCart = JSON.parse(localStorage.getItem(accountCartKey) || '[]');
+                const mergedCart = [...accountCart, ...guestCart];
+
+                if (mergedCart.length) {
+                    await fetch(`${API_BASE}/me/cart/merge`, {
+                        method: 'POST',
+                        headers: authHeaders,
+                        body: JSON.stringify({ items: mergedCart })
+                    });
+                }
+
+                localStorage.removeItem("cart_guest");
+                localStorage.removeItem(accountCartKey);
+
+                const guestWishlist = JSON.parse(localStorage.getItem("wishlist_guest") || '[]');
+                const accountWishlist = JSON.parse(localStorage.getItem(accountWishlistKey) || '[]');
+                const mergedWishlist = [...accountWishlist, ...guestWishlist];
+
+                if (mergedWishlist.length) {
+                    await fetch(`${API_BASE}/me/wishlist/merge`, {
+                        method: 'POST',
+                        headers: authHeaders,
+                        body: JSON.stringify({ ids: mergedWishlist })
+                    });
+                }
+
+                localStorage.removeItem("wishlist_guest");
+                localStorage.removeItem(accountWishlistKey);
+
+                // Show success message
+                document.getElementById("signup-form").style.display = "none";
+                document.getElementById("success-message").style.display = "block";
+
+                // Redirect after delay
+                setTimeout(function () {
+                    const params = new URLSearchParams(window.location.search);
+                    const redirect = params.get("redirect") || "index.html";
+                    window.location.href = redirect;
+                }, 1200);
+            } catch (error) {
+                const isNetworkError = String(error?.message || '').toLowerCase().includes('failed to fetch');
+                const message = isNetworkError
+                    ? 'Cannot reach backend. Start server with npm start, then open http://localhost:3000/signup.html (not file://).'
+                    : (error.message || 'Unable to create account.');
+
+                alert(message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+            }
+        });
+
+        // Live password match validation
+        document.getElementById("confirm-password").addEventListener("input", function () {
+            const password = document.getElementById("password").value;
+            const errorText = document.getElementById("password-error");
+
+            if (this.value && this.value !== password) {
+                errorText.style.display = "block";
+                this.style.borderColor = "#c0392b";
+            } else {
+                errorText.style.display = "none";
+                this.style.borderColor = "";
+            }
+        });
+    </script>
+</body>
+
+</html>

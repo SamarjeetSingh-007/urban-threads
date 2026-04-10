@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — URBAN THREADS</title>
+    <meta name="description" content="Manage Urban Threads products from a dedicated admin panel.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html"><h1>URBAN THREADS</h1></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html" id="login-btn">Login</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header page-header--admin">
+        <div class="container">
+            <h1>Admin Panel</h1>
+            <p>Manage your full India catalog from one place</p>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <div class="container">
+            <div class="admin-meta">
+                <div>
+                    <h2>Catalog Management</h2>
+                    <p>Mumbai HQ • Prices in INR (₹) • Direct database sync</p>
+                </div>
+                <div class="admin-stats">
+                    <div class="admin-stat-card">
+                        <span>Total Products</span>
+                        <strong id="admin-total-products">0</strong>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span>In Stock</span>
+                        <strong id="admin-instock-products">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-panel-tabs" role="tablist" aria-label="Admin panels">
+                <button type="button" class="admin-tab-btn active" id="admin-tab-products" data-admin-tab="products" role="tab" aria-controls="admin-products-panel" aria-selected="true">Products</button>
+                <button type="button" class="admin-tab-btn" id="admin-tab-settings" data-admin-tab="settings" role="tab" aria-controls="admin-settings-panel" aria-selected="false">Settings</button>
+            </div>
+
+            <div id="admin-products-panel" class="admin-panel" role="tabpanel" aria-labelledby="admin-tab-products">
+                <div class="admin-grid">
+                <div class="admin-card">
+                    <h3 id="admin-form-title">Add Product</h3>
+                    <form id="admin-product-form" class="admin-form">
+                        <input type="hidden" id="admin-edit-id">
+
+                        <label for="admin-name">Product Name</label>
+                        <input type="text" id="admin-name" required placeholder="Mumbai Street Hoodie">
+
+                        <label for="admin-category">Category</label>
+                        <select id="admin-category" required>
+                            <option value="">Select category</option>
+                        </select>
+                        <small class="admin-field-hint">Manage categories in the Settings tab. Changes sync site-wide.</small>
+
+                        <div class="admin-form-row">
+                            <div>
+                                <label for="admin-price">Price (₹)</label>
+                                <input type="number" id="admin-price" min="0" step="1" required placeholder="3499">
+                            </div>
+                            <div>
+                                <label for="admin-original-price">Original Price (₹)</label>
+                                <input type="number" id="admin-original-price" min="0" step="1" placeholder="4499">
+                            </div>
+                        </div>
+
+                        <label for="admin-image">Primary Image URL</label>
+                        <input type="text" id="admin-image" required placeholder="https://... or /uploads/...">
+
+                        <div class="admin-upload-stack">
+                            <label for="admin-image-files">Upload Images from Device</label>
+                            <div class="admin-upload-row">
+                                <input type="file" id="admin-image-files" accept="image/*" multiple>
+                                <button type="button" class="btn btn-secondary admin-upload-btn" id="admin-upload-image-files">
+                                    <i class="fas fa-upload"></i>
+                                    Upload image(s)
+                                </button>
+                            </div>
+                            <small class="admin-field-hint admin-upload-note">Uploads go to Supabase Storage when configured, otherwise local server storage.</small>
+                        </div>
+
+                        <div class="admin-media-group">
+                            <label>Additional Image URLs</label>
+                            <div id="admin-image-urls-list" class="admin-url-list"></div>
+                            <button type="button" class="btn btn-secondary admin-add-url-btn" id="admin-add-image-url">
+                                <i class="fas fa-plus"></i>
+                                Add image URL
+                            </button>
+                            <small class="admin-field-hint">Maximum 8 total images (including primary image).</small>
+                        </div>
+
+                        <div class="admin-media-group">
+                            <label>Product Videos</label>
+                            <div class="admin-upload-row">
+                                <input type="file" id="admin-video-files" accept="video/*" multiple>
+                                <button type="button" class="btn btn-secondary admin-upload-btn" id="admin-upload-video-files">
+                                    <i class="fas fa-upload"></i>
+                                    Upload video(s)
+                                </button>
+                            </div>
+                            <div id="admin-video-urls-list" class="admin-url-list"></div>
+                            <button type="button" class="btn btn-secondary admin-add-url-btn" id="admin-add-video-url">
+                                <i class="fas fa-plus"></i>
+                                Add video URL
+                            </button>
+                            <small class="admin-field-hint">Maximum 3 videos per product.</small>
+                        </div>
+
+                        <label for="admin-description">Description</label>
+                        <textarea id="admin-description" rows="3" placeholder="Product description"></textarea>
+
+                        <div class="admin-selection-block">
+                            <label>Available Sizes</label>
+                            <div class="admin-size-groups">
+                                <div class="admin-size-group" id="admin-apparel-size-group">
+                                    <strong class="admin-subheading">Apparel Sizes</strong>
+                                    <div class="admin-choice-grid" id="admin-apparel-sizes-grid"></div>
+                                </div>
+                                <div class="admin-size-group" id="admin-footwear-size-group">
+                                    <strong class="admin-subheading">Footwear Sizes</strong>
+                                    <div class="admin-choice-grid" id="admin-footwear-sizes-grid"></div>
+                                </div>
+                            </div>
+                            <small class="admin-field-hint">Choose only one size system per product (apparel or footwear).</small>
+                        </div>
+
+                        <div class="admin-selection-block">
+                            <label>Available Colors</label>
+                            <div class="admin-choice-grid admin-choice-grid--colors" id="admin-colors-grid"></div>
+                        </div>
+
+                        <div class="admin-form-row">
+                            <div>
+                                <label for="admin-rating">Rating (0 to 5)</label>
+                                <input type="number" id="admin-rating" min="0" max="5" step="0.1" placeholder="4.7">
+                            </div>
+                            <div>
+                                <label for="admin-reviews">Review Count</label>
+                                <input type="number" id="admin-reviews" min="0" step="1" placeholder="120">
+                            </div>
+                        </div>
+
+                        <div class="admin-form-row admin-form-row--compact">
+                            <div>
+                                <label for="admin-badge">Badge</label>
+                                <input type="text" id="admin-badge" placeholder="New / Best Seller">
+                            </div>
+                            <div class="admin-checkbox">
+                                <input type="checkbox" id="admin-in-stock" checked>
+                                <label for="admin-in-stock">In stock</label>
+                            </div>
+                        </div>
+
+                        <div class="admin-form-actions">
+                            <button type="submit" class="btn btn-primary" id="admin-save-btn">Add Product</button>
+                            <button type="button" class="btn btn-secondary" id="admin-cancel-btn" style="display:none;">Cancel Edit</button>
+                        </div>
+                        <p id="admin-message"></p>
+                    </form>
+                </div>
+
+                <div class="admin-card admin-card--list">
+                    <h3>All Products</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-body">
+                                <tr>
+                                    <td colspan="6" class="admin-table-empty">Loading products...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div id="admin-settings-panel" class="admin-panel" role="tabpanel" aria-labelledby="admin-tab-settings" hidden>
+                <div class="admin-settings-grid">
+                    <div class="admin-settings-card">
+                        <h3>Categories</h3>
+                        <p>Used in product form, shop filters, and footer collections.</p>
+                        <div class="admin-setting-add-row">
+                            <input type="text" id="admin-setting-category-input" placeholder="Add category (e.g. kurtas)">
+                            <button type="button" class="btn btn-secondary" id="admin-setting-category-add" aria-label="Add category"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <ul class="admin-settings-list" id="admin-setting-category-list"></ul>
+                    </div>
+
+                    <div class="admin-settings-card">
+                        <h3>Apparel Sizes</h3>
+                        <p>Clothing size system (XS, M, XL, 3XL...).</p>
+                        <div class="admin-setting-add-row">
+                            <input type="text" id="admin-setting-apparel-size-input" placeholder="Add apparel size">
+                            <button type="button" class="btn btn-secondary" id="admin-setting-apparel-size-add" aria-label="Add apparel size"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <ul class="admin-settings-list" id="admin-setting-apparel-size-list"></ul>
+                    </div>
+
+                    <div class="admin-settings-card">
+                        <h3>Footwear Sizes</h3>
+                        <p>Footwear size system (7, 8.5, 10...).</p>
+                        <div class="admin-setting-add-row">
+                            <input type="text" id="admin-setting-footwear-size-input" placeholder="Add footwear size">
+                            <button type="button" class="btn btn-secondary" id="admin-setting-footwear-size-add" aria-label="Add footwear size"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <ul class="admin-settings-list" id="admin-setting-footwear-size-list"></ul>
+                    </div>
+
+                    <div class="admin-settings-card">
+                        <h3>Colors</h3>
+                        <p>Available color palette for products.</p>
+                        <div class="admin-setting-add-row">
+                            <input type="text" id="admin-setting-color-input" placeholder="Add color (e.g. Cream)">
+                            <button type="button" class="btn btn-secondary" id="admin-setting-color-add" aria-label="Add color"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <ul class="admin-settings-list" id="admin-setting-color-list"></ul>
+                    </div>
+                </div>
+                <p id="admin-settings-message" class="admin-message"></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>URBAN THREADS</h3>
+                    <p>Premium streetwear for the culture. Authentic designs, quality materials, timeless pieces.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop All</a></li>
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Collections</h4>
+                    <ul>
+                        <li><a href="shop.html?category=hoodies">Hoodies</a></li>
+                        <li><a href="shop.html?category=tshirts">T-Shirts</a></li>
+                        <li><a href="shop.html?category=sneakers">Sneakers</a></li>
+                        <li><a href="shop.html?category=jackets">Jackets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Urban Threads India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
