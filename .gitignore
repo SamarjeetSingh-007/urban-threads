@@ -4,3 +4,4 @@ backend/data/db.json
 .env
 uploads/
 supabase/.temp/
+.vercel

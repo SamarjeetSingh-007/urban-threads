@@ -2110,7 +2110,7 @@ app.use(express.static(FRONTEND_DIR, {
     }
 }));
 
-async function start() {
+async function bootstrap() {
     if (SUPABASE_MODE === 'true' && !HAS_SUPABASE_KEYS) {
         throw new Error('USE_SUPABASE=true but SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing in .env.');
     }
@@ -2128,13 +2128,39 @@ async function start() {
     await seedProductsIfNeeded();
     await ensureAdminUser();
 
-    app.listen(PORT, () => {
-        console.log(`Urban Threads backend running at http://localhost:${PORT}`);
-        console.log(`Database provider: ${USE_SUPABASE ? 'supabase' : 'local-json'}`);
-    });
+    return {
+        database: USE_SUPABASE ? 'supabase' : 'local-json'
+    };
 }
 
-start().catch((error) => {
-    console.error('Startup failed:', error.message);
-    process.exit(1);
-});
+let bootstrapPromise = null;
+
+function ensureBootstrapped() {
+    if (!bootstrapPromise) {
+        bootstrapPromise = bootstrap();
+    }
+
+    return bootstrapPromise;
+}
+
+if (process.env.VERCEL) {
+    module.exports = async (req, res) => {
+        try {
+            await ensureBootstrapped();
+            return app(req, res);
+        } catch (error) {
+            console.error('Startup failed:', error.message);
+            return res.status(500).json({ message: 'Startup failed.' });
+        }
+    };
+} else {
+    ensureBootstrapped().then(({ database }) => {
+        app.listen(PORT, () => {
+            console.log(`Urban Threads backend running at http://localhost:${PORT}`);
+            console.log(`Database provider: ${database}`);
+        });
+    }).catch((error) => {
+        console.error('Startup failed:', error.message);
+        process.exit(1);
+    });
+}
