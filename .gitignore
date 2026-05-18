@@ -1,0 +1,7 @@
+node_modules/
+backend/data/db.json
+.DS_Store
+.env
+uploads/
+supabase/.temp/
+.vercel
