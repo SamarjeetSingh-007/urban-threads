@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URBAN THREADS — Premium Streetwear</title>
+    <meta name="description" content="Discover our exclusive collection of premium streetwear. Luxury meets street culture — timeless silhouettes reimagined.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html"><h1>URBAN THREADS</h1></a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html" id="login-btn">Login</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-subtitle">SS25 Collection</h2>
+                <h1 class="hero-title">DEFINE YOUR<br>STYLE</h1>
+                <p class="hero-description">Discover our exclusive collection of premium streetwear where luxury meets the street. Timeless silhouettes reimagined for the modern era.</p>
+                <div class="hero-buttons">
+                    <a href="shop.html" class="btn btn-primary">Shop Collection</a>
+                    <a href="#featured" class="btn btn-secondary">Explore</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwxfHxzdHJlZXR3ZWFyJTIwZmFzaGlvbnxlbnwwfHx8fDE3NTYxMTU0NjF8MA&ixlib=rb-4.1.0&q=85"
+                    alt="Premium Streetwear Collection" loading="lazy" width="600" height="600">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="featured">
+        <div class="container">
+            <h2 class="section-title">Categories</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="hoodies">
+                    <img src="https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwzfHxob29kaWV8ZW58MHx8fHwxNzU2MTE1NDY2fDA&ixlib=rb-4.1.0&q=85"
+                        alt="Hoodies Collection" loading="lazy" width="350" height="480">
+                    <div class="category-overlay">
+                        <h3>Hoodies</h3>
+                        <p>Premium comfort meets street style</p>
+                        <a href="shop.html?category=hoodies" class="btn btn-outline">Shop Now</a>
+                    </div>
+                </div>
+                <div class="category-card" data-category="sneakers">
+                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxzbmVha2Vyc3xlbnwwfHx8fDE3NTYwNTcyNTl8MA&ixlib=rb-4.1.0&q=85"
+                        alt="Sneakers Collection" loading="lazy" width="350" height="480">
+                    <div class="category-overlay">
+                        <h3>Sneakers</h3>
+                        <p>Step up your street game</p>
+                        <a href="shop.html?category=sneakers" class="btn btn-outline">Shop Now</a>
+                    </div>
+                </div>
+                <div class="category-card" data-category="tshirts">
+                    <img src="https://images.unsplash.com/photo-1538329972958-465d6d2144ed?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxzdHJlZXR3ZWFyJTIwZmFzaGlvbnxlbnwwfHx8fDE3NTYxMTU0NjF8MA&ixlib=rb-4.1.0&q=85"
+                        alt="T-Shirts Collection" loading="lazy" width="350" height="480">
+                    <div class="category-overlay">
+                        <h3>T-Shirts</h3>
+                        <p>Essential street basics</p>
+                        <a href="shop.html?category=tshirts" class="btn btn-outline">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured</h2>
+            <div class="products-grid" id="featured-products">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>URBAN THREADS</h3>
+                    <p>Premium streetwear for the culture. Authentic designs, quality materials, timeless pieces.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop All</a></li>
+                        <li><a href="wishlist.html">Wishlist</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Collections</h4>
+                    <ul>
+                        <li><a href="shop.html?category=hoodies">Hoodies</a></li>
+                        <li><a href="shop.html?category=tshirts">T-Shirts</a></li>
+                        <li><a href="shop.html?category=sneakers">Sneakers</a></li>
+                        <li><a href="shop.html?category=jackets">Jackets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Urban Threads India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+</body>
+
+</html>
