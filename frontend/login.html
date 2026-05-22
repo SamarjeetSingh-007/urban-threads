@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — URBAN THREADS</title>
+    <meta name="description" content="Sign in to your Urban Threads account to access your orders, wishlist, and exclusive member benefits.">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            height: 100vh;
+            width: 100%;
+            background: #FDFBF7;
+            color: #1a1a1a;
+            overflow: hidden;
+        }
+
+        /* Split Layout */
+        .login-image {
+            width: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 26, 0.25);
+        }
+
+        .login-image .brand-logo {
+            position: absolute;
+            top: 2.1rem;
+            left: 2.1rem;
+            z-index: 2;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(253, 251, 247, 0.96);
+            letter-spacing: 3px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .login-form-side {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 3rem;
+            background: #FDFBF7;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .login-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .login-subtitle {
+            font-size: 0.88rem;
+            color: rgba(26, 26, 26, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .login-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .login-field label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            padding: 0.85rem 0;
+            border: none;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.2);
+            outline: none;
+            font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: #1a1a1a;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form input:focus {
+            border-color: #C9A96E;
+        }
+
+        .forgot-link {
+            align-self: flex-end;
+            font-size: 0.78rem;
+            color: rgba(26, 26, 26, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin-top: -0.5rem;
+        }
+
+        .forgot-link:hover {
+            color: #C9A96E;
+        }
+
+        .login-btn {
+            padding: 0.95rem;
+            border: 1px solid #C9A96E;
+            background: #C9A96E;
+            color: white;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background: #b8963d;
+            border-color: #b8963d;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(26, 26, 26, 0.1);
+        }
+
+        .divider span {
+            font-size: 0.72rem;
+            color: rgba(26, 26, 26, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .google-btn {
+            padding: 0.85rem;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            background: transparent;
+            color: #1a1a1a;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .google-btn:hover {
+            border-color: #1a1a1a;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: rgba(26, 26, 26, 0.5);
+        }
+
+        .login-footer a {
+            color: #C9A96E;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .login-image {
+                width: 100%;
+                height: 280px;
+            }
+
+            .login-form-side {
+                width: 100%;
+                padding: 2rem;
+            }
+
+            .login-container h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Left: Editorial Image -->
+    <div class="login-image">
+        <a href="index.html" class="brand-logo">URBAN THREADS</a>
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80"
+            alt="Urban Threads Fashion" loading="eager">
+    </div>
+
+    <!-- Right: Login Form -->
+    <div class="login-form-side">
+        <div class="login-container">
+            <h2>Welcome Back</h2>
+            <p class="login-subtitle">Sign in to your account</p>
+
+            <form class="login-form">
+                <div class="login-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+                <div class="login-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+
+            <div class="login-footer">
+                New to Urban Threads? <a href="signup.html">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.protocol === 'file:'
+            ? 'http://localhost:3000/api'
+            : `${window.location.origin}/api`;
+
+        document.querySelector(".login-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = e.target.querySelector('#email').value.trim();
+            const password = e.target.querySelector('#password').value;
+            const submitBtn = e.target.querySelector('.login-btn');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing In...';
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data?.message || 'Login failed.');
+                }
+
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("loggedInUser", data.user.email);
+                localStorage.setItem("userName", data.user.name || email);
+                localStorage.setItem("userRole", data.user.role || 'user');
+                localStorage.setItem("authToken", data.token);
+
+                const authHeaders = {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${data.token}`
+                };
+
+                const accountCartKey = `cart_${data.user.email}`;
+                const accountWishlistKey = `wishlist_${data.user.email}`;
+
+                const guestCart = JSON.parse(localStorage.getItem("cart_guest") || '[]');
+                const accountCart = JSON.parse(localStorage.getItem(accountCartKey) || '[]');
+                const mergedCart = [...accountCart, ...guestCart];
+
+                if (mergedCart.length) {
+                    await fetch(`${API_BASE}/me/cart/merge`, {
+                        method: 'POST',
+                        headers: authHeaders,
+                        body: JSON.stringify({ items: mergedCart })
+                    });
+                }
+
+                localStorage.removeItem("cart_guest");
+                localStorage.removeItem(accountCartKey);
+
+                const guestWishlist = JSON.parse(localStorage.getItem("wishlist_guest") || '[]');
+                const accountWishlist = JSON.parse(localStorage.getItem(accountWishlistKey) || '[]');
+                const mergedWishlist = [...accountWishlist, ...guestWishlist];
+
+                if (mergedWishlist.length) {
+                    await fetch(`${API_BASE}/me/wishlist/merge`, {
+                        method: 'POST',
+                        headers: authHeaders,
+                        body: JSON.stringify({ ids: mergedWishlist })
+                    });
+                }
+
+                localStorage.removeItem("wishlist_guest");
+                localStorage.removeItem(accountWishlistKey);
+
+                const params = new URLSearchParams(window.location.search);
+                const redirect = params.get("redirect") || "index.html";
+                window.location.href = redirect;
+            } catch (error) {
+                const isNetworkError = String(error?.message || '').toLowerCase().includes('failed to fetch');
+                const message = isNetworkError
+                    ? 'Cannot reach backend. Start server with npm start, then open http://localhost:3000/login.html (not file://).'
+                    : (error.message || 'Unable to sign in.');
+
+                alert(message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            }
+        });
+    </script>
+</body>
+
+</html>
