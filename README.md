@@ -1,64 +1,44 @@
-# URBAN THREADS
+# Urban Threads
 
-Streetwear ecommerce app with a Node.js backend and a vanilla HTML/CSS/JS frontend.
+A streetwear e-commerce web app built with Node.js, Express, and vanilla HTML/CSS/JS.
 
-## Project layout
+## How to run
 
-```text
-.
-├── backend/
-│   ├── data/                     # local JSON data store (non-Supabase mode)
-│   └── sql/                      # Supabase SQL schemas/migrations
-├── docs/
-│   └── emailjs/                  # email template assets/docs
-├── frontend/
-│   ├── assets/
-│   ├── js/
-│   ├── styles/
-│   ├── index.html
-│   ├── shop.html
-│   ├── product.html
-│   ├── cart.html
-│   ├── admin.html
-│   ├── login.html
-│   ├── signup.html
-│   ├── wishlist.html
-│   ├── about.html
-│   ├── contact.html
-│   ├── privacy.html
-│   └── terms.html
-├── scripts/
-│   └── start-urban-threads.command
-├── uploads/                      # uploaded product media (local storage mode)
-├── server.js
-├── package.json
-└── .env
+```
+npm install
+npm start
 ```
 
-## Run locally
+Then open http://localhost:3000
 
-- Install dependencies: `npm install`
-- Start server: `npm start`
-- Open app: `http://localhost:3000`
+## Tech Stack
 
-The Express server serves both API endpoints and the frontend pages.
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Node.js + Express
+- **Database:** Supabase (PostgreSQL) with local JSON fallback
+- **Auth:** JWT + bcrypt
+- **Deployment:** Vercel
 
-## Supabase setup (optional)
+## Folder Structure
 
-- Run `backend/sql/supabase-schema.sql` in Supabase SQL editor.
-- Run `backend/sql/supabase-relational-state.sql` in Supabase SQL editor.
-- Configure `.env` with:
-  - `SUPABASE_URL`
-  - `SUPABASE_SERVICE_ROLE_KEY`
-  - `USE_SUPABASE=true`
-- Restart with `npm start`.
+```
+frontend/       → all the UI pages, stylesheets, JS files
+backend/sql/    → supabase schema files
+server.js       → main express server (API + static serving)
+api/            → vercel serverless entry point
+scripts/        → helper scripts
+```
 
-## Default admin account
+## Supabase Setup
+
+1. Run `backend/sql/supabase-schema.sql` in Supabase SQL editor
+2. Run `backend/sql/supabase-relational-state.sql` in Supabase SQL editor
+3. Set env vars in `.env`:
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `USE_SUPABASE=true`
+
+## Admin Login
 
 - Email: `admin@urbanthreads.com`
-- Password: value of `ADMIN_PASSWORD` in `.env`
-
-## Notes
-
-- Do not open pages directly with `file://`; use `http://localhost:3000/...`.
-- In local mode, uploads are served from `/uploads/...`.
+- Password: whatever you set as `ADMIN_PASSWORD` in `.env`

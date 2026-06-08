@@ -1,2 +1,2 @@
-// Vercel serverless entry point — re-exports the Express handler from server.js
+// vercel serverless handler
 module.exports = require('../server.js');
