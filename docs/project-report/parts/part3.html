@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ====== PAGE SETUP — Exact Requirements ====== */
+/* Font: Times New Roman, Content: 12pt, Line Spacing: 1.5, Margins: 1in, Justified */
+@page {
+    size: A4;
+    margin: 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    margin: 1in;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: counter(page, lower-roman); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0;
+}
+.running-hdr img { height: 40px; display: block; margin: 0 auto 2pt auto; }
+.running-hdr .u-name { font-size: 11pt; font-weight: bold; color: #000; display: block; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.5pt; }
+.running-hdr .u-addr { font-size: 8.5pt; display: block; font-family: 'Times New Roman', Times, serif; }
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+
+/* ====== TYPOGRAPHY (Exact Requirements) ====== */
+h1 { font-size: 17pt; font-weight: bold; text-align: center; text-transform: uppercase; margin: 8pt 0 12pt 0; }
+h2 { font-size: 14pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+h3 { font-size: 13pt; font-weight: bold; margin: 8pt 0 4pt 0; }
+p { text-align: justify; margin-bottom: 6pt; text-indent: 0.4in; }
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 6pt; }
+li { margin-bottom: 2pt; }
+
+/* ====== TABLES ====== */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 11pt; }
+table, th, td { border: 1px solid #000; }
+th, td { padding: 3pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+.toc td, .toc th { border: none; }
+
+/* ====== FIGURES — Keep with caption, no orphan ====== */
+.fig { text-align: center; margin: 6pt 0; }
+.fig img { max-width: 100%; max-height: 4in; border: 1px solid #ccc; }
+.fig-cap { font-size: 10pt; font-style: italic; margin-top: 2pt; text-indent: 0; text-align: center; }
+
+/* ====== CODE AS PLAIN TEXT ====== */
+.code { font-family: 'Courier New', Courier, monospace; font-size: 9pt; white-space: pre-wrap; line-height: 1.25; margin: 4pt 0 6pt 0.2in; }
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 14pt; }
+.spacer-lg { height: 28pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 20pt; }
+.border-box { border: 2px solid #000; padding: 18pt; }
+
+/* ====== WIDOWS & ORPHANS ====== */
+p, li, h2, h3 { orphans: 3; widows: 3; }
+h2, h3 { page-break-after: avoid; }
+.fig { page-break-inside: avoid; }
+table { page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- RUNNING HEADER -->
+<div class="running-hdr">
+    <img src="../images/nsu_logo.png" alt="NSU" style="filter: grayscale(100%);">
+    <span class="u-name">NETAJI SUBHASH UNIVERSITY</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+
+<!-- =================== CHAPTER 5: SW & HW REQUIREMENTS =================== -->
+<div class="pb">
+<h1>Chapter 5<br>Software &amp; Hardware Requirements</h1>
+
+<h2>5.1 Hardware Requirements</h2>
+<table>
+    <thead><tr><th>Component</th><th>Development Machine</th><th>End User</th></tr></thead>
+    <tbody>
+        <tr><td>Processor</td><td>Intel i5 / Apple M1 or above</td><td>Any modern processor</td></tr>
+        <tr><td>RAM</td><td>8 GB minimum</td><td>2 GB minimum</td></tr>
+        <tr><td>Storage</td><td>256 GB SSD</td><td>No local storage needed</td></tr>
+        <tr><td>Display</td><td>13" or larger monitor</td><td>Any screen size</td></tr>
+        <tr><td>Internet</td><td>Broadband (10 Mbps+)</td><td>Any internet connection</td></tr>
+        <tr><td>Input Devices</td><td>Keyboard and Mouse</td><td>Keyboard/Mouse/Touchscreen</td></tr>
+    </tbody>
+</table>
+
+<h2>5.2 Software Requirements</h2>
+<table>
+    <thead><tr><th>Software</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+        <tr><td>Node.js</td><td>18.x or above</td><td>JavaScript runtime for backend</td></tr>
+        <tr><td>npm</td><td>9.x or above</td><td>Package manager</td></tr>
+        <tr><td>Express.js</td><td>4.18.x</td><td>Web application framework</td></tr>
+        <tr><td>Supabase</td><td>Latest (cloud)</td><td>Database, auth, and file storage</td></tr>
+        <tr><td>VS Code</td><td>Latest</td><td>Code editor / IDE</td></tr>
+        <tr><td>Git</td><td>2.x</td><td>Version control system</td></tr>
+        <tr><td>Google Chrome</td><td>Latest</td><td>Primary browser for testing</td></tr>
+        <tr><td>Operating System</td><td>macOS / Windows / Linux</td><td>Development environment</td></tr>
+        <tr><td>Vercel CLI</td><td>Latest</td><td>Deployment tool</td></tr>
+    </tbody>
+</table>
+
+<h2>5.3 Functional Requirements</h2>
+<table>
+    <thead><tr><th style="width:8%">ID</th><th style="width:22%">Requirement</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>FR01</td><td>User Registration</td><td>Users can create accounts with name, email, and password. Email must be unique. Password is hashed before storage.</td></tr>
+        <tr><td>FR02</td><td>User Login</td><td>Registered users can log in with email and password. JWT token returned on success for session management.</td></tr>
+        <tr><td>FR03</td><td>Browse Products</td><td>Users can view all products or filter by category (Hoodies, Sneakers, T-Shirts, Jackets, Accessories).</td></tr>
+        <tr><td>FR04</td><td>Search Products</td><td>Users can search products by name using keyword search with real-time results.</td></tr>
+        <tr><td>FR05</td><td>Add to Cart</td><td>Logged-in users can add products to cart with selected size and quantity.</td></tr>
+        <tr><td>FR06</td><td>Manage Cart</td><td>Users can update quantity, remove items, and view cart total in real-time.</td></tr>
+        <tr><td>FR07</td><td>Add to Wishlist</td><td>Logged-in users can save products to their wishlist for later purchase.</td></tr>
+        <tr><td>FR08</td><td>Contact Form</td><td>Users can submit a contact form with name, email, subject, and message.</td></tr>
+        <tr><td>FR09</td><td>Admin Login</td><td>Admin can log in with special credentials to access the admin panel.</td></tr>
+        <tr><td>FR10</td><td>Admin Product CRUD</td><td>Admin can add, edit, and delete products with image upload and category configuration.</td></tr>
+    </tbody>
+</table>
+
+<h2>5.4 Non-Functional Requirements</h2>
+<ul>
+    <li><strong>Performance:</strong> Pages should load within 3 seconds on a standard broadband connection. API response time should be under 500ms.</li>
+    <li><strong>Security:</strong> Passwords must be hashed using bcrypt. JWT tokens must have configurable expiry. All user input must be validated server-side. CORS must be properly configured.</li>
+    <li><strong>Usability:</strong> Interface must be intuitive and consistent across all pages. Navigation should be self-explanatory with clear visual cues.</li>
+    <li><strong>Scalability:</strong> System should handle concurrent users through Vercel's serverless architecture without manual scaling.</li>
+    <li><strong>Availability:</strong> System should have 99.9% uptime through Vercel's infrastructure and Supabase's managed database.</li>
+    <li><strong>Compatibility:</strong> Must work on Chrome, Firefox, Safari, and Edge browsers on both desktop and mobile.</li>
+    <li><strong>Maintainability:</strong> Code should be well-structured, commented, and follow consistent naming conventions for easy maintenance.</li>
+    <li><strong>Responsiveness:</strong> UI must adapt seamlessly to screen sizes from 320px (mobile) to 2560px (ultra-wide desktop).</li>
+</ul>
+</div>
+
+<!-- =================== CHAPTER 6: SYSTEM DESIGN =================== -->
+<div class="pb">
+<h1>Chapter 6<br>System Design (DFD / UML / ER Diagram)</h1>
+
+<h2>6.1 System Architecture</h2>
+<p>Urban Threads follows a three-tier client-server architecture separating the application into three distinct layers:</p>
+<p class="ni"><strong>Presentation Layer (Frontend):</strong> HTML5, CSS3, and Vanilla JavaScript running in the user's browser. Responsible for rendering the UI and handling user interactions. Communicates with the backend through HTTP/HTTPS REST API calls.</p>
+<p class="ni"><strong>Application Layer (Backend):</strong> Node.js runtime with Express.js framework. Handles business logic, request routing, authentication middleware, file upload processing, and API endpoint management.</p>
+<p class="ni"><strong>Data Layer (Database):</strong> Supabase-hosted PostgreSQL database storing users, products, cart items, wishlist items, orders, and contact messages. Supabase Storage handles product image files.</p>
+
+<p class="ni" style="margin-top:12pt;"><strong>Architecture Flow:</strong></p>
+<p class="ni">Browser (HTML/CSS/JS) → HTTP/HTTPS → Express.js Server (Node.js) → Supabase Client SDK → PostgreSQL Database + Supabase Storage</p>
+
+<h2>6.2 Data Flow Diagram — Level 0 (Context Diagram)</h2>
+<p>The context diagram shows the Urban Threads system as a single process with its interactions with two external entities — Customer and Administrator.</p>
+<div class="fig">
+    <img src="../images/dfd_level0.png" alt="DFD Level 0">
+    <p class="fig-cap">Fig. 6.1: Data Flow Diagram — Level 0 (Context Diagram)</p>
+</div>
+
+<h2>6.3 Data Flow Diagram — Level 1</h2>
+<p>The Level 1 DFD decomposes the single process from the context diagram into major sub-processes: User Authentication (1.0), Product Management (2.0), Cart Management (3.0), Wishlist Management (4.0), Contact Processing (5.0), and Admin Dashboard (6.0). Data stores include the Users Database, Products Database, Cart Database, and Contact Messages store.</p>
+<div class="fig">
+    <img src="../images/dfd_level1.png" alt="DFD Level 1">
+    <p class="fig-cap">Fig. 6.2: Data Flow Diagram — Level 1</p>
+</div>
+
+<h2>6.4 Data Flow Diagram — Level 2</h2>
+<p>The Level 2 DFD further decomposes the User Authentication process (Process 1.0) into six detailed sub-processes: Receive Credentials (1.1), Validate Input Format (1.2), Check Email Existence (1.3), Hash Password with bcrypt (1.4), Create User Record (1.5), and Generate JWT Token (1.6). It shows data stores D1 (Users Database) and D2 (Token Store), and includes error flows for invalid input and duplicate email scenarios.</p>
+<div class="fig">
+    <img src="../images/dfd_level2.png" alt="DFD Level 2">
+    <p class="fig-cap">Fig. 6.3: Data Flow Diagram — Level 2 (User Authentication Decomposition)</p>
+</div>
+
+<h2>6.5 UML Use Case Diagram</h2>
+<p>The Use Case Diagram identifies the two actors (Customer and Administrator) and their interactions with the Urban Threads system. The Customer can perform actions such as Register, Login, Browse Products, Search, Add to Cart, Manage Cart, Add to Wishlist, and Submit Contact Form. The Administrator can perform Admin Login, Add/Edit/Delete Products, View Orders, and Manage Users. The diagram includes &lt;&lt;include&gt;&gt; and &lt;&lt;extend&gt;&gt; relationships between related use cases.</p>
+<div class="fig">
+    <img src="../images/uml_usecase.png" alt="UML Use Case Diagram">
+    <p class="fig-cap">Fig. 6.4: UML Use Case Diagram</p>
+</div>
+
+<h3>Use Case Descriptions:</h3>
+<table style="font-size:10pt;">
+    <thead><tr><th>UC ID</th><th>Use Case</th><th>Actor</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>UC-01</td><td>Register</td><td>Customer</td><td>Create account with name, email, password</td></tr>
+        <tr><td>UC-02</td><td>Login</td><td>Customer</td><td>Authenticate with email and password</td></tr>
+        <tr><td>UC-03</td><td>Browse Products</td><td>Customer</td><td>View and filter product catalog by category</td></tr>
+        <tr><td>UC-04</td><td>Search Products</td><td>Customer</td><td>Search by keyword (includes Browse)</td></tr>
+        <tr><td>UC-05</td><td>Add to Cart</td><td>Customer</td><td>Add product with selected size to cart</td></tr>
+        <tr><td>UC-06</td><td>Manage Cart</td><td>Customer</td><td>Update quantity, remove items, view total</td></tr>
+        <tr><td>UC-07</td><td>Add to Wishlist</td><td>Customer</td><td>Save product for later purchase</td></tr>
+        <tr><td>UC-08</td><td>Contact</td><td>Customer</td><td>Submit inquiry via contact form</td></tr>
+        <tr><td>UC-09</td><td>Admin Login</td><td>Admin</td><td>Authenticate as administrator</td></tr>
+        <tr><td>UC-10</td><td>Manage Products</td><td>Admin</td><td>Add, edit, delete products with images</td></tr>
+        <tr><td>UC-11</td><td>View Orders</td><td>Admin</td><td>Review customer order history</td></tr>
+        <tr><td>UC-12</td><td>Manage Users</td><td>Admin</td><td>View and manage registered users</td></tr>
+    </tbody>
+</table>
+
+<h2>6.6 Entity Relationship (ER) Diagram</h2>
+<p>The ER Diagram shows the logical structure of the database including all entities (Users, Products, Cart_Items, Wishlist_Items, Orders, Contact_Messages), their attributes, and the relationships between them.</p>
+<div class="fig">
+    <img src="../images/er_diagram.png" alt="ER Diagram">
+    <p class="fig-cap">Fig. 6.5: Entity Relationship Diagram</p>
+</div>
+
+<h3>Relationships:</h3>
+<ul>
+    <li><strong>User → Cart_Items:</strong> One-to-Many (1:N) — A user can have multiple cart items</li>
+    <li><strong>User → Wishlist_Items:</strong> One-to-Many (1:N) — A user can have multiple wishlist items</li>
+    <li><strong>User → Orders:</strong> One-to-Many (1:N) — A user can place multiple orders</li>
+    <li><strong>Product → Cart_Items:</strong> One-to-Many (1:N) — A product can appear in multiple carts</li>
+    <li><strong>Product → Wishlist_Items:</strong> One-to-Many (1:N) — A product can be in multiple wishlists</li>
+    <li><strong>Contact_Messages:</strong> Independent entity (not related to users or products)</li>
+</ul>
+</div>
+
+<!-- =================== CHAPTER 7: MODULE DESCRIPTION =================== -->
+<div class="pb">
+<h1>Chapter 7<br>Module Description</h1>
+
+<p>Urban Threads is organized into seven distinct functional modules, each responsible for a specific aspect of the system's functionality. This modular design ensures separation of concerns and makes the application easier to maintain and extend.</p>
+
+<h2>7.1 User Authentication Module</h2>
+<p>This module handles user registration, login, session management, and access control. It is one of the most critical modules as it ensures the security of user data and controls access to protected features.</p>
+<h3>Registration Flow:</h3>
+<ol>
+    <li>User submits registration form with name, email, and password.</li>
+    <li>Client-side JavaScript validates for empty fields, valid email format, and minimum password length (6 characters).</li>
+    <li>Frontend sends POST request to /api/auth/register endpoint.</li>
+    <li>Server validates input on the backend (never trusting client-side validation alone).</li>
+    <li>Server checks if the email already exists in the database.</li>
+    <li>Password is hashed using bcrypt with a salt round of 10.</li>
+    <li>User record is inserted into the users table with the hashed password.</li>
+    <li>JWT token is generated with userId, email, and role in the payload, with a 24-hour expiry.</li>
+    <li>Token is returned to the client and stored in localStorage for subsequent authenticated requests.</li>
+</ol>
+<h3>Login Flow:</h3>
+<ol>
+    <li>User submits login form with email and password.</li>
+    <li>Server retrieves user record by email from the database.</li>
+    <li>Password is compared with stored hash using bcrypt.compare() function.</li>
+    <li>If credentials match, a new JWT token is generated and returned. Otherwise, 401 Unauthorized is sent.</li>
+</ol>
+<h3>JWT Authentication Middleware:</h3>
+<p>Protected routes use a middleware function that extracts the JWT token from the Authorization header (Bearer token format), verifies it using the JWT_SECRET environment variable, and attaches the decoded user information (userId, email, role) to the request object. If the token is missing, expired, or invalid, the middleware returns a 401 or 403 error response.</p>
+
+<h2>7.2 Product Catalog Module</h2>
+<p>This module manages the display and discovery of products in the storefront. It handles product listing with a responsive grid layout, category-based filtering with five categories (Hoodies, Sneakers, T-Shirts, Jackets, Accessories), keyword search using case-insensitive ILIKE queries with debounced API calls, and detailed product pages with image gallery, description, available sizes, and pricing.</p>
+
+<h2>7.3 Shopping Cart Module</h2>
+<p>This module manages the user's shopping cart with the following functionality: adding items with product ID, selected size, and quantity (POST /api/cart), viewing all cart items with product details joined from the products table (GET /api/cart), updating item quantity with increment/decrement controls (PUT /api/cart/:id), removing items from the cart (DELETE /api/cart/:id), and real-time total calculation on the frontend. Cart data is stored in the cart_items database table and persists across sessions and devices for logged-in users. Duplicate items (same product and size) have their quantity incremented rather than creating new entries.</p>
+
+<h2>7.4 Wishlist Module</h2>
+<p>The wishlist module allows authenticated users to save products for future purchase. Users can add products to their wishlist, view all saved items, remove items they are no longer interested in, and move items from the wishlist directly to the shopping cart. A unique constraint on (user_id, product_id) prevents duplicate wishlist entries. The API endpoints are GET /api/wishlist, POST /api/wishlist, and DELETE /api/wishlist/:id.</p>
+
+<h2>7.5 Admin Panel Module</h2>
+<p>The admin panel provides a comprehensive web-based dashboard for the store administrator, accessible at the /admin.html route. The admin panel includes:</p>
+<ul>
+    <li><strong>Admin Authentication:</strong> Separate login using credentials configured via ADMIN_EMAIL and ADMIN_PASSWORD environment variables. Upon successful authentication, a JWT token with an admin role flag is issued.</li>
+    <li><strong>Product Management (CRUD):</strong> A form for creating new products with fields for name, category, price, original price, description, primary image URL, additional image URLs, and video URLs. Products can be edited and deleted through the admin table view.</li>
+    <li><strong>Image Upload:</strong> File upload functionality using Multer middleware, with images stored in Supabase Storage. The admin can upload multiple images per product (up to 8) and videos (up to 3).</li>
+    <li><strong>Settings Tab:</strong> Configuration panels for managing categories, apparel sizes, footwear sizes, and available colors. Changes sync site-wide to the shop filters and product forms.</li>
+    <li><strong>Product Listing Table:</strong> Displays all products with ID, name, category, price, stock status, and action buttons (Edit/Delete).</li>
+</ul>
+
+<h2>7.6 Contact Module</h2>
+<p>This module provides a communication channel between users and administrators through a contact form with four fields: Name, Email Address, Subject, and Message. When submitted, the data is validated server-side and stored in the contact_messages database table. The admin can view all submitted messages through the admin panel. The API endpoint is POST /api/contact.</p>
+
+<h2>7.7 Search &amp; Filter Module</h2>
+<p>This module enhances product discovery through multiple mechanisms: text-based search using PostgreSQL ILIKE operator for case-insensitive matching, category filtering by selecting one of the five product categories, and the frontend constructs query parameters and sends them to /api/products with debounced API calls (300ms delay) for search to avoid excessive requests during typing.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ====== PAGE SETUP — Exact Requirements ====== */
+/* Font: Times New Roman, Content: 12pt, Line Spacing: 1.5, Margins: 1in, Justified */
+@page {
+    size: A4;
+    margin: 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    margin: 1in;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: counter(page, lower-roman); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0;
+}
+.running-hdr img { height: 40px; display: block; margin: 0 auto 2pt auto; }
+.running-hdr .u-name { font-size: 11pt; font-weight: bold; color: #000; display: block; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.5pt; }
+.running-hdr .u-addr { font-size: 8.5pt; display: block; font-family: 'Times New Roman', Times, serif; }
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+
+/* ====== TYPOGRAPHY (Exact Requirements) ====== */
+h1 { font-size: 17pt; font-weight: bold; text-align: center; text-transform: uppercase; margin: 8pt 0 12pt 0; }
+h2 { font-size: 14pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+h3 { font-size: 13pt; font-weight: bold; margin: 8pt 0 4pt 0; }
+p { text-align: justify; margin-bottom: 6pt; text-indent: 0.4in; }
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 6pt; }
+li { margin-bottom: 2pt; }
+
+/* ====== TABLES ====== */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 11pt; }
+table, th, td { border: 1px solid #000; }
+th, td { padding: 3pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+.toc td, .toc th { border: none; }
+
+/* ====== FIGURES — Keep with caption, no orphan ====== */
+.fig { text-align: center; margin: 6pt 0; }
+.fig img { max-width: 100%; max-height: 4in; border: 1px solid #ccc; }
+.fig-cap { font-size: 10pt; font-style: italic; margin-top: 2pt; text-indent: 0; text-align: center; }
+
+/* ====== CODE AS PLAIN TEXT ====== */
+.code { font-family: 'Courier New', Courier, monospace; font-size: 9pt; white-space: pre-wrap; line-height: 1.25; margin: 4pt 0 6pt 0.2in; }
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 14pt; }
+.spacer-lg { height: 28pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 20pt; }
+.border-box { border: 2px solid #000; padding: 18pt; }
+
+/* ====== WIDOWS & ORPHANS ====== */
+p, li, h2, h3 { orphans: 3; widows: 3; }
+h2, h3 { page-break-after: avoid; }
+.fig { page-break-inside: avoid; }
+table { page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- RUNNING HEADER -->
+<div class="running-hdr">
+    <img src="../images/nsu_logo.png" alt="NSU" style="filter: grayscale(100%);">
+    <span class="u-name">NETAJI SUBHASH UNIVERSITY</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+
+<!-- =================== CHAPTER 8: DATABASE DESIGN =================== -->
+<div class="pb">
+<h1>Chapter 8<br>Database Design</h1>
+
+<h2>8.1 Database Schema</h2>
+<p>The application uses PostgreSQL (version 15) hosted on Supabase. The database schema consists of six primary tables designed to support all application features.</p>
+
+<p class="ni" style="font-style:italic;">Table 8.1: Users Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY, DEFAULT gen_random_uuid()</td><td>Unique user identifier</td></tr>
+        <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>User's full name</td></tr>
+        <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>User's email address</td></tr>
+        <tr><td>password_hash</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>bcrypt hashed password</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Account creation timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.2: Products Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Product identifier</td></tr>
+        <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Product name</td></tr>
+        <tr><td>category</td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Product category</td></tr>
+        <tr><td>price</td><td>DECIMAL(10,2)</td><td>NOT NULL</td><td>Price in INR</td></tr>
+        <tr><td>description</td><td>TEXT</td><td></td><td>Product description</td></tr>
+        <tr><td>sizes</td><td>TEXT[]</td><td></td><td>Available sizes array</td></tr>
+        <tr><td>images</td><td>TEXT[]</td><td></td><td>Image URLs array</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Creation timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.3: Cart Items Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Cart item ID</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id) ON DELETE CASCADE</td><td>Reference to user</td></tr>
+        <tr><td>product_id</td><td>UUID</td><td>NOT NULL, FK → products(id) ON DELETE CASCADE</td><td>Reference to product</td></tr>
+        <tr><td>quantity</td><td>INTEGER</td><td>NOT NULL, DEFAULT 1</td><td>Quantity of item</td></tr>
+        <tr><td>size</td><td>VARCHAR(10)</td><td></td><td>Selected size</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.4: Wishlist Items Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Wishlist item ID</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id)</td><td>Reference to user</td></tr>
+        <tr><td>product_id</td><td>UUID</td><td>NOT NULL, FK → products(id)</td><td>Reference to product</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.5: Orders Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Order identifier</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id)</td><td>Reference to user</td></tr>
+        <tr><td>items</td><td>JSONB</td><td>NOT NULL</td><td>Order items as JSON</td></tr>
+        <tr><td>total</td><td>DECIMAL(10,2)</td><td>NOT NULL</td><td>Order total (INR)</td></tr>
+        <tr><td>status</td><td>VARCHAR(20)</td><td>DEFAULT 'pending'</td><td>Order status</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Order timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.6: Contact Messages Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Message ID</td></tr>
+        <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Sender's name</td></tr>
+        <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Sender's email</td></tr>
+        <tr><td>subject</td><td>VARCHAR(255)</td><td></td><td>Subject line</td></tr>
+        <tr><td>message</td><td>TEXT</td><td>NOT NULL</td><td>Message body</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<h2>8.2 Normalization</h2>
+<h3>First Normal Form (1NF):</h3>
+<p>All tables have primary keys (UUID type). All columns contain atomic values. No repeating groups exist. The sizes and images columns use PostgreSQL TEXT[] arrays, which is the recommended approach for ordered collections in modern PostgreSQL and is considered atomic at the database level.</p>
+<h3>Second Normal Form (2NF):</h3>
+<p>All non-key columns are fully functionally dependent on the primary key. Since all tables use single-column primary keys (UUID), there are no partial dependencies possible.</p>
+<h3>Third Normal Form (3NF):</h3>
+<p>No transitive dependencies exist — all non-key attributes depend directly and only on the primary key. Foreign key constraints with ON DELETE CASCADE maintain referential integrity across related tables.</p>
+
+<h2>8.3 Data Dictionary</h2>
+<table style="font-size:10pt;">
+    <thead><tr><th>Field</th><th>Table</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>All tables</td><td>UUID</td><td>Auto-generated universal unique identifier</td></tr>
+        <tr><td>name</td><td>users, products, contacts</td><td>VARCHAR</td><td>Name of entity (user, product, or sender)</td></tr>
+        <tr><td>email</td><td>users, contacts</td><td>VARCHAR</td><td>Email address (unique constraint on users)</td></tr>
+        <tr><td>password_hash</td><td>users</td><td>VARCHAR</td><td>bcrypt hash with salt round 10. Never stores plaintext.</td></tr>
+        <tr><td>category</td><td>products</td><td>VARCHAR</td><td>Values: hoodies, sneakers, tshirts, jackets, accessories</td></tr>
+        <tr><td>price</td><td>products</td><td>DECIMAL</td><td>Price in INR. Precision: 10 digits, 2 decimal places.</td></tr>
+        <tr><td>sizes</td><td>products</td><td>TEXT[]</td><td>PostgreSQL array e.g. {S,M,L,XL,XXL}</td></tr>
+        <tr><td>images</td><td>products</td><td>TEXT[]</td><td>Array of image URLs from Supabase Storage</td></tr>
+        <tr><td>user_id</td><td>cart, wishlist, orders</td><td>UUID</td><td>Foreign key referencing users(id)</td></tr>
+        <tr><td>product_id</td><td>cart, wishlist</td><td>UUID</td><td>Foreign key referencing products(id)</td></tr>
+        <tr><td>quantity</td><td>cart_items</td><td>INTEGER</td><td>Number of units in cart. Minimum value: 1.</td></tr>
+        <tr><td>items</td><td>orders</td><td>JSONB</td><td>JSON array of order line items with product details</td></tr>
+        <tr><td>status</td><td>orders</td><td>VARCHAR</td><td>Values: pending, processing, shipped, delivered, cancelled</td></tr>
+        <tr><td>created_at</td><td>All tables</td><td>TIMESTAMPTZ</td><td>Timestamp with timezone, auto-generated on insert</td></tr>
+    </tbody>
+</table>
+
+<h2>8.4 SQL Schema</h2>
+<p>The following SQL statements were used to create the database schema in Supabase:</p>
+
+<p class="ni code">CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    sizes TEXT[],
+    images TEXT[],
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE cart_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL DEFAULT 1,
+    size VARCHAR(10),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE wishlist_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id, product_id)
+);
+
+CREATE TABLE orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    items JSONB NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE contact_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
+    message TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);</p>
+</div>
+<!-- =================== CHAPTER 9: CODING / IMPLEMENTATION =================== -->
+<div class="pb">
+<h1>Chapter 9<br>Coding / Implementation</h1>
+
+<h2>9.1 Technology Stack</h2>
+<table>
+    <thead><tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr></thead>
+    <tbody>
+        <tr><td>Frontend</td><td>HTML5, CSS3, Vanilla JavaScript</td><td>User interface and client-side logic</td></tr>
+        <tr><td>Backend</td><td>Node.js, Express.js</td><td>Server-side logic and REST API</td></tr>
+        <tr><td>Database</td><td>PostgreSQL (via Supabase)</td><td>Data storage and retrieval</td></tr>
+        <tr><td>File Storage</td><td>Supabase Storage</td><td>Product image storage</td></tr>
+        <tr><td>Authentication</td><td>bcryptjs, jsonwebtoken</td><td>Password hashing and JWT tokens</td></tr>
+        <tr><td>File Upload</td><td>Multer</td><td>Multipart form data processing</td></tr>
+        <tr><td>Deployment</td><td>Vercel</td><td>Serverless hosting with CDN</td></tr>
+        <tr><td>Version Control</td><td>Git, GitHub</td><td>Source code management</td></tr>
+    </tbody>
+</table>
+
+<h2>9.2 Project Directory Structure</h2>
+<p class="ni code">urban-threads/
+├── frontend/                 # Frontend static files
+│   ├── index.html            # Homepage
+│   ├── shop.html             # Product catalog
+│   ├── login.html            # User login page
+│   ├── signup.html           # User registration page
+│   ├── cart.html             # Shopping cart page
+│   ├── wishlist.html         # Wishlist page
+│   ├── about.html            # About us page
+│   ├── contact.html          # Contact form page
+│   ├── admin.html            # Admin panel
+│   ├── product.html          # Product detail page
+│   ├── styles/               # Stylesheets
+│   │   └── main.css          # Main stylesheet
+│   ├── js/                   # Client-side JavaScript
+│   │   ├── main.js           # Core functionality
+│   │   ├── shop.js           # Product catalog logic
+│   │   ├── cart.js           # Cart management
+│   │   ├── auth.js           # Authentication UI logic
+│   │   └── admin.js          # Admin panel logic
+│   └── assets/               # Static assets (favicon, etc.)
+├── api/
+│   └── index.js              # Vercel serverless entry point
+├── server.js                 # Main Express.js server
+├── package.json              # npm dependencies
+├── vercel.json               # Vercel deployment config
+├── .env                      # Environment variables (not in Git)
+├── .env.example              # Template for env variables
+└── .gitignore                # Git ignore rules</p>
+
+<h2>9.3 Server Setup — Express.js Configuration</h2>
+<p>The main server file initializes the Express application, configures middleware, sets up database connections, and defines all API routes.</p>
+
+<p class="ni code">const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+require('dotenv').config();
+
+const { createClient } = require('@supabase/supabase-js');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Supabase initialization
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
+// Middleware configuration
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+// JWT Authentication Middleware
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader &amp;&amp; authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'Access denied' });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) return res.status(403).json({ error: 'Invalid token' });
+        req.user = decoded;
+        next();
+    });
+}
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});</p>
+
+<h2>9.4 User Registration API</h2>
+
+<p class="ni code">app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        // Input validation
+        if (!name || !email || !password) {
+            return res.status(400).json({ error: 'All fields required' });
+        }
+        if (password.length &lt; 6) {
+            return res.status(400).json({ error: 'Password min 6 characters' });
+        }
+
+        // Check if email already exists
+        const { data: existing } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email)
+            .single();
+        if (existing) {
+            return res.status(409).json({ error: 'Email already registered' });
+        }
+
+        // Hash password with bcrypt (salt round 10)
+        const password_hash = await bcrypt.hash(password, 10);
+
+        // Insert user into database
+        const { data: newUser, error } = await supabase
+            .from('users')
+            .insert([{ name, email, password_hash }])
+            .select()
+            .single();
+        if (error) throw error;
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: newUser.id, email: newUser.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({ user: newUser, token });
+    } catch (error) {
+        res.status(500).json({ error: 'Registration failed' });
+    }
+});</p>
+
+<h2>9.5 User Login API</h2>
+
+<p class="ni code">app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password required' });
+        }
+
+        // Find user by email
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email.toLowerCase())
+            .single();
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // Compare password with stored hash
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user.id, email: user.email, role: user.role || 'user' },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({
+            user: { id: user.id, name: user.name, email: user.email },
+            token
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Login failed' });
+    }
+});</p>
+
+<h2>9.6 Product API Endpoints</h2>
+
+<p class="ni code">// GET all products with optional category filter and search
+app.get('/api/products', async (req, res) => {
+    try {
+        const { category, search } = req.query;
+        let query = supabase.from('products').select('*');
+
+        if (category) query = query.eq('category', category);
+        if (search) query = query.ilike('name', `%${search}%`);
+
+        const { data, error } = await query.order('created_at',
+            { ascending: false });
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch products' });
+    }
+});
+
+// POST new product (admin only)
+app.post('/api/products', authenticateToken, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Admin access required' });
+        }
+        const { name, category, price, description, sizes, images } = req.body;
+
+        const { data, error } = await supabase
+            .from('products')
+            .insert([{ name, category, price, description, sizes, images }])
+            .select()
+            .single();
+        if (error) throw error;
+        res.status(201).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create product' });
+    }
+});</p>
+
+<h2>9.7 Cart API Endpoints</h2>
+
+<p class="ni code">// GET user's cart with product details
+app.get('/api/cart', authenticateToken, async (req, res) => {
+    try {
+        const { data, error } = await supabase
+            .from('cart_items')
+            .select('*, products(*)')
+            .eq('user_id', req.user.userId);
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch cart' });
+    }
+});
+
+// POST add to cart (or increment quantity for duplicates)
+app.post('/api/cart', authenticateToken, async (req, res) => {
+    try {
+        const { product_id, size, quantity } = req.body;
+        const user_id = req.user.userId;
+
+        // Check for existing item (same product + size)
+        const { data: existing } = await supabase
+            .from('cart_items')
+            .select('*')
+            .eq('user_id', user_id)
+            .eq('product_id', product_id)
+            .eq('size', size)
+            .single();
+
+        if (existing) {
+            const { data, error } = await supabase
+                .from('cart_items')
+                .update({ quantity: existing.quantity + (quantity || 1) })
+                .eq('id', existing.id)
+                .select().single();
+            if (error) throw error;
+            return res.json(data);
+        }
+
+        const { data, error } = await supabase
+            .from('cart_items')
+            .insert([{ user_id, product_id, size, quantity: quantity || 1 }])
+            .select().single();
+        if (error) throw error;
+        res.status(201).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to add to cart' });
+    }
+});</p>
+
+<h2>9.8 API Endpoints Summary</h2>
+<table style="font-size:10pt;">
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>POST</td><td>/api/auth/register</td><td>No</td><td>Register new user</td></tr>
+        <tr><td>POST</td><td>/api/auth/login</td><td>No</td><td>Login (returns JWT)</td></tr>
+        <tr><td>POST</td><td>/api/auth/admin-login</td><td>No</td><td>Admin login</td></tr>
+        <tr><td>GET</td><td>/api/products</td><td>No</td><td>Get products (filter, search)</td></tr>
+        <tr><td>GET</td><td>/api/products/:id</td><td>No</td><td>Get product detail</td></tr>
+        <tr><td>POST</td><td>/api/products</td><td>Admin</td><td>Create product</td></tr>
+        <tr><td>PUT</td><td>/api/products/:id</td><td>Admin</td><td>Update product</td></tr>
+        <tr><td>DELETE</td><td>/api/products/:id</td><td>Admin</td><td>Delete product</td></tr>
+        <tr><td>GET</td><td>/api/cart</td><td>User</td><td>Get cart items</td></tr>
+        <tr><td>POST</td><td>/api/cart</td><td>User</td><td>Add to cart</td></tr>
+        <tr><td>PUT</td><td>/api/cart/:id</td><td>User</td><td>Update cart quantity</td></tr>
+        <tr><td>DELETE</td><td>/api/cart/:id</td><td>User</td><td>Remove from cart</td></tr>
+        <tr><td>GET</td><td>/api/wishlist</td><td>User</td><td>Get wishlist</td></tr>
+        <tr><td>POST</td><td>/api/wishlist</td><td>User</td><td>Add to wishlist</td></tr>
+        <tr><td>DELETE</td><td>/api/wishlist/:id</td><td>User</td><td>Remove from wishlist</td></tr>
+        <tr><td>POST</td><td>/api/contact</td><td>No</td><td>Submit contact form</td></tr>
+        <tr><td>POST</td><td>/api/uploads</td><td>Admin</td><td>Upload product images</td></tr>
+        <tr><td>GET</td><td>/api/catalog-settings</td><td>No</td><td>Get categories/sizes/colors</td></tr>
+        <tr><td>PUT</td><td>/api/catalog-settings</td><td>Admin</td><td>Update catalog settings</td></tr>
+    </tbody>
+</table>
+
+<h2>9.9 Frontend Implementation</h2>
+<h3>9.9.1 Homepage — Featured Products</h3>
+
+<p class="ni code">// Fetch and render featured products on homepage
+async function loadFeaturedProducts() {
+    try {
+        const response = await fetch('/api/products');
+        const products = await response.json();
+        const container = document.getElementById('featured-products');
+
+        products.slice(0, 8).forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                &lt;img src="${product.images[0]}" alt="${product.name}"&gt;
+                &lt;h3&gt;${product.name}&lt;/h3&gt;
+                &lt;p class="price"&gt;₹${product.price}&lt;/p&gt;
+                &lt;button onclick="addToCart('${product.id}')"&gt;
+                    Add to Cart
+                &lt;/button&gt;
+            `;
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error loading products:', error);
+    }
+}</p>
+
+<h3>9.9.2 CSS — Dark Theme Variables</h3>
+
+<p class="ni code">:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --accent: #c9a96e;
+    --accent-hover: #d4b87a;
+    --border: #2a2a2a;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.product-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(201, 169, 110, 0.15);
+}</p>
+
+<h2>9.10 Deployment on Vercel</h2>
+<p>The application is deployed on Vercel's serverless platform. The configuration file (vercel.json) defines build targets and routing rules:</p>
+
+<p class="ni code">{
+    "version": 2,
+    "builds": [
+        { "src": "api/index.js", "use": "@vercel/node" },
+        { "src": "frontend/**", "use": "@vercel/static" }
+    ],
+    "routes": [
+        { "src": "/api/(.*)", "dest": "/api/index.js" },
+        { "src": "/uploads/(.*)", "dest": "/api/index.js" },
+        { "src": "/(.*)", "dest": "/frontend/$1" }
+    ]
+}</p>
+
+<p>Environment variables are configured in the Vercel dashboard (not in code): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD, and SUPABASE_MEDIA_BUCKET. The deployed site is accessible at: <strong>https://urban-threads-theta.vercel.app</strong></p>
+</div>
+
+</body>
+</html>

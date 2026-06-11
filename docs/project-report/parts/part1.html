@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ============================================================
+   PAGE SETUP  — NSU Requirements
+   Font: Times New Roman | Content: 12pt | Spacing: 1.5
+   Margins: 1 inch all sides | Alignment: Justified
+   ============================================================ */
+
+@page {
+    size: A4;
+    margin: 0.7in 1in 0.8in 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    margin: 1in;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: counter(page, lower-roman); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding: 12pt 0 6pt 0;
+    border-bottom: 2pt solid #000;
+}
+.running-hdr img {
+    height: 36px;
+    display: block;
+    margin: 0 auto 3pt auto;
+}
+.running-hdr .u-name {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #1a3c6e;
+    display: block;
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 1pt;
+    text-transform: uppercase;
+}
+.running-hdr .u-addr {
+    font-size: 9pt;
+    display: block;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 1pt;
+}
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+}
+
+/* ====== TYPOGRAPHY ====== */
+h1 {
+    font-size: 17pt;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 6pt 0 10pt 0;
+    page-break-after: avoid;
+}
+h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 10pt 0 5pt 0;
+    page-break-after: avoid;
+}
+h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    margin: 6pt 0 3pt 0;
+    page-break-after: avoid;
+}
+p {
+    text-align: justify;
+    margin-bottom: 5pt;
+    text-indent: 0.4in;
+}
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 5pt; }
+li { margin-bottom: 1pt; }
+
+/* ====== TABLES ====== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5pt 0;
+    font-size: 11pt;
+    page-break-inside: auto;
+}
+table, th, td { border: 1px solid #000; }
+th, td { padding: 2pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+tr { page-break-inside: avoid; }
+.toc td, .toc th { border: none; }
+
+/* ====== FIGURES ====== */
+.fig {
+    text-align: center;
+    margin: 5pt 0;
+    page-break-inside: avoid;
+}
+.fig img {
+    max-width: 95%;
+    max-height: 3.8in;
+    border: 1px solid #aaa;
+}
+.fig-cap {
+    font-size: 10pt;
+    font-style: italic;
+    margin-top: 2pt;
+    text-indent: 0;
+    text-align: center;
+}
+
+/* ====== CODE AS PLAIN TEXT ====== */
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9pt;
+    white-space: pre-wrap;
+    line-height: 1.2;
+    margin: 3pt 0 5pt 0.2in;
+    page-break-inside: avoid;
+}
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 12pt; }
+.spacer-lg { height: 24pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 16pt; }
+.border-box { border: 2px solid #000; padding: 16pt; }
+
+/* ====== WIDOWS & ORPHANS ====== */
+p, li { orphans: 3; widows: 3; }
+</style>
+</head>
+<body>
+
+<!-- RUNNING HEADER — appears on every page via CSS running element -->
+<div class="running-hdr">
+    <img src="images/nsu_logo.png" alt="NSU">
+    <span class="u-name">Netaji Subhash University</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+
+<!-- ============== COVER PAGE ============== -->
+<div style="page: cover;">
+<div class="border-box" style="min-height:9in; display:flex; flex-direction:column; justify-content:space-between;">
+    <div class="center">
+        <div class="spacer-lg"></div>
+        <img src="images/nsu_logo.png" alt="NSU Logo" style="height:80px; margin-bottom:4pt;">
+        <p class="ni center bold" style="font-size:14pt; color:#1a3c6e;">NETAJI SUBHASH UNIVERSITY</p>
+        <p class="ni center" style="font-size:10pt;">Pokahri, Near Bhilai Pharai, Jamshedpur, Jharkhand</p>
+        <div class="spacer-lg"></div>
+        <p class="ni center bold" style="font-size:13pt;">A Project Report</p>
+        <p class="ni center" style="font-size:11pt;">on</p>
+        <div class="spacer-lg"></div>
+        <p class="ni center bold" style="font-size:20pt; letter-spacing:2px;">URBAN THREADS</p>
+        <p class="ni center" style="font-size:12pt;">Premium Streetwear E-Commerce Website</p>
+        <div class="spacer-lg"></div>
+        <p class="ni center" style="font-size:11pt;">Submitted in partial fulfillment of the requirements<br>for the award of the degree of</p>
+        <div class="spacer"></div>
+        <p class="ni center bold" style="font-size:13pt;">BACHELOR OF COMPUTER APPLICATIONS (BCA)</p>
+    </div>
+    <div>
+        <div class="two-col" style="margin-top:0;">
+            <div><p class="ni bold">Submitted By:</p><p class="ni">Samarjeet Singh</p><p class="ni">BCA Final Semester</p></div>
+            <div style="text-align:right;"><p class="ni bold">Under the Guidance of:</p><p class="ni">Mr. Ritesh Kumar Jha</p></div>
+        </div>
+        <div class="spacer-lg"></div>
+        <p class="ni center bold" style="font-size:11pt;">Academic Session: 2023–2026</p>
+    </div>
+</div>
+</div>
+
+<!-- ============== CERTIFICATE ============== -->
+<div class="pb" style="page: front;">
+<h1>Certificate</h1>
+<p>This is to certify that the project work entitled <strong>"Urban Threads — Premium Streetwear E-Commerce Website"</strong> is a bonafide work carried out by <strong>Samarjeet Singh</strong>, a student of <strong>BCA Final Semester</strong>, at <strong>Netaji Subhash University, Jamshedpur</strong>, during the academic session <strong>2023–2026</strong>, in partial fulfillment of the requirements for the award of the degree of <strong>Bachelor of Computer Applications (BCA)</strong>.</p>
+<p>The project has been completed under my supervision and guidance. The work embodied in this project report has not been submitted earlier for the award of any degree or diploma to the best of my knowledge and belief.</p>
+<p>I wish him all the best for his future endeavors and recommend this project for evaluation.</p>
+<div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="two-col">
+    <div><p class="ni">Date: _______________</p><p class="ni">Place: Jamshedpur</p></div>
+    <div style="text-align:right;"><p class="ni bold">Mr. Ritesh Kumar Jha</p><p class="ni">(Project Guide)</p></div>
+</div>
+<div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="center"><p class="ni bold">Head of Department</p><p class="ni">Department of Computer Applications</p><p class="ni">Netaji Subhash University, Jamshedpur</p></div>
+</div>
+
+<!-- ============== INTERNSHIP PAGES ============== -->
+<div class="pb" style="page: front;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Certificate — to be attached separately]</p></div>
+<div class="pb" style="page: front;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Letter — to be attached separately]</p></div>
+
+<!-- ============== DECLARATION ============== -->
+<div class="pb" style="page: front;">
+<h1>Declaration</h1>
+<p>I, <strong>Samarjeet Singh</strong>, a student of <strong>BCA Final Semester</strong> at <strong>Netaji Subhash University, Jamshedpur</strong>, hereby declare that the project work entitled <strong>"Urban Threads — Premium Streetwear E-Commerce Website"</strong> submitted by me is a genuine piece of work carried out by me under the guidance of <strong>Mr. Ritesh Kumar Jha</strong>.</p>
+<p>I further declare that this project report has not been submitted to any other university or institution for the award of any degree, diploma, or fellowship. All the information and data furnished in this report is authentic to the best of my knowledge.</p>
+<p>The references and sources of information used in this project have been duly acknowledged. I take full responsibility for any errors or omissions that may have inadvertently crept in.</p>
+<p>I understand that any violation of the above statement found at any stage may result in the cancellation of my degree, and I shall be liable for disciplinary action as per the university rules and regulations.</p>
+<div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="two-col">
+    <div><p class="ni">Date: _______________</p><p class="ni">Place: Jamshedpur</p></div>
+    <div style="text-align:right;"><p class="ni bold">Samarjeet Singh</p><p class="ni">BCA Final Semester</p><p class="ni">Netaji Subhash University</p></div>
+</div>
+</div>
+
+<!-- ============== ACKNOWLEDGEMENT ============== -->
+<div class="pb" style="page: front;">
+<h1>Acknowledgement</h1>
+<p>I would like to express my sincere gratitude to all those who helped me throughout the completion of this project. Without their constant support and encouragement, this work would not have been possible.</p>
+<p>First and foremost, I would like to thank my project guide, <strong>Mr. Ritesh Kumar Jha</strong>, for his valuable guidance, constructive suggestions, and constant encouragement throughout the development of this project. His expertise and patience helped me overcome the various challenges I faced during the project.</p>
+<p>I am also grateful to the <strong>Head of the Department of Computer Applications</strong>, Netaji Subhash University, for providing me with the necessary infrastructure and resources to carry out this project successfully.</p>
+<p>I express my heartfelt thanks to all the faculty members who have imparted knowledge and skills during my BCA course, which laid the foundation for this project. Their dedication to teaching has helped me build a strong understanding of computer science fundamentals, programming, and software development methodologies.</p>
+<p>I am deeply indebted to my parents and family members for their unwavering support, motivation, and understanding throughout my academic journey. They have always stood by me and encouraged me to pursue my passion for technology.</p>
+<p>I would also like to acknowledge my friends and classmates who have been a constant source of inspiration and have contributed to my learning through discussions and collaborative problem-solving sessions.</p>
+<p>I am thankful to the open-source community for providing free and powerful tools such as Node.js, Express.js, Supabase, and Visual Studio Code, which made the development of this project possible without any financial investment.</p>
+<p>Finally, I thank the Almighty God for giving me the strength, wisdom, and perseverance to complete this project on time.</p>
+<div class="spacer-lg"></div>
+<div class="right"><p class="ni bold">Samarjeet Singh</p><p class="ni">BCA Final Semester</p></div>
+</div>
+
+<!-- ============== ABSTRACT ============== -->
+<div class="pb" style="page: front;">
+<h1>Abstract / Project Summary</h1>
+<p>The rapid growth of e-commerce has fundamentally transformed the way consumers shop for fashion and apparel. With the increasing penetration of the internet and smartphones across India, online shopping has become a preferred mode of purchasing for the younger demographic. This project, titled <strong>"Urban Threads"</strong>, addresses the growing demand for a dedicated premium streetwear e-commerce platform that caters specifically to the Indian market.</p>
+<p>Urban Threads is a full-stack web application designed to provide users with a seamless online shopping experience for streetwear fashion. The platform allows users to browse products by category, search for specific items, view detailed product information, add items to their shopping cart and wishlist, and manage their user accounts. An integrated admin panel enables the store administrator to manage products, categories, sizes, colors, and uploaded media through a convenient web-based dashboard.</p>
+<p>The system is built using a modern web technology stack. The frontend is developed with <strong>HTML5, CSS3, and Vanilla JavaScript</strong>, ensuring a fast and responsive user interface. The backend is powered by <strong>Node.js with Express.js</strong>, providing a robust server-side architecture. <strong>Supabase (PostgreSQL)</strong> serves as the database and file storage backend. The application is deployed on <strong>Vercel</strong> for high availability and automatic scaling.</p>
+<p>Key features include user registration and authentication with secure password hashing (bcrypt, salt round 10), JWT-based session management, a product catalog with category-based filtering and search functionality, shopping cart with real-time updates, wishlist functionality, a contact form for user communication, responsive design for all screen sizes, and an admin dashboard for complete content management including product CRUD operations, image uploads, category management, and user oversight.</p>
+<p>The project demonstrates the practical application of full-stack web development concepts learned during the BCA program, including requirements analysis, database design, API development, frontend engineering, authentication and authorization, testing, and cloud deployment on modern serverless platforms.</p>
+<p class="ni"><strong>Keywords:</strong> E-commerce, Streetwear, Node.js, Express.js, Supabase, PostgreSQL, JavaScript, Full-Stack Development, REST API, JWT Authentication.</p>
+</div>
+
+<!-- ============== TABLE OF CONTENTS ============== -->
+<div class="pb" style="page: front;">
+<h1>Table of Contents</h1>
+<table class="toc">
+    <thead><tr><th style="width:8%">S.No</th><th>Title</th><th style="width:12%;text-align:center">Page No.</th></tr></thead>
+    <tbody>
+        <tr><td></td><td>Certificate</td><td class="center">ii</td></tr>
+        <tr><td></td><td>Internship Certificate &amp; Letter</td><td class="center">iii–iv</td></tr>
+        <tr><td></td><td>Declaration</td><td class="center">v</td></tr>
+        <tr><td></td><td>Acknowledgement</td><td class="center">vi</td></tr>
+        <tr><td></td><td>Abstract / Project Summary</td><td class="center">vii</td></tr>
+        <tr><td></td><td>Table of Contents</td><td class="center">viii</td></tr>
+        <tr><td><b>1</b></td><td><b>Introduction</b></td><td class="center"></td></tr>
+        <tr><td><b>2</b></td><td><b>Problem Statement</b></td><td class="center"></td></tr>
+        <tr><td><b>3</b></td><td><b>Objectives of the Project</b></td><td class="center"></td></tr>
+        <tr><td><b>4</b></td><td><b>System Analysis</b></td><td class="center"></td></tr>
+        <tr><td><b>5</b></td><td><b>Software &amp; Hardware Requirements</b></td><td class="center"></td></tr>
+        <tr><td><b>6</b></td><td><b>System Design (DFD / UML / ER Diagram)</b></td><td class="center"></td></tr>
+        <tr><td><b>7</b></td><td><b>Module Description</b></td><td class="center"></td></tr>
+        <tr><td><b>8</b></td><td><b>Database Design</b></td><td class="center"></td></tr>
+        <tr><td><b>9</b></td><td><b>Coding / Implementation</b></td><td class="center"></td></tr>
+        <tr><td><b>10</b></td><td><b>Output Screens</b></td><td class="center"></td></tr>
+        <tr><td><b>11</b></td><td><b>Testing</b></td><td class="center"></td></tr>
+        <tr><td><b>12</b></td><td><b>Conclusion</b></td><td class="center"></td></tr>
+        <tr><td><b>13</b></td><td><b>Future Scope</b></td><td class="center"></td></tr>
+        <tr><td><b>14</b></td><td><b>Bibliography / References</b></td><td class="center"></td></tr>
+    </tbody>
+</table>
+</div>

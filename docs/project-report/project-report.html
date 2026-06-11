@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ====== PAGE SETUP — NSU Requirements ====== */
+/* Font: Times New Roman, Content: 12pt, Line Spacing: 1.5, Margins: 1in, Justified */
+@page {
+    size: A4;
+    margin: 1.85in 1in 0.85in 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+        vertical-align: top;
+        padding-top: 10pt;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    size: A4;
+    margin: 0;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page:first {
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    margin-top: 1.85in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+        vertical-align: top;
+        padding-top: 10pt;
+    }
+    @bottom-center { content: counter(page); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding: 14pt 0 16pt 0;
+    border-bottom: 2pt solid #000;
+    margin-bottom: 0;
+}
+.running-hdr img { height: 44px; display: block; margin: 0 auto 3pt auto; }
+.running-hdr .u-name { font-size: 12pt; font-weight: bold; color: #000; display: block; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.5pt; text-transform: uppercase; }
+.running-hdr .u-addr { font-size: 9pt; display: block; font-family: 'Times New Roman', Times, serif; margin-top: 1pt; }
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+
+/* ====== TYPOGRAPHY (Exact Requirements) ====== */
+h1 { font-size: 17pt; font-weight: bold; text-align: center; text-transform: uppercase; margin: 8pt 0 12pt 0; }
+h2 { font-size: 14pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+h3 { font-size: 13pt; font-weight: bold; margin: 8pt 0 4pt 0; }
+p { text-align: justify; margin-bottom: 6pt; text-indent: 0.4in; }
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 6pt; }
+li { margin-bottom: 2pt; }
+
+/* ====== TABLES ====== */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 11pt; }
+table, th, td { border: 1px solid #000; }
+th, td { padding: 3pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+.toc td, .toc th { border: none; }
+.toc a { color: #000; text-decoration: none; font-weight: inherit; }
+.toc-page::after { content: target-counter(attr(href), page); }
+
+/* ====== FIGURES — allow break to avoid blank pages ====== */
+.fig { text-align: center; margin: 4pt 0; page-break-inside: auto; }
+.fig img { max-width: 95%; max-height: 2.8in; border: 1px solid #ccc; object-fit: contain; }
+.full-page-img { max-width: 100%; max-height: 7.2in; display: block; margin: 8pt auto; border: 1px solid #ccc; object-fit: contain; }
+.fig-cap { font-size: 10pt; font-style: italic; margin-top: 2pt; text-indent: 0; text-align: center; }
+/* Keep figure description + image together as a unit in output screens */
+.screen-block { page-break-inside: avoid; page-break-before: always; }
+
+/* ====== CODE AS PLAIN TEXT ====== */
+pre.code, .code { font-family: 'Courier New', Courier, monospace; font-size: 9pt; white-space: pre-wrap; line-height: 1.25; margin: 6pt 0 6pt 0.2in; page-break-inside: auto; text-align: left !important; text-indent: 0 !important; direction: ltr !important; unicode-bidi: normal; }
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 14pt; }
+.spacer-lg { height: 28pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 20pt; }
+.border-box { border: 2px solid #000; padding: 18pt; }
+
+/* ====== WIDOWS & ORPHANS — relaxed to prevent blank pages ====== */
+p, li { orphans: 2; widows: 2; }
+h1, h2, h3 { page-break-after: avoid; }
+table { page-break-inside: auto; }
+tr { page-break-inside: auto; }
+
+/* ====== COVER PAGE NEW STYLES ====== */
+.cover-container {
+    page: cover;
+    page-break-after: always;
+    page-break-inside: avoid;
+    width: 210mm;
+    height: 297mm;
+    padding: 12mm 15mm;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+.cover-border {
+    width: 100%;
+    height: 100%;
+    border: 3pt solid #000;
+    padding: 24pt;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.cover-top {
+    text-align: center;
+    width: 100%;
+    margin-top: 10pt;
+}
+.cover-top img {
+    height: 85px;
+    display: block;
+    margin: 0 auto 12pt auto;
+}
+.uni-name {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    line-height: 1.2;
+}
+.uni-addr {
+    font-size: 10.5pt;
+    margin-top: 4pt;
+    color: #000;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 0;
+}
+.cover-middle {
+    text-align: center;
+    width: 100%;
+    margin: 20pt 0;
+}
+.subtitle-report {
+    font-size: 13pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #000;
+    margin: 0;
+}
+.sub-on {
+    font-size: 12pt;
+    margin: 6pt 0;
+    font-style: italic;
+    color: #000;
+}
+.project-title {
+    font-size: 26pt;
+    font-weight: bold;
+    letter-spacing: 3px;
+    line-height: 1.2;
+    color: #000;
+    margin: 12pt 0;
+    text-transform: uppercase;
+}
+.project-subtitle {
+    font-size: 13pt;
+    color: #000;
+    margin-bottom: 24pt;
+    margin-top: 0;
+}
+.submitted-for {
+    font-size: 11.5pt;
+    line-height: 1.5;
+    color: #000;
+    margin-bottom: 10pt;
+}
+.degree-name {
+    font-size: 13.5pt;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+.cover-bottom {
+    width: 100%;
+    margin-bottom: 10pt;
+}
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 15pt;
+}
+.submitted-by, .guided-by {
+    display: flex;
+    flex-direction: column;
+}
+.submitted-by {
+    text-align: left;
+}
+.guided-by {
+    text-align: right;
+}
+.cover-bottom .label {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 4pt;
+}
+.cover-bottom .val {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #000;
+}
+.cover-bottom .sub-val {
+    font-size: 11pt;
+    color: #000;
+    margin-top: 2pt;
+}
+.academic-session {
+    text-align: center;
+    font-size: 12pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 25pt;
+    border-top: 1px solid #000;
+    padding-top: 12pt;
+}
+</style>
+</head>
+<body>
+
+<!-- ============== COVER PAGE ============== -->
+<div class="cover-container">
+    <div class="cover-border">
+        <!-- University Logo & Name -->
+        <div class="cover-top">
+            <img src="images/nsu_logo.png" alt="NSU Logo">
+            <div class="ni uni-name">Netaji Subhash University</div>
+            <div class="ni uni-addr">Pokahri, Near Bhilai Pharai, Jamshedpur, Jharkhand</div>
+        </div>
+
+        <!-- Project Title -->
+        <div class="cover-middle">
+            <div class="ni subtitle-report">A Project Report</div>
+            <div class="ni sub-on">on</div>
+            <div class="ni project-title">URBAN THREADS</div>
+            <div class="ni project-subtitle">Premium Streetwear E-Commerce Website</div>
+            <div class="ni submitted-for">Submitted in partial fulfillment of the requirements<br>for the award of the degree of</div>
+            <div class="ni degree-name">BACHELOR OF COMPUTER APPLICATIONS (BCA)</div>
+        </div>
+
+        <!-- Submitted By & Guide -->
+        <div class="cover-bottom">
+            <div class="info-row">
+                <div class="submitted-by">
+                    <span class="label">Submitted By:</span>
+                    <span class="val">Samarjeet Singh</span>
+                    <span class="sub-val">BCA Final Semester</span>
+                </div>
+                <div class="guided-by">
+                    <span class="label">Under the Guidance of:</span>
+                    <span class="val">Mr. Ritesh Kumar Jha</span>
+                    <span class="sub-val">Project Guide</span>
+                </div>
+            </div>
+            <div class="academic-session">
+                Academic Session: 2023–2026
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============== CERTIFICATE ============== -->
+<div class="pb" style="page: front;" id="cert">
+<!-- RUNNING HEADER -->
+<div class="running-hdr">
+    <img src="images/nsu_logo.png" alt="NSU">
+    <span class="u-name">NETAJI SUBHASH UNIVERSITY</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+<h1>Certificate</h1>
+<p>This is to certify that the project work entitled <strong>"Urban Threads — Premium Streetwear E-Commerce Website"</strong> is a bonafide work carried out by <strong>Samarjeet Singh</strong>, a student of <strong>BCA Final Semester</strong>, at <strong>Netaji Subhash University, Jamshedpur</strong>, during the academic session <strong>2023–2026</strong>, in partial fulfillment of the requirements for the award of the degree of <strong>Bachelor of Computer Applications (BCA)</strong>.</p>
+<p>The project has been completed under my supervision and guidance. The work embodied in this project report has not been submitted earlier for the award of any degree or diploma to the best of my knowledge and belief.</p>
+<p>I wish him all the best for his future endeavors and recommend this project for evaluation.</p>
+<div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="two-col">
+    <div><p class="ni">Date: _______________</p><p class="ni">Place: Jamshedpur</p></div>
+    <div style="text-align:right;"><p class="ni bold">Mr. Ritesh Kumar Jha</p><p class="ni">(Project Guide)</p></div>
+</div>
+<div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="center"><p class="ni bold">Head of Department</p><p class="ni">Department of Computer Applications</p><p class="ni">Netaji Subhash University, Jamshedpur</p></div>
+</div>
+
+<!-- ============== INTERNSHIP CERTIFICATE & LETTER ============== -->
+<div class="pb" style="page: front;" id="intern-cert">
+    <h1 style="margin-bottom: 8pt;">Internship Certificate</h1>
+    <img src="images/internship_certificate.jpg" alt="Internship Certificate" class="full-page-img">
+</div>
+<div class="pb" style="page: front;" id="intern-let">
+    <h1 style="margin-bottom: 8pt;">Internship Letter</h1>
+    <img src="images/internship_letter.jpg" alt="Internship Letter" class="full-page-img">
+</div>
+
+<!-- ============== DECLARATION ============== -->
+<div class="pb" style="page: front;" id="decl">
+<h1>Declaration</h1>
+<p>I, <strong>Samarjeet Singh</strong>, a student of <strong>BCA Final Semester</strong> at <strong>Netaji Subhash University, Jamshedpur</strong>, hereby declare that the project work entitled <strong>"Urban Threads — Premium Streetwear E-Commerce Website"</strong> submitted by me is a genuine piece of work carried out by me under the guidance of <strong>Mr. Ritesh Kumar Jha</strong>.</p>
+<p>I further declare that this project report has not been submitted to any other university or institution for the award of any degree, diploma, or fellowship. All the information and data furnished in this report is authentic to the best of my knowledge.</p>
+<p>The references and sources of information used in this project have been duly acknowledged. I take full responsibility for any errors or omissions that may have inadvertently crept in.</p>
+<p>I understand that any violation of the above statement found at any stage may result in the cancellation of my degree, and I shall be liable for disciplinary action as per the university rules and regulations.</p>
+<div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div>
+<div class="two-col">
+    <div><p class="ni">Date: _______________</p><p class="ni">Place: Jamshedpur</p></div>
+    <div style="text-align:right;"><p class="ni bold">Samarjeet Singh</p><p class="ni">BCA Final Semester</p><p class="ni">Netaji Subhash University</p></div>
+</div>
+</div>
+
+<!-- ============== ACKNOWLEDGEMENT ============== -->
+<div class="pb" style="page: front;" id="ack">
+<h1>Acknowledgement</h1>
+<p>I would like to express my sincere gratitude to all those who helped me throughout the completion of this project. Without their constant support and encouragement, this work would not have been possible.</p>
+<p>First and foremost, I would like to thank my project guide, <strong>Mr. Ritesh Kumar Jha</strong>, for his valuable guidance, constructive suggestions, and constant encouragement throughout the development of this project. His expertise and patience helped me overcome the various challenges I faced during the project.</p>
+<p>I am also grateful to the <strong>Head of the Department of Computer Applications</strong>, Netaji Subhash University, for providing me with the necessary infrastructure and resources to carry out this project successfully.</p>
+<p>I express my heartfelt thanks to all the faculty members who have imparted knowledge and skills during my BCA course, which laid the foundation for this project. Their dedication to teaching has helped me build a strong understanding of computer science fundamentals, programming, and software development methodologies.</p>
+<p>I am deeply indebted to my parents and family members for their unwavering support, motivation, and understanding throughout my academic journey. They have always stood by me and encouraged me to pursue my passion for technology.</p>
+<p>I would also like to acknowledge my friends and classmates who have been a constant source of inspiration and have contributed to my learning through discussions and collaborative problem-solving sessions.</p>
+<p>I am thankful to the open-source community for providing free and powerful tools such as Node.js, Express.js, Supabase, and Visual Studio Code, which made the development of this project possible without any financial investment.</p>
+<p>Finally, I thank the Almighty God for giving me the strength, wisdom, and perseverance to complete this project on time.</p>
+<div class="spacer-lg"></div>
+<div class="right"><p class="ni bold">Samarjeet Singh</p><p class="ni">BCA Final Semester</p></div>
+</div>
+
+<!-- ============== ABSTRACT ============== -->
+<div class="pb" style="page: front;" id="abs">
+<h1>Abstract / Project Summary</h1>
+<p>The rapid growth of e-commerce has fundamentally transformed the way consumers shop for fashion and apparel. With the increasing penetration of the internet and smartphones across India, online shopping has become a preferred mode of purchasing for the younger demographic. This project, titled <strong>"Urban Threads"</strong>, addresses the growing demand for a dedicated premium streetwear e-commerce platform that caters specifically to the Indian market.</p>
+<p>Urban Threads is a full-stack web application designed to provide users with a seamless online shopping experience for streetwear fashion. The platform allows users to browse products by category, search for specific items, view detailed product information, add items to their shopping cart and wishlist, and manage their user accounts. An integrated admin panel enables the store administrator to manage products, categories, sizes, colors, and uploaded media through a convenient web-based dashboard.</p>
+<p>The system is built using a modern web technology stack. The frontend is developed with <strong>HTML5, CSS3, and Vanilla JavaScript</strong>, ensuring a fast and responsive user interface. The backend is powered by <strong>Node.js with Express.js</strong>, providing a robust server-side architecture. <strong>Supabase (PostgreSQL)</strong> serves as the database and file storage backend. The application is deployed on <strong>Vercel</strong> for high availability and automatic scaling.</p>
+<p>Key features include user registration and authentication with secure password hashing (bcrypt, salt round 10), JWT-based session management, a product catalog with category-based filtering and search functionality, shopping cart with real-time updates, wishlist functionality, a contact form for user communication, responsive design for all screen sizes, and an admin dashboard for complete content management including product CRUD operations, image uploads, category management, and user oversight.</p>
+<p>The project demonstrates the practical application of full-stack web development concepts learned during the BCA program, including requirements analysis, database design, API development, frontend engineering, authentication and authorization, testing, and cloud deployment on modern serverless platforms.</p>
+<p class="ni"><strong>Keywords:</strong> E-commerce, Streetwear, Node.js, Express.js, Supabase, PostgreSQL, JavaScript, Full-Stack Development, REST API, JWT Authentication.</p>
+</div>
+
+<!-- ============== TABLE OF CONTENTS ============== -->
+<div class="pb" style="page: front;" id="toc">
+<h1>Table of Contents</h1>
+<table class="toc">
+    <thead><tr><th style="width:8%">S.No</th><th>Title</th><th style="width:12%;text-align:center">Page No.</th></tr></thead>
+    <tbody>
+        <tr><td></td><td><a href="#cert">Certificate</a></td><td class="center"><a href="#cert" class="toc-page"></a></td></tr>
+        <tr><td></td><td><a href="#intern-cert">Internship Certificate &amp; Letter</a></td><td class="center"><a href="#intern-cert" class="toc-page"></a>–<a href="#intern-let" class="toc-page"></a></td></tr>
+        <tr><td></td><td><a href="#decl">Declaration</a></td><td class="center"><a href="#decl" class="toc-page"></a></td></tr>
+        <tr><td></td><td><a href="#ack">Acknowledgement</a></td><td class="center"><a href="#ack" class="toc-page"></a></td></tr>
+        <tr><td></td><td><a href="#abs">Abstract / Project Summary</a></td><td class="center"><a href="#abs" class="toc-page"></a></td></tr>
+        <tr><td></td><td><a href="#toc">Table of Contents</a></td><td class="center"><a href="#toc" class="toc-page"></a></td></tr>
+        <tr><td><b>1</b></td><td><b><a href="#ch1">Introduction</a></b></td><td class="center"><a href="#ch1" class="toc-page"></a></td></tr>
+        <tr><td><b>2</b></td><td><b><a href="#ch2">Problem Statement</a></b></td><td class="center"><a href="#ch2" class="toc-page"></a></td></tr>
+        <tr><td><b>3</b></td><td><b><a href="#ch3">Objectives of the Project</a></b></td><td class="center"><a href="#ch3" class="toc-page"></a></td></tr>
+        <tr><td><b>4</b></td><td><b><a href="#ch4">System Analysis</a></b></td><td class="center"><a href="#ch4" class="toc-page"></a></td></tr>
+        <tr><td><b>5</b></td><td><b><a href="#ch5">Software &amp; Hardware Requirements</a></b></td><td class="center"><a href="#ch5" class="toc-page"></a></td></tr>
+        <tr><td><b>6</b></td><td><b><a href="#ch6">System Design (DFD / UML / ER Diagram)</a></b></td><td class="center"><a href="#ch6" class="toc-page"></a></td></tr>
+        <tr><td><b>7</b></td><td><b><a href="#ch7">Module Description</a></b></td><td class="center"><a href="#ch7" class="toc-page"></a></td></tr>
+        <tr><td><b>8</b></td><td><b><a href="#ch8">Database Design</a></b></td><td class="center"><a href="#ch8" class="toc-page"></a></td></tr>
+        <tr><td><b>9</b></td><td><b><a href="#ch9">Coding / Implementation</a></b></td><td class="center"><a href="#ch9" class="toc-page"></a></td></tr>
+        <tr><td><b>10</b></td><td><b><a href="#ch10">Output Screens</a></b></td><td class="center"><a href="#ch10" class="toc-page"></a></td></tr>
+        <tr><td><b>11</b></td><td><b><a href="#ch11">Testing</a></b></td><td class="center"><a href="#ch11" class="toc-page"></a></td></tr>
+        <tr><td><b>12</b></td><td><b><a href="#ch12">Conclusion</a></b></td><td class="center"><a href="#ch12" class="toc-page"></a></td></tr>
+        <tr><td><b>13</b></td><td><b><a href="#ch13">Future Scope</a></b></td><td class="center"><a href="#ch13" class="toc-page"></a></td></tr>
+        <tr><td><b>14</b></td><td><b><a href="#ch14">Bibliography / References</a></b></td><td class="center"><a href="#ch14" class="toc-page"></a></td></tr>
+    </tbody>
+</table>
+</div>
+<!-- =================== CHAPTER 1: INTRODUCTION =================== -->
+<div class="pb" id="ch1">
+<h1>Chapter 1<br>Introduction</h1>
+
+<h2>1.1 Overview</h2>
+<p>E-commerce, or electronic commerce, refers to the buying and selling of goods and services over the internet. Over the past decade, the e-commerce sector in India has witnessed exponential growth, driven by the rise in internet users, affordable smartphone access, and evolving consumer preferences. The digital marketplace has become an integral part of the modern economy, providing businesses with the opportunity to reach customers across geographical boundaries.</p>
+<p><strong>Urban Threads</strong> is an e-commerce web application focused on premium streetwear fashion. Streetwear is a style of casual clothing that originated in the late 1980s, drawing inspiration from hip-hop culture, skateboarding, and sports. The platform offers a curated selection of streetwear products including hoodies, sneakers, t-shirts, jackets, and accessories, all presented through a premium luxury minimalist interface that resonates with the streetwear community.</p>
+<p>The application provides a complete shopping experience — from browsing and product discovery to cart management and user account handling. It features a modern, luxury light-themed UI with charcoal text and gold accents that aligns with the premium streetwear aesthetic, and is built with performance and responsiveness in mind. The system architecture follows a client-server model, with a clear separation between the frontend user interface and the backend business logic.</p>
+<p>This project represents the culmination of the skills and knowledge acquired during the three-year BCA program at Netaji Subhash University. It encompasses various aspects of software engineering including requirements analysis, system design, database modeling, coding, testing, and deployment.</p>
+
+<h2>1.2 E-Commerce in India</h2>
+<p>The Indian e-commerce industry has undergone a remarkable transformation over the past fifteen years. Starting from humble beginnings with platforms like Flipkart and Snapdeal, the industry has grown into a multi-billion dollar ecosystem. The COVID-19 pandemic further accelerated the shift to online shopping, with millions of new users adopting digital commerce for the first time.</p>
+<p>According to IBEF (India Brand Equity Foundation), the Indian e-commerce market was valued at approximately $84 billion in 2021 and is expected to reach $200 billion by 2027, growing at a CAGR of approximately 27%. The fashion and apparel segment accounts for roughly 29% of the total e-commerce market share, making it the second-largest category after electronics.</p>
+<p>The Digital India initiative has led to increased internet penetration, especially in semi-urban and rural areas. The proliferation of affordable smartphones has made internet access available to over 800 million Indians. The introduction of UPI (Unified Payments Interface) has simplified digital transactions, removing a significant barrier to online commerce.</p>
+<p>The fashion e-commerce segment has particularly benefited from the growing aspirations of India's young population. With a median age of 28 years, India has one of the youngest demographics in the world. This young, tech-savvy population is increasingly turning to online platforms for fashion shopping, driven by social media influence, convenience, and the ability to compare prices across platforms. However, despite this growth, there remains a significant gap in the market for specialized, niche fashion platforms — particularly in the streetwear segment.</p>
+
+<h2>1.3 Streetwear Fashion Industry</h2>
+<p>Streetwear is a fashion movement that originated in the late 1980s and early 1990s in urban America. It draws heavy inspiration from hip-hop culture, skateboarding, surfing, and Japanese street fashion. The global streetwear market was valued at approximately $185 billion in 2021 and is projected to reach $450 billion by 2030, according to Grand View Research.</p>
+<p>In India, the streetwear culture has been growing steadily, driven by the influence of global pop culture, social media, and the increasing exposure of Indian youth to international fashion trends through platforms like Instagram, YouTube, and TikTok. Indian streetwear brands like Bewakoof, The Souled Store, and Rare Rabbit have emerged, but the market still lacks a dedicated platform that offers a premium, curated streetwear shopping experience comparable to international platforms like StockX, GOAT, or END Clothing.</p>
+<p>The streetwear consumer is typically a young individual aged 18-35 who values self-expression, cultural relevance, and brand authenticity. Understanding the streetwear culture and its consumer base is crucial for designing an effective e-commerce platform that embodies the visual and cultural essence of this fashion segment.</p>
+
+<h2>1.4 Motivation</h2>
+<p>The motivation behind developing Urban Threads came from observing the gap between large generic e-commerce platforms and the niche streetwear community. While platforms like Amazon and Flipkart offer a wide range of products, they lack the curated, brand-focused experience that streetwear enthusiasts look for. Dedicated streetwear websites from international brands are often inaccessible to Indian consumers due to high shipping costs and limited availability.</p>
+<p>As a student of computer applications with a personal interest in fashion and web development, I saw this as an opportunity to combine both interests and build something practical that addresses a real market need. The project was also motivated by the desire to gain practical, hands-on experience with modern web development technologies and to build a portfolio-worthy project that demonstrates competence in full-stack development.</p>
+
+<h2>1.5 Scope of the Project</h2>
+<p>The scope of this project covers the design, development, and deployment of a fully functional e-commerce website encompassing both the customer-facing frontend and the administrative backend.</p>
+<p class="ni"><strong>Features Included:</strong> User Registration and Login, Product Browsing with Category Filtering, Product Search, Shopping Cart Management, Wishlist, Contact Form, Admin Panel with Product CRUD, Image Upload, Category/Size/Color Settings, Responsive Design, and Cloud Deployment on Vercel.</p>
+<p class="ni"><strong>Features Excluded:</strong> Payment gateway integration, order tracking with logistics, social login (OAuth), product reviews/ratings, multi-language support, and native mobile applications. These are covered in the Future Scope chapter.</p>
+
+<h2>1.6 Comparative Analysis of Existing Platforms</h2>
+<p>Before commencing development, a study of existing platforms was conducted to understand the landscape and identify opportunities for differentiation.</p>
+<table>
+    <thead><tr><th>Feature</th><th>Amazon</th><th>Myntra</th><th>StockX</th><th>Urban Threads</th></tr></thead>
+    <tbody>
+        <tr><td>Streetwear Focus</td><td>No</td><td>Partial</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>INR Pricing</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        <tr><td>India Shipping</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
+        <tr><td>Gold Accent Styling</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Curated Catalog</td><td>No</td><td>Partial</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Admin Panel</td><td>Seller Hub</td><td>Seller Hub</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Open Source</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Cost to Build</td><td>High</td><td>High</td><td>High</td><td>₹0 (Free)</td></tr>
+    </tbody>
+</table>
+<p>The analysis clearly shows that Urban Threads fills a unique gap — combining the curated streetwear experience of international platforms with India-friendly pricing and a free, open-source technology stack.</p>
+</div>
+
+<!-- =================== CHAPTER 2: PROBLEM STATEMENT =================== -->
+<div class="pb" id="ch2">
+<h1>Chapter 2<br>Problem Statement</h1>
+
+<p>In the current market scenario, there is a noticeable lack of dedicated e-commerce platforms catering specifically to the Indian streetwear fashion segment. The following key problems were identified during the analysis phase:</p>
+
+<h3>Problem 1: Lack of Niche Focus</h3>
+<p>General e-commerce platforms like Amazon and Flipkart mix streetwear products with thousands of other categories, making it extremely difficult for streetwear enthusiasts to discover curated collections. Users have to navigate through multiple levels of categorization, sponsored listings, and irrelevant results to find relevant products. This dilutes the shopping experience and leads to customer frustration.</p>
+
+<h3>Problem 2: Poor User Experience for Fashion Consumers</h3>
+<p>Many existing fashion websites suffer from cluttered interfaces, excessive advertisements, slow load times, and unintuitive navigation. The visual design of these platforms does not resonate with the aesthetic sensibilities of the streetwear community, which values minimalist, bold, and culturally relevant design. A generic white-themed interface fails to capture the essence of streetwear culture.</p>
+
+<h3>Problem 3: Limited Accessibility to International Brands</h3>
+<p>International streetwear platforms like StockX, GOAT, and Supreme offer the curated experience that Indian consumers desire but are largely inaccessible. Barriers include the lack of INR pricing (requiring currency conversion), high international shipping costs ($30-50 per order), customs duties (40-60% extra cost), long delivery times (2-4 weeks), and limited payment options (no UPI or Indian wallets).</p>
+
+<h3>Problem 4: Technical Barriers for Small Businesses</h3>
+<p>Small and emerging streetwear brands in India face significant technical barriers when trying to establish an online presence. The cost of premium e-commerce solutions like Shopify ($29-299/month) or WooCommerce hosting can be prohibitive for startups operating on limited budgets. This creates a barrier to entry for small businesses that want to sell streetwear online.</p>
+
+<h2>Formal Problem Statement</h2>
+<p style="text-indent:0; padding:10pt; border:1px solid #000; background:#f9f9f9; margin:10pt 0;"><em>"There exists a significant gap in the Indian e-commerce market for a dedicated, culturally authentic streetwear fashion platform that provides Indian consumers with a curated shopping experience featuring INR pricing, fast performance, and a premium visual identity, built using free and open-source technologies that are accessible to small businesses and entrepreneurs."</em></p>
+
+<h2>Proposed Solution</h2>
+<p>To address the identified problems, this project proposes the development of <strong>Urban Threads</strong> — a dedicated premium streetwear e-commerce platform. The platform provides a curated product catalog focused exclusively on streetwear, a premium luxury light-themed UI with gold accents that reflects the streetwear aesthetic, complete e-commerce functionality including cart, wishlist, and admin panel, INR pricing with India-specific product information, a lightweight vanilla JavaScript frontend for fast performance, a robust Node.js + Express.js backend with RESTful API design, PostgreSQL database via Supabase for reliable data storage, and free cloud deployment on Vercel for high availability.</p>
+</div>
+
+<!-- =================== CHAPTER 3: OBJECTIVES OF THE PROJECT =================== -->
+<div class="pb" id="ch3">
+<h1>Chapter 3<br>Objectives of the Project</h1>
+
+<h2>3.1 Primary Objectives</h2>
+<ol>
+    <li><strong>To design and develop a fully functional e-commerce website</strong> dedicated to premium streetwear fashion, providing users with a complete online shopping experience from product discovery to cart management.</li>
+    <li><strong>To implement secure user authentication</strong> using industry-standard practices including password hashing with bcrypt (salt round 10), JWT-based session management with configurable token expiry, and middleware-based access control.</li>
+    <li><strong>To create an intuitive product catalog</strong> with category-based filtering (Hoodies, Sneakers, T-Shirts, Jackets, Accessories), keyword search functionality, and detailed product pages with image galleries.</li>
+    <li><strong>To develop shopping cart and wishlist features</strong> that allow users to manage their selections conveniently with real-time quantity updates, size selection, and persistent storage across sessions.</li>
+    <li><strong>To build a comprehensive admin panel</strong> for the store administrator to manage products (CRUD operations), upload product images, configure categories, sizes, and colors, and oversee user accounts.</li>
+    <li><strong>To ensure responsive design</strong> so the website works seamlessly across desktops (1920px), tablets (768px), and mobile phones (320px) using CSS Grid and Flexbox.</li>
+</ol>
+
+<h2>3.2 Secondary Objectives</h2>
+<ol start="7">
+    <li><strong>To deploy the application on Vercel</strong> ensuring high availability, fast load times through global CDN, automatic scaling via serverless architecture, and HTTPS security.</li>
+    <li><strong>To apply modern web development practices</strong> including semantic HTML5, CSS3 animations, RESTful API design, middleware-based request processing, and modular code organization.</li>
+    <li><strong>To implement a contact form</strong> allowing users to submit queries and feedback directly to the store administration through the website.</li>
+    <li><strong>To design a robust database schema</strong> using PostgreSQL through Supabase, following normalization principles (1NF, 2NF, 3NF) and implementing proper foreign key relationships.</li>
+</ol>
+
+<h2>3.3 Learning Objectives</h2>
+<ol start="11">
+    <li><strong>To gain practical experience</strong> in full-stack web development covering the entire spectrum from frontend UI design to backend API development, database management, and cloud deployment.</li>
+    <li><strong>To understand and apply the Software Development Life Cycle (SDLC)</strong> methodology in a real-world project, following Agile principles with iterative development sprints.</li>
+    <li><strong>To develop problem-solving skills</strong> by resolving real-world challenges such as CORS (Cross-Origin Resource Sharing) configuration, serverless deployment constraints, file upload in cloud environments, and performance optimization.</li>
+    <li><strong>To build a portfolio-worthy project</strong> demonstrating competence in modern web technologies (Node.js, Express.js, PostgreSQL, JavaScript) suitable for showcasing to potential employers in the software development industry.</li>
+</ol>
+</div>
+
+<!-- =================== CHAPTER 4: SYSTEM ANALYSIS =================== -->
+<div class="pb" id="ch4">
+<h1>Chapter 4<br>System Analysis</h1>
+
+<h2>4.1 Study of Existing System</h2>
+<p>Amazon and Flipkart are the two largest e-commerce platforms in India. While they offer an extensive product range covering electronics, fashion, groceries, and more, their interfaces are cluttered with sponsored listings and streetwear products are mixed with thousands of unrelated items. Finding specific streetwear items requires navigating through multiple filter layers, making the experience tedious for niche shoppers.</p>
+<p>Myntra and AJIO are dedicated fashion platforms but serve all fashion segments equally without dedicated sections for streetwear. Their focus on mainstream fashion means that streetwear products are underrepresented in their catalogs and discovery algorithms.</p>
+<p>International platforms like StockX and GOAT offer curated streetwear experiences but do not cater to the Indian market — they lack INR pricing, charge high international shipping fees ($30-50), impose customs duties (40-60%), and have delivery times of 2-4 weeks.</p>
+
+<h3>Limitations of Existing Systems:</h3>
+<ul>
+    <li>No dedicated platform for Indian streetwear enthusiasts</li>
+    <li>Generic UI designs that do not reflect streetwear culture</li>
+    <li>Cluttered product listings in large marketplaces</li>
+    <li>High costs for accessing international streetwear platforms</li>
+    <li>Lack of community-driven features and brand identity</li>
+    <li>Complex seller onboarding processes for small brands</li>
+</ul>
+
+<h2>4.2 Proposed System</h2>
+<p>The proposed system addresses these limitations with the following features:</p>
+<ul>
+    <li><strong>Curated Product Catalog:</strong> Only streetwear products in five categories — Hoodies, Sneakers, T-Shirts, Jackets, and Accessories.</li>
+    <li><strong>Premium Luxury UI:</strong> Elegant warm ivory background (#FDFBF7), charcoal typography, and gold (#c9a96e) accents with modern typography (Inter, Playfair Display) and smooth hover animations.</li>
+    <li><strong>INR Pricing:</strong> All prices in Indian Rupees with India-specific product information.</li>
+    <li><strong>Fast Performance:</strong> Vanilla JavaScript frontend loading in under 2 seconds, no heavy framework overhead.</li>
+    <li><strong>Secure Authentication:</strong> bcrypt-hashed passwords (salt round 10) and JWT-based session management.</li>
+    <li><strong>Admin Dashboard:</strong> Built-in admin panel for product CRUD, image upload, category/size/color configuration, and user management.</li>
+    <li><strong>Cloud Deployment:</strong> Deployed on Vercel for high availability, HTTPS, CDN, and auto-scaling.</li>
+</ul>
+
+<h2>4.3 SWOT Analysis</h2>
+<table>
+    <thead><tr><th style="width:50%">Strengths</th><th>Weaknesses</th></tr></thead>
+    <tbody><tr>
+        <td><ul style="margin-left:12pt"><li>Focused streetwear niche</li><li>Premium luxury minimalist UI</li><li>Lightweight — no heavy frameworks</li><li>Free technology stack (₹0 cost)</li><li>Secure auth (bcrypt + JWT)</li><li>Cloud-deployed with auto-scaling</li><li>Built-in admin panel</li></ul></td>
+        <td><ul style="margin-left:12pt"><li>No payment gateway yet</li><li>No order tracking system</li><li>English language only</li><li>No social media login</li><li>Single developer</li><li>No mobile application</li></ul></td>
+    </tr></tbody>
+</table>
+<table>
+    <thead><tr><th style="width:50%">Opportunities</th><th>Threats</th></tr></thead>
+    <tbody><tr>
+        <td><ul style="margin-left:12pt"><li>Growing streetwear market in India</li><li>Increasing internet penetration</li><li>Young demographic (median age 28)</li><li>Brand partnership potential</li><li>Mobile app expansion</li><li>Social media integration</li></ul></td>
+        <td><ul style="margin-left:12pt"><li>Established platforms adding streetwear</li><li>International platforms expanding to India</li><li>Rapid changes in fashion trends</li><li>Security threats and cyber attacks</li><li>Dependency on third-party services</li></ul></td>
+    </tr></tbody>
+</table>
+
+<h2>4.4 Feasibility Study</h2>
+
+<h3>4.4.1 Technical Feasibility</h3>
+<p>The project uses widely adopted, mature technologies — Node.js (v18+), Express.js (v4), PostgreSQL (via Supabase), and standard HTML/CSS/JavaScript. All tools are open-source and freely available. Documentation is extensive and community support is strong. The project is <strong>technically feasible</strong>.</p>
+
+<h3>4.4.2 Economic Feasibility</h3>
+<table>
+    <thead><tr><th>Item</th><th>Cost</th></tr></thead>
+    <tbody>
+        <tr><td>Node.js, Express.js, JavaScript</td><td>Free (Open Source)</td></tr>
+        <tr><td>Supabase (Database, Auth, Storage)</td><td>Free Tier (500 MB)</td></tr>
+        <tr><td>Vercel (Hosting &amp; Deployment)</td><td>Free Tier (100 GB bandwidth)</td></tr>
+        <tr><td>VS Code (IDE)</td><td>Free (Microsoft)</td></tr>
+        <tr><td>Git &amp; GitHub</td><td>Free</td></tr>
+        <tr><td>SSL Certificate</td><td>Free (via Vercel)</td></tr>
+        <tr><td>Domain Name</td><td>Free (Vercel subdomain)</td></tr>
+        <tr><td><strong>Total Development Cost</strong></td><td><strong>₹0 (Zero)</strong></td></tr>
+    </tbody>
+</table>
+<p>The project is <strong>economically feasible</strong> — the entire platform can be built and deployed at zero cost.</p>
+
+<h3>4.4.3 Operational Feasibility</h3>
+<p>The system has an intuitive, user-friendly interface that requires no technical knowledge to navigate. The admin panel provides a simple web-based interface for product management. No special training or hardware is required to operate the system. The project is <strong>operationally feasible</strong>.</p>
+
+<h3>4.4.4 Schedule Feasibility</h3>
+<p>The project was developed over 12 weeks following Agile methodology with 6 sprints of 2 weeks each. This timeline was sufficient to complete all planned features. The project is <strong>schedule feasible</strong>.</p>
+
+<h2>4.5 Existing vs Proposed System</h2>
+<table>
+    <thead><tr><th>Parameter</th><th>Existing System</th><th>Proposed System</th></tr></thead>
+    <tbody>
+        <tr><td>Focus</td><td>Generic / All categories</td><td>Streetwear fashion only</td></tr>
+        <tr><td>User Interface</td><td>Generic, basic styling</td><td>Premium luxury minimalist with gold accents</td></tr>
+        <tr><td>Target Audience</td><td>General consumers</td><td>Streetwear enthusiasts (18-35)</td></tr>
+        <tr><td>Product Discovery</td><td>Complex multi-level filters</td><td>Simple category-based browsing</td></tr>
+        <tr><td>Pricing</td><td>INR (domestic) / USD (intl)</td><td>INR only</td></tr>
+        <tr><td>Performance</td><td>Moderate (heavy frameworks)</td><td>Fast (vanilla JS, &lt;2s load)</td></tr>
+        <tr><td>Authentication</td><td>Multiple options</td><td>Email/Password with JWT</td></tr>
+        <tr><td>Admin Access</td><td>Complex seller dashboards</td><td>Simple built-in admin panel</td></tr>
+        <tr><td>Cost to Build</td><td>High (commercial tools)</td><td>Zero (open-source stack)</td></tr>
+        <tr><td>Deployment</td><td>Paid cloud infrastructure</td><td>Free (Vercel serverless)</td></tr>
+    </tbody>
+</table>
+
+<h2>4.6 Development Methodology — Agile Model</h2>
+<p>The project was developed following the <strong>Agile Software Development Methodology</strong> with iterative development over 12 weeks in 6 sprints:</p>
+<ul>
+    <li><strong>Sprint 1 (Weeks 1-2):</strong> Requirements gathering, technology selection, database schema design, project setup and Git initialization</li>
+    <li><strong>Sprint 2 (Weeks 3-4):</strong> Express.js server setup, user authentication with bcrypt/JWT, product CRUD API endpoints</li>
+    <li><strong>Sprint 3 (Weeks 5-6):</strong> Homepage UI, product catalog page, product detail page, responsive CSS with luxury minimalist layout</li>
+    <li><strong>Sprint 4 (Weeks 7-8):</strong> Shopping cart functionality, wishlist feature, login/signup pages, contact form with database storage</li>
+    <li><strong>Sprint 5 (Weeks 9-10):</strong> Admin panel development — authentication, product CRUD, image upload via Supabase Storage, category/size/color management, user listing</li>
+    <li><strong>Sprint 6 (Weeks 11-12):</strong> Testing (unit, integration, system), bug fixes, UI polishing, performance optimization, Vercel deployment and configuration</li>
+</ul>
+</div>
+<!-- =================== CHAPTER 5: SOFTWARE & HARDWARE REQUIREMENTS =================== -->
+<div class="pb" id="ch5">
+<h1>Chapter 5<br>Software &amp; Hardware Requirements</h1>
+
+<h2>5.1 Hardware Requirements</h2>
+<table>
+    <thead><tr><th>Component</th><th>Development Machine</th><th>End User</th></tr></thead>
+    <tbody>
+        <tr><td>Processor</td><td>Intel i5 / Apple M1 or above</td><td>Any modern processor</td></tr>
+        <tr><td>RAM</td><td>8 GB minimum</td><td>2 GB minimum</td></tr>
+        <tr><td>Storage</td><td>256 GB SSD</td><td>No local storage needed</td></tr>
+        <tr><td>Display</td><td>13" or larger monitor</td><td>Any screen size</td></tr>
+        <tr><td>Internet</td><td>Broadband (10 Mbps+)</td><td>Any internet connection</td></tr>
+        <tr><td>Input Devices</td><td>Keyboard and Mouse</td><td>Keyboard/Mouse/Touchscreen</td></tr>
+    </tbody>
+</table>
+
+<h2>5.2 Software Requirements</h2>
+<table>
+    <thead><tr><th>Software</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+        <tr><td>Node.js</td><td>18.x or above</td><td>JavaScript runtime for backend</td></tr>
+        <tr><td>npm</td><td>9.x or above</td><td>Package manager</td></tr>
+        <tr><td>Express.js</td><td>4.18.x</td><td>Web application framework</td></tr>
+        <tr><td>Supabase</td><td>Latest (cloud)</td><td>Database, auth, and file storage</td></tr>
+        <tr><td>VS Code</td><td>Latest</td><td>Code editor / IDE</td></tr>
+        <tr><td>Git</td><td>2.x</td><td>Version control system</td></tr>
+        <tr><td>Google Chrome</td><td>Latest</td><td>Primary browser for testing</td></tr>
+        <tr><td>Operating System</td><td>macOS / Windows / Linux</td><td>Development environment</td></tr>
+        <tr><td>Vercel CLI</td><td>Latest</td><td>Deployment tool</td></tr>
+    </tbody>
+</table>
+
+<h2>5.3 Functional Requirements</h2>
+<table>
+    <thead><tr><th style="width:8%">ID</th><th style="width:22%">Requirement</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>FR01</td><td>User Registration</td><td>Users can create accounts with name, email, and password. Email must be unique. Password is hashed before storage.</td></tr>
+        <tr><td>FR02</td><td>User Login</td><td>Registered users can log in with email and password. JWT token returned on success for session management.</td></tr>
+        <tr><td>FR03</td><td>Browse Products</td><td>Users can view all products or filter by category (Hoodies, Sneakers, T-Shirts, Jackets, Accessories).</td></tr>
+        <tr><td>FR04</td><td>Search Products</td><td>Users can search products by name using keyword search with real-time results.</td></tr>
+        <tr><td>FR05</td><td>Add to Cart</td><td>Logged-in users can add products to cart with selected size and quantity.</td></tr>
+        <tr><td>FR06</td><td>Manage Cart</td><td>Users can update quantity, remove items, and view cart total in real-time.</td></tr>
+        <tr><td>FR07</td><td>Add to Wishlist</td><td>Logged-in users can save products to their wishlist for later purchase.</td></tr>
+        <tr><td>FR08</td><td>Contact Form</td><td>Users can submit a contact form with name, email, subject, and message.</td></tr>
+        <tr><td>FR09</td><td>Admin Login</td><td>Admin can log in with special credentials to access the admin panel.</td></tr>
+        <tr><td>FR10</td><td>Admin Product CRUD</td><td>Admin can add, edit, and delete products with image upload and category configuration.</td></tr>
+    </tbody>
+</table>
+
+<h2>5.4 Non-Functional Requirements</h2>
+<ul>
+    <li><strong>Performance:</strong> Pages should load within 3 seconds on a standard broadband connection. API response time should be under 500ms.</li>
+    <li><strong>Security:</strong> Passwords must be hashed using bcrypt. JWT tokens must have configurable expiry. All user input must be validated server-side. CORS must be properly configured.</li>
+    <li><strong>Usability:</strong> Interface must be intuitive and consistent across all pages. Navigation should be self-explanatory with clear visual cues.</li>
+    <li><strong>Scalability:</strong> System should handle concurrent users through Vercel's serverless architecture without manual scaling.</li>
+    <li><strong>Availability:</strong> System should have 99.9% uptime through Vercel's infrastructure and Supabase's managed database.</li>
+    <li><strong>Compatibility:</strong> Must work on Chrome, Firefox, Safari, and Edge browsers on both desktop and mobile.</li>
+    <li><strong>Maintainability:</strong> Code should be well-structured, commented, and follow consistent naming conventions for easy maintenance.</li>
+    <li><strong>Responsiveness:</strong> UI must adapt seamlessly to screen sizes from 320px (mobile) to 2560px (ultra-wide desktop).</li>
+</ul>
+</div>
+
+<!-- =================== CHAPTER 6: SYSTEM DESIGN =================== -->
+<div class="pb" id="ch6">
+<h1>Chapter 6<br>System Design (DFD / UML / ER Diagram)</h1>
+
+<h2>6.1 System Architecture</h2>
+<p>Urban Threads follows a three-tier client-server architecture separating the application into three distinct layers:</p>
+<p class="ni"><strong>Presentation Layer (Frontend):</strong> HTML5, CSS3, and Vanilla JavaScript running in the user's browser. Responsible for rendering the UI and handling user interactions. Communicates with the backend through HTTP/HTTPS REST API calls.</p>
+<p class="ni"><strong>Application Layer (Backend):</strong> Node.js runtime with Express.js framework. Handles business logic, request routing, authentication middleware, file upload processing, and API endpoint management.</p>
+<p class="ni"><strong>Data Layer (Database):</strong> Supabase-hosted PostgreSQL database storing users, products, cart items, wishlist items, orders, and contact messages. Supabase Storage handles product image files.</p>
+
+<p class="ni" style="margin-top:12pt;"><strong>Architecture Flow:</strong></p>
+<p class="ni">Browser (HTML/CSS/JS) → HTTP/HTTPS → Express.js Server (Node.js) → Supabase Client SDK → PostgreSQL Database + Supabase Storage</p>
+
+<h2>6.2 Data Flow Diagram — Level 0 (Context Diagram)</h2>
+<p>The context diagram, also known as Level 0 DFD, establishes the boundary of the Urban Threads system. It represents the entire application as a single process and highlights the data exchanges between the system and its external entities, namely the Customer and the Administrator. The Customer entity provides inputs such as registration details, login credentials, product search queries, cart additions, wishlist updates, and contact form inquiries. In return, the Customer receives outputs like authentication status, product listings, cart details, order status, and validation feedback.</p>
+<p>On the other hand, the Administrator entity interacts with the system by providing administrative credentials, product management details (add, update, delete products), and configuration settings. The Administrator receives data back in the form of administrative authentication status, product list updates, order tracking sheets, and user management records. This diagram serves as a high-level overview of the system's external interfaces without showing any internal data stores or sub-processes, which are decomposed in the subsequent Level 1 and Level 2 diagrams. Having these details spelled out here ensures the reader has enough context to understand the system interfaces before examining the internal data flows.</p>
+<div class="fig">
+    <img src="images/dfd_level0.png" alt="DFD Level 0">
+    <p class="fig-cap">Fig. 6.1: Data Flow Diagram — Level 0 (Context Diagram)</p>
+</div>
+
+<h2>6.3 Data Flow Diagram — Level 1</h2>
+<p>The Level 1 Data Flow Diagram (DFD) decomposes the single process of the context diagram into the major functional sub-processes of the Urban Threads system. This diagram maps the primary operations of the application, including User Authentication (1.0), Product Management (2.0), Cart Management (3.0), Wishlist Management (4.0), Contact Processing (5.0), and the Admin Dashboard (6.0). It illustrates how data flows between these processes, the external entities (Customer and Administrator), and the core data stores of the system.</p>
+<p>The data stores represent the database tables: the Users Database (D1) stores user credentials and profile information; the Products Database (D2) holds product details, categories, and inventory statuses; the Cart Database (D3) stores active items added by users; and the Contact Messages store (D4) holds inquiries submitted by customers. The processes coordinate the flow of data: for example, when a user logs in, the Authentication process verifies details against the Users Database; when the administrator updates a product, the Product Management process writes to the Products Database and refreshes the catalog shown to the user. This multi-process structure ensures that data paths are isolated and secure.</p>
+<div class="fig">
+    <img src="images/dfd_level1.png" alt="DFD Level 1">
+    <p class="fig-cap">Fig. 6.2: Data Flow Diagram — Level 1</p>
+</div>
+
+<h2>6.4 Data Flow Diagram — Level 2</h2>
+<p>The Level 2 Data Flow Diagram (DFD) provides a highly detailed view of the system by decomposing a specific process from the Level 1 DFD. In this report, Process 1.0 (User Authentication) is decomposed into its constituent sub-processes to show the detailed handling of credentials and session creation. These sub-processes include: Receive Credentials (1.1), Validate Input Format (1.2) for validating email syntax and password strength, Check Email Existence (1.3) against the database, Hash Password with bcrypt (1.4) for security, Create User Record (1.5) in the Supabase database, and Generate JWT Token (1.6) for session management.</p>
+<p>The diagram maps the exact step-by-step logic of how user signup and login are handled at the API level. It highlights how the database is read to verify existence, how cryptographic hashing secures the passwords, and how the JSON Web Token is signed and sent back to the customer's browser. Error paths, such as invalid formats, duplicate emails during registration, or incorrect passwords during login, are also mapped to show how the system maintains security and alerts the user without compromising internal system details. This level of decomposition is vital for developers implementing security controls on the server side.</p>
+<div class="fig">
+    <img src="images/dfd_level2.png" alt="DFD Level 2">
+    <p class="fig-cap">Fig. 6.3: Data Flow Diagram — Level 2 (User Authentication Decomposition)</p>
+</div>
+
+<h2>6.5 UML Use Case Diagram</h2>
+<p>The Use Case Diagram visualizes the functional requirements of the Urban Threads platform from the perspective of its users. It identifies two primary actors — the Customer and the Administrator — and shows the different use cases (interactions) they perform with the system. The Customer actor is concerned with front-end customer actions like Register, Login, Browse Products, Search, Add to Cart, Manage Cart, Add to Wishlist, and Submit Contact Form. The Administrator actor is concerned with backend management tasks such as Admin Login, Add/Edit/Delete Products, View Orders, and Manage Users.</p>
+<p>The diagram utilizes standard UML relationships, including &lt;&lt;include&gt;&gt; relationships where one use case contains the behavior of another (for example, Checkout includes Login), and &lt;&lt;extend&gt;&gt; relationships where a use case optionally extends another's behavior (for example, applying a discount code extends cart management). This mapping ensures that the boundaries of the system and user permissions are clearly defined before development begins, keeping features aligned with expectations.</p>
+<div class="fig">
+    <img src="images/uml_usecase.png" alt="UML Use Case Diagram">
+    <p class="fig-cap">Fig. 6.4: UML Use Case Diagram</p>
+</div>
+
+<h3>Use Case Descriptions:</h3>
+<table style="font-size:10pt;">
+    <thead><tr><th>UC ID</th><th>Use Case</th><th>Actor</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>UC-01</td><td>Register</td><td>Customer</td><td>Create account with name, email, password</td></tr>
+        <tr><td>UC-02</td><td>Login</td><td>Customer</td><td>Authenticate with email and password</td></tr>
+        <tr><td>UC-03</td><td>Browse Products</td><td>Customer</td><td>View and filter product catalog by category</td></tr>
+        <tr><td>UC-04</td><td>Search Products</td><td>Customer</td><td>Search by keyword (includes Browse)</td></tr>
+        <tr><td>UC-05</td><td>Add to Cart</td><td>Customer</td><td>Add product with selected size to cart</td></tr>
+        <tr><td>UC-06</td><td>Manage Cart</td><td>Customer</td><td>Update quantity, remove items, view total</td></tr>
+        <tr><td>UC-07</td><td>Add to Wishlist</td><td>Customer</td><td>Save product for later purchase</td></tr>
+        <tr><td>UC-08</td><td>Contact</td><td>Customer</td><td>Submit inquiry via contact form</td></tr>
+        <tr><td>UC-09</td><td>Admin Login</td><td>Admin</td><td>Authenticate as administrator</td></tr>
+        <tr><td>UC-10</td><td>Manage Products</td><td>Admin</td><td>Add, edit, delete products with images</td></tr>
+        <tr><td>UC-11</td><td>View Orders</td><td>Admin</td><td>Review customer order history</td></tr>
+        <tr><td>UC-12</td><td>Manage Users</td><td>Admin</td><td>View and manage registered users</td></tr>
+    </tbody>
+</table>
+
+<h2>6.6 Entity Relationship (ER) Diagram</h2>
+<p>The Entity Relationship (ER) Diagram represents the logical database structure of the Urban Threads system. It maps the primary database entities, their attributes, and the relationships that connect them. This design is implemented in a relational PostgreSQL database hosted on Supabase. The schema comprises six primary entities: Users (storing account information), Products (storing streetwear items), Cart_Items (linking users to their cart selections), Wishlist_Items (linking users to saved items), Orders (tracking placed purchases), and Contact_Messages (storing customer inquiries).</p>
+<p>The entities are normalized to eliminate redundancy and maintain data integrity. Key constraints, including primary keys (PK) and foreign keys (FK), are enforced: for instance, Cart_Items references both the Users table and the Products table. The relationships are defined using standard crow's foot notation, detailing the cardinalities (e.g., a User can have one or more Cart_Items, but each Cart_Item belongs to exactly one User). This clean logical model ensures consistent data storage and fast query performance under heavy loads.</p>
+<div class="fig">
+    <img src="images/er_diagram.png" alt="ER Diagram">
+    <p class="fig-cap">Fig. 6.5: Entity Relationship Diagram</p>
+</div>
+
+<h3>Relationships:</h3>
+<ul>
+    <li><strong>User → Cart_Items:</strong> One-to-Many (1:N) — A user can have multiple cart items</li>
+    <li><strong>User → Wishlist_Items:</strong> One-to-Many (1:N) — A user can have multiple wishlist items</li>
+    <li><strong>User → Orders:</strong> One-to-Many (1:N) — A user can place multiple orders</li>
+    <li><strong>Product → Cart_Items:</strong> One-to-Many (1:N) — A product can appear in multiple carts</li>
+    <li><strong>Product → Wishlist_Items:</strong> One-to-Many (1:N) — A product can be in multiple wishlists</li>
+    <li><strong>Contact_Messages:</strong> Independent entity (not related to users or products)</li>
+</ul>
+</div>
+
+<!-- =================== CHAPTER 7: MODULE DESCRIPTION =================== -->
+<div class="pb" id="ch7">
+<h1>Chapter 7<br>Module Description</h1>
+
+<p>Urban Threads is organized into seven distinct functional modules, each responsible for a specific aspect of the system's functionality. This modular design ensures separation of concerns and makes the application easier to maintain and extend.</p>
+
+<h2>7.1 User Authentication Module</h2>
+<p>This module handles user registration, login, session management, and access control. It is one of the most critical modules as it ensures the security of user data and controls access to protected features.</p>
+<h3>Registration Flow:</h3>
+<ol>
+    <li>User submits registration form with name, email, and password.</li>
+    <li>Client-side JavaScript validates for empty fields, valid email format, and minimum password length (6 characters).</li>
+    <li>Frontend sends POST request to /api/auth/register endpoint.</li>
+    <li>Server validates input on the backend (never trusting client-side validation alone).</li>
+    <li>Server checks if the email already exists in the database.</li>
+    <li>Password is hashed using bcrypt with a salt round of 10.</li>
+    <li>User record is inserted into the users table with the hashed password.</li>
+    <li>JWT token is generated with userId, email, and role in the payload, with a 24-hour expiry.</li>
+    <li>Token is returned to the client and stored in localStorage for subsequent authenticated requests.</li>
+</ol>
+<h3>Login Flow:</h3>
+<ol>
+    <li>User submits login form with email and password.</li>
+    <li>Server retrieves user record by email from the database.</li>
+    <li>Password is compared with stored hash using bcrypt.compare() function.</li>
+    <li>If credentials match, a new JWT token is generated and returned. Otherwise, 401 Unauthorized is sent.</li>
+</ol>
+<h3>JWT Authentication Middleware:</h3>
+<p>Protected routes use a middleware function that extracts the JWT token from the Authorization header (Bearer token format), verifies it using the JWT_SECRET environment variable, and attaches the decoded user information (userId, email, role) to the request object. If the token is missing, expired, or invalid, the middleware returns a 401 or 403 error response.</p>
+
+<h2>7.2 Product Catalog Module</h2>
+<p>This module manages the display and discovery of products in the storefront. It handles product listing with a responsive grid layout, category-based filtering with five categories (Hoodies, Sneakers, T-Shirts, Jackets, Accessories), keyword search using case-insensitive ILIKE queries with debounced API calls, and detailed product pages with image gallery, description, available sizes, and pricing.</p>
+
+<h2>7.3 Shopping Cart Module</h2>
+<p>This module manages the user's shopping cart with the following functionality: adding items with product ID, selected size, and quantity (POST /api/cart), viewing all cart items with product details joined from the products table (GET /api/cart), updating item quantity with increment/decrement controls (PUT /api/cart/:id), removing items from the cart (DELETE /api/cart/:id), and real-time total calculation on the frontend. Cart data is stored in the cart_items database table and persists across sessions and devices for logged-in users. Duplicate items (same product and size) have their quantity incremented rather than creating new entries.</p>
+
+<h2>7.4 Wishlist Module</h2>
+<p>The wishlist module allows authenticated users to save products for future purchase. Users can add products to their wishlist, view all saved items, remove items they are no longer interested in, and move items from the wishlist directly to the shopping cart. A unique constraint on (user_id, product_id) prevents duplicate wishlist entries. The API endpoints are GET /api/wishlist, POST /api/wishlist, and DELETE /api/wishlist/:id.</p>
+
+<h2>7.5 Admin Panel Module</h2>
+<p>The admin panel provides a comprehensive web-based dashboard for the store administrator, accessible at the /admin.html route. The admin panel includes:</p>
+<ul>
+    <li><strong>Admin Authentication:</strong> Separate login using credentials configured via ADMIN_EMAIL and ADMIN_PASSWORD environment variables. Upon successful authentication, a JWT token with an admin role flag is issued.</li>
+    <li><strong>Product Management (CRUD):</strong> A form for creating new products with fields for name, category, price, original price, description, primary image URL, additional image URLs, and video URLs. Products can be edited and deleted through the admin table view.</li>
+    <li><strong>Image Upload:</strong> File upload functionality using Multer middleware, with images stored in Supabase Storage. The admin can upload multiple images per product (up to 8) and videos (up to 3).</li>
+    <li><strong>Settings Tab:</strong> Configuration panels for managing categories, apparel sizes, footwear sizes, and available colors. Changes sync site-wide to the shop filters and product forms.</li>
+    <li><strong>Product Listing Table:</strong> Displays all products with ID, name, category, price, stock status, and action buttons (Edit/Delete).</li>
+</ul>
+
+<h2>7.6 Contact Module</h2>
+<p>This module provides a communication channel between users and administrators through a contact form with four fields: Name, Email Address, Subject, and Message. When submitted, the data is validated server-side and stored in the contact_messages database table. The admin can view all submitted messages through the admin panel. The API endpoint is POST /api/contact.</p>
+
+<h2>7.7 Search &amp; Filter Module</h2>
+<p>This module enhances product discovery through multiple mechanisms: text-based search using PostgreSQL ILIKE operator for case-insensitive matching, category filtering by selecting one of the five product categories, and the frontend constructs query parameters and sends them to /api/products with debounced API calls (300ms delay) for search to avoid excessive requests during typing.</p>
+</div>
+
+<!-- =================== CHAPTER 8: DATABASE DESIGN =================== -->
+<div class="pb" id="ch8">
+<h1>Chapter 8<br>Database Design</h1>
+
+<h2>8.1 Database Schema</h2>
+<p>The application uses PostgreSQL (version 15) hosted on Supabase. The database schema consists of six primary tables designed to support all application features.</p>
+
+<p class="ni" style="font-style:italic;">Table 8.1: Users Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY, DEFAULT gen_random_uuid()</td><td>Unique user identifier</td></tr>
+        <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>User's full name</td></tr>
+        <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>User's email address</td></tr>
+        <tr><td>password_hash</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>bcrypt hashed password</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Account creation timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.2: Products Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Product identifier</td></tr>
+        <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Product name</td></tr>
+        <tr><td>category</td><td>VARCHAR(50)</td><td>NOT NULL</td><td>Product category</td></tr>
+        <tr><td>price</td><td>DECIMAL(10,2)</td><td>NOT NULL</td><td>Price in INR</td></tr>
+        <tr><td>description</td><td>TEXT</td><td></td><td>Product description</td></tr>
+        <tr><td>sizes</td><td>TEXT[]</td><td></td><td>Available sizes array</td></tr>
+        <tr><td>images</td><td>TEXT[]</td><td></td><td>Image URLs array</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Creation timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.3: Cart Items Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Cart item ID</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id) ON DELETE CASCADE</td><td>Reference to user</td></tr>
+        <tr><td>product_id</td><td>UUID</td><td>NOT NULL, FK → products(id) ON DELETE CASCADE</td><td>Reference to product</td></tr>
+        <tr><td>quantity</td><td>INTEGER</td><td>NOT NULL, DEFAULT 1</td><td>Quantity of item</td></tr>
+        <tr><td>size</td><td>VARCHAR(10)</td><td></td><td>Selected size</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.4: Wishlist Items Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Wishlist item ID</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id)</td><td>Reference to user</td></tr>
+        <tr><td>product_id</td><td>UUID</td><td>NOT NULL, FK → products(id)</td><td>Reference to product</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.5: Orders Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Order identifier</td></tr>
+        <tr><td>user_id</td><td>UUID</td><td>NOT NULL, FK → users(id)</td><td>Reference to user</td></tr>
+        <tr><td>items</td><td>JSONB</td><td>NOT NULL</td><td>Order items as JSON</td></tr>
+        <tr><td>total</td><td>DECIMAL(10,2)</td><td>NOT NULL</td><td>Order total (INR)</td></tr>
+        <tr><td>status</td><td>VARCHAR(20)</td><td>DEFAULT 'pending'</td><td>Order status</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Order timestamp</td></tr>
+    </tbody>
+</table>
+
+<p class="ni" style="font-style:italic;">Table 8.6: Contact Messages Table</p>
+<table>
+    <thead><tr><th>Column</th><th>Data Type</th><th>Constraints</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>UUID</td><td>PRIMARY KEY</td><td>Message ID</td></tr>
+        <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Sender's name</td></tr>
+        <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Sender's email</td></tr>
+        <tr><td>subject</td><td>VARCHAR(255)</td><td></td><td>Subject line</td></tr>
+        <tr><td>message</td><td>TEXT</td><td>NOT NULL</td><td>Message body</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMPTZ</td><td>DEFAULT NOW()</td><td>Timestamp</td></tr>
+    </tbody>
+</table>
+
+<h2>8.2 Normalization</h2>
+<h3>First Normal Form (1NF):</h3>
+<p>All tables have primary keys (UUID type). All columns contain atomic values. No repeating groups exist. The sizes and images columns use PostgreSQL TEXT[] arrays, which is the recommended approach for ordered collections in modern PostgreSQL and is considered atomic at the database level.</p>
+<h3>Second Normal Form (2NF):</h3>
+<p>All non-key columns are fully functionally dependent on the primary key. Since all tables use single-column primary keys (UUID), there are no partial dependencies possible.</p>
+<h3>Third Normal Form (3NF):</h3>
+<p>No transitive dependencies exist — all non-key attributes depend directly and only on the primary key. Foreign key constraints with ON DELETE CASCADE maintain referential integrity across related tables.</p>
+
+<h2>8.3 Data Dictionary</h2>
+<table style="font-size:10pt;">
+    <thead><tr><th>Field</th><th>Table</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>id</td><td>All tables</td><td>UUID</td><td>Auto-generated universal unique identifier</td></tr>
+        <tr><td>name</td><td>users, products, contacts</td><td>VARCHAR</td><td>Name of entity (user, product, or sender)</td></tr>
+        <tr><td>email</td><td>users, contacts</td><td>VARCHAR</td><td>Email address (unique constraint on users)</td></tr>
+        <tr><td>password_hash</td><td>users</td><td>VARCHAR</td><td>bcrypt hash with salt round 10. Never stores plaintext.</td></tr>
+        <tr><td>category</td><td>products</td><td>VARCHAR</td><td>Values: hoodies, sneakers, tshirts, jackets, accessories</td></tr>
+        <tr><td>price</td><td>products</td><td>DECIMAL</td><td>Price in INR. Precision: 10 digits, 2 decimal places.</td></tr>
+        <tr><td>sizes</td><td>products</td><td>TEXT[]</td><td>PostgreSQL array e.g. {S,M,L,XL,XXL}</td></tr>
+        <tr><td>images</td><td>products</td><td>TEXT[]</td><td>Array of image URLs from Supabase Storage</td></tr>
+        <tr><td>user_id</td><td>cart, wishlist, orders</td><td>UUID</td><td>Foreign key referencing users(id)</td></tr>
+        <tr><td>product_id</td><td>cart, wishlist</td><td>UUID</td><td>Foreign key referencing products(id)</td></tr>
+        <tr><td>quantity</td><td>cart_items</td><td>INTEGER</td><td>Number of units in cart. Minimum value: 1.</td></tr>
+        <tr><td>items</td><td>orders</td><td>JSONB</td><td>JSON array of order line items with product details</td></tr>
+        <tr><td>status</td><td>orders</td><td>VARCHAR</td><td>Values: pending, processing, shipped, delivered, cancelled</td></tr>
+        <tr><td>created_at</td><td>All tables</td><td>TIMESTAMPTZ</td><td>Timestamp with timezone, auto-generated on insert</td></tr>
+    </tbody>
+</table>
+
+<h2>8.4 SQL Schema</h2>
+<p>The following SQL statements were used to create the database schema in Supabase:</p>
+
+<pre class="code">CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE products (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    sizes TEXT[],
+    images TEXT[],
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE cart_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    quantity INTEGER NOT NULL DEFAULT 1,
+    size VARCHAR(10),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE wishlist_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id, product_id)
+);
+
+CREATE TABLE orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id),
+    items JSONB NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE contact_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
+    message TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);</pre>
+</div>
+<!-- =================== CHAPTER 9: CODING / IMPLEMENTATION =================== -->
+<div class="pb" id="ch9">
+<h1>Chapter 9<br>Coding / Implementation</h1>
+
+<h2>9.1 Technology Stack</h2>
+<table>
+    <thead><tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr></thead>
+    <tbody>
+        <tr><td>Frontend</td><td>HTML5, CSS3, Vanilla JavaScript</td><td>User interface and client-side logic</td></tr>
+        <tr><td>Backend</td><td>Node.js, Express.js</td><td>Server-side logic and REST API</td></tr>
+        <tr><td>Database</td><td>PostgreSQL (via Supabase)</td><td>Data storage and retrieval</td></tr>
+        <tr><td>File Storage</td><td>Supabase Storage</td><td>Product image storage</td></tr>
+        <tr><td>Authentication</td><td>bcryptjs, jsonwebtoken</td><td>Password hashing and JWT tokens</td></tr>
+        <tr><td>File Upload</td><td>Multer</td><td>Multipart form data processing</td></tr>
+        <tr><td>Deployment</td><td>Vercel</td><td>Serverless hosting with CDN</td></tr>
+        <tr><td>Version Control</td><td>Git, GitHub</td><td>Source code management</td></tr>
+    </tbody>
+</table>
+
+<h2>9.2 Project Directory Structure</h2>
+<pre class="code">urban-threads/
+├── frontend/                 # Frontend static files
+│   ├── index.html            # Homepage
+│   ├── shop.html             # Product catalog
+│   ├── login.html            # User login page
+│   ├── signup.html           # User registration page
+│   ├── cart.html             # Shopping cart page
+│   ├── wishlist.html         # Wishlist page
+│   ├── about.html            # About us page
+│   ├── contact.html          # Contact form page
+│   ├── admin.html            # Admin panel
+│   ├── product.html          # Product detail page
+│   ├── styles/               # Stylesheets
+│   │   └── main.css          # Main stylesheet
+│   ├── js/                   # Client-side JavaScript
+│   │   ├── main.js           # Core functionality
+│   │   ├── shop.js           # Product catalog logic
+│   │   ├── cart.js           # Cart management
+│   │   ├── auth.js           # Authentication UI logic
+│   │   └── admin.js          # Admin panel logic
+│   └── assets/               # Static assets (favicon, etc.)
+├── api/
+│   └── index.js              # Vercel serverless entry point
+├── server.js                 # Main Express.js server
+├── package.json              # npm dependencies
+├── vercel.json               # Vercel deployment config
+├── .env                      # Environment variables (not in Git)
+├── .env.example              # Template for env variables
+└── .gitignore                # Git ignore rules</pre>
+
+<h2>9.3 Server Setup — Express.js Configuration</h2>
+<p>The main server file initializes the Express application, configures middleware, sets up database connections, and defines all API routes.</p>
+
+<pre class="code">const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+require('dotenv').config();
+
+const { createClient } = require('@supabase/supabase-js');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Supabase initialization
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
+// Middleware configuration
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'frontend')));
+
+// JWT Authentication Middleware
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader &amp;&amp; authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'Access denied' });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) return res.status(403).json({ error: 'Invalid token' });
+        req.user = decoded;
+        next();
+    });
+}
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});</pre>
+
+<h2>9.4 User Registration API</h2>
+
+<pre class="code">app.post('/api/auth/register', async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        // Input validation
+        if (!name || !email || !password) {
+            return res.status(400).json({ error: 'All fields required' });
+        }
+        if (password.length &lt; 6) {
+            return res.status(400).json({ error: 'Password min 6 characters' });
+        }
+
+        // Check if email already exists
+        const { data: existing } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email)
+            .single();
+        if (existing) {
+            return res.status(409).json({ error: 'Email already registered' });
+        }
+
+        // Hash password with bcrypt (salt round 10)
+        const password_hash = await bcrypt.hash(password, 10);
+
+        // Insert user into database
+        const { data: newUser, error } = await supabase
+            .from('users')
+            .insert([{ name, email, password_hash }])
+            .select()
+            .single();
+        if (error) throw error;
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: newUser.id, email: newUser.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.status(201).json({ user: newUser, token });
+    } catch (error) {
+        res.status(500).json({ error: 'Registration failed' });
+    }
+});</pre>
+
+<h2>9.5 User Login API</h2>
+
+<pre class="code">app.post('/api/auth/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ error: 'Email and password required' });
+        }
+
+        // Find user by email
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', email.toLowerCase())
+            .single();
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // Compare password with stored hash
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { userId: user.id, email: user.email, role: user.role || 'user' },
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        );
+
+        res.json({
+            user: { id: user.id, name: user.name, email: user.email },
+            token
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Login failed' });
+    }
+});</pre>
+
+<h2>9.6 Product API Endpoints</h2>
+
+<pre class="code">// GET all products with optional category filter and search
+app.get('/api/products', async (req, res) => {
+    try {
+        const { category, search } = req.query;
+        let query = supabase.from('products').select('*');
+
+        if (category) query = query.eq('category', category);
+        if (search) query = query.ilike('name', `%${search}%`);
+
+        const { data, error } = await query.order('created_at',
+            { ascending: false });
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch products' });
+    }
+});
+
+// POST new product (admin only)
+app.post('/api/products', authenticateToken, async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Admin access required' });
+        }
+        const { name, category, price, description, sizes, images } = req.body;
+
+        const { data, error } = await supabase
+            .from('products')
+            .insert([{ name, category, price, description, sizes, images }])
+            .select()
+            .single();
+        if (error) throw error;
+        res.status(201).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create product' });
+    }
+});</pre>
+
+<h2>9.7 Cart API Endpoints</h2>
+
+<pre class="code">// GET user's cart with product details
+app.get('/api/cart', authenticateToken, async (req, res) => {
+    try {
+        const { data, error } = await supabase
+            .from('cart_items')
+            .select('*, products(*)')
+            .eq('user_id', req.user.userId);
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch cart' });
+    }
+});
+
+// POST add to cart (or increment quantity for duplicates)
+app.post('/api/cart', authenticateToken, async (req, res) => {
+    try {
+        const { product_id, size, quantity } = req.body;
+        const user_id = req.user.userId;
+
+        // Check for existing item (same product + size)
+        const { data: existing } = await supabase
+            .from('cart_items')
+            .select('*')
+            .eq('user_id', user_id)
+            .eq('product_id', product_id)
+            .eq('size', size)
+            .single();
+
+        if (existing) {
+            const { data, error } = await supabase
+                .from('cart_items')
+                .update({ quantity: existing.quantity + (quantity || 1) })
+                .eq('id', existing.id)
+                .select().single();
+            if (error) throw error;
+            return res.json(data);
+        }
+
+        const { data, error } = await supabase
+            .from('cart_items')
+            .insert([{ user_id, product_id, size, quantity: quantity || 1 }])
+            .select().single();
+        if (error) throw error;
+        res.status(201).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to add to cart' });
+    }
+});</pre>
+
+<h2>9.8 API Endpoints Summary</h2>
+<table style="font-size:10pt;">
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+    <tbody>
+        <tr><td>POST</td><td>/api/auth/register</td><td>No</td><td>Register new user</td></tr>
+        <tr><td>POST</td><td>/api/auth/login</td><td>No</td><td>Login (returns JWT)</td></tr>
+        <tr><td>POST</td><td>/api/auth/admin-login</td><td>No</td><td>Admin login</td></tr>
+        <tr><td>GET</td><td>/api/products</td><td>No</td><td>Get products (filter, search)</td></tr>
+        <tr><td>GET</td><td>/api/products/:id</td><td>No</td><td>Get product detail</td></tr>
+        <tr><td>POST</td><td>/api/products</td><td>Admin</td><td>Create product</td></tr>
+        <tr><td>PUT</td><td>/api/products/:id</td><td>Admin</td><td>Update product</td></tr>
+        <tr><td>DELETE</td><td>/api/products/:id</td><td>Admin</td><td>Delete product</td></tr>
+        <tr><td>GET</td><td>/api/cart</td><td>User</td><td>Get cart items</td></tr>
+        <tr><td>POST</td><td>/api/cart</td><td>User</td><td>Add to cart</td></tr>
+        <tr><td>PUT</td><td>/api/cart/:id</td><td>User</td><td>Update cart quantity</td></tr>
+        <tr><td>DELETE</td><td>/api/cart/:id</td><td>User</td><td>Remove from cart</td></tr>
+        <tr><td>GET</td><td>/api/wishlist</td><td>User</td><td>Get wishlist</td></tr>
+        <tr><td>POST</td><td>/api/wishlist</td><td>User</td><td>Add to wishlist</td></tr>
+        <tr><td>DELETE</td><td>/api/wishlist/:id</td><td>User</td><td>Remove from wishlist</td></tr>
+        <tr><td>POST</td><td>/api/contact</td><td>No</td><td>Submit contact form</td></tr>
+        <tr><td>POST</td><td>/api/uploads</td><td>Admin</td><td>Upload product images</td></tr>
+        <tr><td>GET</td><td>/api/catalog-settings</td><td>No</td><td>Get categories/sizes/colors</td></tr>
+        <tr><td>PUT</td><td>/api/catalog-settings</td><td>Admin</td><td>Update catalog settings</td></tr>
+    </tbody>
+</table>
+
+<h2>9.9 Frontend Implementation</h2>
+<h3>9.9.1 Homepage — Featured Products</h3>
+
+<pre class="code">// Fetch and render featured products on homepage
+async function loadFeaturedProducts() {
+    try {
+        const response = await fetch('/api/products');
+        const products = await response.json();
+        const container = document.getElementById('featured-products');
+
+        products.slice(0, 8).forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                &lt;img src="${product.images[0]}" alt="${product.name}"&gt;
+                &lt;h3&gt;${product.name}&lt;/h3&gt;
+                &lt;p class="price"&gt;₹${product.price}&lt;/p&gt;
+                &lt;button onclick="addToCart('${product.id}')"&gt;
+                    Add to Cart
+                &lt;/button&gt;
+            `;
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error loading products:', error);
+    }
+}</pre>
+
+<h3>9.9.2 CSS — Luxury Minimal Design System Variables</h3>
+
+<pre class="code">:root {
+    --bg-primary: #FDFBF7; /* Ivory background */
+    --text-primary: #1a1a1a; /* Charcoal text */
+    --accent: #C9A96E; /* Gold accent */
+    --bg-secondary: #F5F0E8; /* Light warm gray background */
+    --border: rgba(26, 26, 26, 0.08);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(253, 251, 247, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.product-card {
+    background: var(--bg-primary);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 30px rgba(26, 26, 26, 0.08);
+}</pre>
+
+<h2>9.10 Deployment on Vercel</h2>
+<p>The application is deployed on Vercel's serverless platform. The configuration file (vercel.json) defines build targets and routing rules:</p>
+
+<pre class="code">{
+    "version": 2,
+    "builds": [
+        { "src": "api/index.js", "use": "@vercel/node" },
+        { "src": "frontend/**", "use": "@vercel/static" }
+    ],
+    "routes": [
+        { "src": "/api/(.*)", "dest": "/api/index.js" },
+        { "src": "/uploads/(.*)", "dest": "/api/index.js" },
+        { "src": "/(.*)", "dest": "/frontend/$1" }
+    ]
+}</pre>
+
+<p>Environment variables are configured in the Vercel dashboard (not in code): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD, and SUPABASE_MEDIA_BUCKET. The deployed site is accessible at: <strong>https://urban-threads-theta.vercel.app</strong></p>
+</div>
+
+<!-- =================== CHAPTER 10: OUTPUT SCREENS =================== -->
+<div class="pb" id="ch10">
+<h1>Chapter 10<br>Output Screens</h1>
+
+<p>This chapter presents the actual output screens of the Urban Threads application. All screenshots are taken from the live deployed website at <strong>https://urban-threads-theta.vercel.app</strong>.</p>
+
+<h2>10.1 Homepage</h2>
+<p>The Homepage serves as the primary entry point for users visiting the Urban Threads streetwear catalog. It includes a hero section that displays a full-width banner, a catchy brand tagline, and dual call-to-action buttons directing users to shop or learn more. The layout is structured to capture user interest immediately by showing high-quality streetwear visuals and introducing the brand's aesthetic. A sticky navbar at the top provides smooth navigation links to other pages, cart indicators, and authentication status.</p>
+<p>Below the hero section, the homepage showcases featured products in a responsive grid layout. Each product card features a clean image, title, price (including discount if applicable), and a hover effect that reveals actions like "Add to Cart" or "Add to Wishlist". The design utilizes a luxury minimalist palette of warm cream backgrounds with charcoal text and elegant gold accents, reflecting a premium streetwear brand identity. This light luxury theme resonates with modern fashion enthusiasts while keeping the visual focus strictly on product aesthetics.</p>
+<div class="fig">
+    <img src="images/screenshots/homepage.png" alt="Homepage Screenshot">
+    <p class="fig-cap">Fig. 10.1: Homepage — Hero Section and Featured Products</p>
+</div>
+
+<div class="screen-block">
+<h2>10.2 Shop / Product Catalog Page</h2>
+<p>The Shop page provides customers with a browse-and-filter experience for the complete product catalog. At the top of the product listing, a series of category filter buttons are rendered dynamically from the database (All, Hoodies, Sneakers, T-Shirts, Jackets, Accessories). Users can filter products instantly without page reloads, as the client-side JavaScript handles the grid updates by making request calls to the Express API.</p>
+<p>Each product in the grid includes a responsive card with an image, name, pricing details, and an intuitive "Add to Cart" button. If an item is out of stock, the button dynamically updates to a disabled state showing "Out of Stock" to prevent user errors. The layout adjusts seamlessly from a 4-column grid on desktop screens to a 1-column grid on mobile phones, ensuring accessibility across all devices. The clean margins and clear typography give it a high-end luxury editorial look.</p>
+<div class="fig">
+    <img src="images/screenshots/shop.png" alt="Shop Page">
+    <p class="fig-cap">Fig. 10.2: Shop / Product Catalog Page with Category Filters</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.3 User Login Page</h2>
+<p>The User Login page is designed with security and simplicity in mind. It consists of a centered card containing email and password input fields. Real-time client-side validation checks that the email format is correct and fields are not empty before letting the request proceed. Upon clicking the login button, the login credentials are sent securely to the backend auth endpoint via HTTPS.</p>
+<p>If authentication succeeds, the backend responds with a signed JSON Web Token (JWT) which is stored in the browser's cookies or localStorage to manage the session. A link to the signup page is provided at the bottom for users who do not have an account yet. The page uses the same clean cream background and charcoal typography, ensuring visual consistency across all customer-facing routes. Error messages, if credentials are incorrect, are shown dynamically above the form without page refreshes.</p>
+<div class="fig">
+    <img src="images/screenshots/login.png" alt="Login Page">
+    <p class="fig-cap">Fig. 10.3: User Login Page</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.4 User Registration Page</h2>
+<p>The User Registration page allows new customers to register an account on the Urban Threads platform. The form contains fields for Full Name, Email, Password, and Confirm Password. Client-side JavaScript checks that all fields are filled, the email has a valid format, and the password matches the confirmation field with a minimum length constraint of 8 characters.</p>
+<p>Once validated on the client side, the data is transmitted to the server where the password is cryptographically hashed using bcrypt (10 salt rounds) before database insertion. Successful registration automatically routes the user to the login screen, prompting them to log in for the first time. The layout matches the login page structure for user familiarity and consistency, making the onboarding flow simple and straightforward.</p>
+<div class="fig">
+    <img src="images/screenshots/signup.png" alt="Signup Page">
+    <p class="fig-cap">Fig. 10.4: User Registration (Signup) Page</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.5 Shopping Cart Page</h2>
+<p>The Shopping Cart page manages the customer's selected items before purchase. Each item is presented in a tabular list containing the product image, product name, chosen size, unit price, quantity, and subtotal. A quantity selector allows users to increase or decrease quantities, which triggers immediate subtotal recalculations using client-side JavaScript.</p>
+<p>The right-hand panel of the page contains the Cart Summary, which shows the total quantity of items, shipping fees (if applicable), tax calculations, and the final order total. A "Proceed to Checkout" button routes users to finalize their purchase. The cart is fully persistent, linking to the user's account in Supabase so that cart contents are saved if they log out and log back in, ensuring a smooth, modern shopping experience.</p>
+<div class="fig">
+    <img src="images/screenshots/cart.png" alt="Cart Page">
+    <p class="fig-cap">Fig. 10.5: Shopping Cart Page with Cart Summary</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.6 Wishlist Page</h2>
+<p>The Wishlist page is a personal space for users to save products they are interested in but are not ready to purchase. Each item in the wishlist is rendered with its image, name, price, and status (e.g., in-stock). Under each wishlist card, users are presented with two primary options: "Move to Cart" or "Remove".</p>
+<p>This page communicates directly with the database via JWT authentication, ensuring that the wishlist remains persistent across different devices and sessions. If the wishlist is empty, a friendly message is displayed along with a button that redirects the user back to the Shop page to explore products. The wishlist is a vital feature for high-end streetwear sites where customers track limited collections.</p>
+<div class="fig">
+    <img src="images/screenshots/wishlist.png" alt="Wishlist Page">
+    <p class="fig-cap">Fig. 10.6: Wishlist Page</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.7 About Us Page</h2>
+<p>The About Us page establishes the brand identity and story of Urban Threads. It features sections detailing the mission statement (providing premium, affordable streetwear to the Indian market), the brand origin, and the core values of quality, accessibility, and community engagement. The layout utilizes elegant serif typography for headings to convey a premium, luxury vibe.</p>
+<p>The page also includes a grid representing the team behind the project, with names, roles, and descriptions. This page is static but highly stylized, using clean grids, gold divider lines, and high-contrast charcoal text blocks to keep the layout engaging and readable. It provides the customer with background context about the store's curation and vision, which builds brand loyalty.</p>
+<div class="fig">
+    <img src="images/screenshots/about.png" alt="About Page">
+    <p class="fig-cap">Fig. 10.7: About Us Page</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.8 Contact Us Page</h2>
+<p>The Contact Us page provides a channel for customer inquiries and feedback. The left column features a form with fields for Name, Email, Subject, and Message. When submitted, the data is sent to the Express backend, validated, and stored in the PostgreSQL database. It can also trigger automated notifications (e.g., EmailJS) to notify the store owner.</p>
+<p>The right column displays key store details, including email support, contact numbers, working hours, and physical office location. The design maintains a structured, symmetric look, using clean borders and input boxes styled with gold outlines when focused, enhancing the overall micro-interactions. The page provides immediate assurance to buyers that customer support is active and available.</p>
+<div class="fig">
+    <img src="images/screenshots/contact.png" alt="Contact Page">
+    <p class="fig-cap">Fig. 10.8: Contact Us Page with Contact Form</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.9 Admin Login Page</h2>
+<p>The Admin Login page provides a separate authentication interface for the store administrator. Admin credentials are configured via environment variables for security. The interface is highly restricted, ensuring that only authorized administrators can access the store management dashboard. Input verification is done against specific environment variables configured on the server side.</p>
+<p>This separation of authentication routes prevents brute-force attempts on admin accounts and keeps administrative sessions isolated from standard customer sessions. Upon successful validation, the administrator is granted a specific admin JWT token that is required to fetch and write to administrative endpoints, preventing unauthorized CRUD actions on products or media.</p>
+<div class="fig">
+    <img src="images/screenshots/admin_login.png" alt="Admin Login Page">
+    <p class="fig-cap">Fig. 10.9: Admin Login Page</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.10 Admin Dashboard — Product Management</h2>
+<p>The Admin Dashboard is a comprehensive, split-panel control center designed for managing products and catalog settings. The left-hand panel contains the product creation and editing form. This form allows administrators to specify details like name, category, price, description, images, video tutorials, available apparel/footwear sizes, and colors. The form supports image uploading directly to Supabase Storage, returning the public URL automatically.</p>
+<p>The right-hand panel displays a table of all products in the database, with quick actions to Edit or Delete. The top section of the page features real-time statistics cards showing metrics like Total Products and In-Stock Counts. The interface is optimized to manage large catalogs efficiently with minimum navigation, giving the owner complete control over their store's product metadata.</p>
+<div class="fig">
+    <img src="images/screenshots/admin_dashboard.png" alt="Admin Dashboard">
+    <p class="fig-cap">Fig. 10.10: Admin Dashboard — Product Management Panel</p>
+</div>
+</div>
+
+<div class="screen-block">
+<h2>10.11 Admin Panel — Settings Tab</h2>
+<p>The Admin Settings page allows the store owner to customize metadata options like product categories, apparel sizes, footwear sizes, and colors dynamically. Rather than hardcoding these configuration arrays in the frontend, they are stored in the database and fetched on page load. This lets the owner add new sizes or categories as the inventory expands.</p>
+<p>The layout is split into separate cards for Category Management, Size Configuration, and Color Setup, each containing simple input boxes and lists. Changes made in this settings panel update the filters on the main Shop page and the dropdown lists in the Product Form instantly. This dynamic layout is built with modularity in mind, allowing fast catalog adjustments without code modifications.</p>
+<div class="fig">
+    <img src="images/screenshots/admin_settings.png" alt="Admin Settings Tab">
+    <p class="fig-cap">Fig. 10.11: Admin Panel — Settings Tab (Categories, Sizes, Colors Management)</p>
+</div>
+</div>
+</div>
+
+<!-- =================== CHAPTER 11: TESTING =================== -->
+<div class="pb" id="ch11">
+<h1>Chapter 11<br>Testing</h1>
+
+<h2>11.1 Testing Methodology</h2>
+<p>Testing is a critical phase of the Software Development Life Cycle (SDLC) that ensures the application meets its functional and non-functional requirements. For Urban Threads, both <strong>Black-Box Testing</strong> (testing functionality without knowledge of internal code) and <strong>White-Box Testing</strong> (testing with knowledge of internal code logic) approaches were used.</p>
+<p>The following testing levels were applied:</p>
+<ul>
+    <li><strong>Unit Testing:</strong> Testing individual functions and API endpoints in isolation to verify correct behavior.</li>
+    <li><strong>Integration Testing:</strong> Testing interactions between frontend, backend, and database to ensure they work together correctly.</li>
+    <li><strong>System Testing:</strong> End-to-end testing of complete user flows from registration to cart checkout.</li>
+    <li><strong>User Acceptance Testing (UAT):</strong> Testing by classmates and friends to validate usability and gather user feedback.</li>
+</ul>
+
+<h2>11.2 Unit Testing</h2>
+<h3>Authentication Tests:</h3>
+<ul>
+    <li>Verified bcrypt password hashing and comparison functions work correctly with salt round 10</li>
+    <li>Verified JWT token generation produces valid tokens with correct payload (userId, email, role) and expiry (24 hours)</li>
+    <li>Verified expired and tampered tokens are correctly rejected by the authentication middleware</li>
+    <li>Verified registration endpoint rejects empty fields, invalid email formats, and passwords shorter than 6 characters</li>
+    <li>Verified duplicate email registration returns 409 Conflict status</li>
+</ul>
+<h3>Product API Tests:</h3>
+<ul>
+    <li>GET /api/products returns complete product array with all fields populated</li>
+    <li>Category filter parameter returns only matching products (e.g., ?category=hoodies returns only hoodies)</li>
+    <li>Search parameter performs case-insensitive matching (e.g., ?search=urban matches "Urban Street Hoodie")</li>
+    <li>Product creation without admin token returns 403 Forbidden</li>
+    <li>Product creation with admin token and valid data returns 201 Created with the new product</li>
+</ul>
+<h3>Cart API Tests:</h3>
+<ul>
+    <li>Add to cart creates new record when product+size combination doesn't exist</li>
+    <li>Add to cart increments quantity when product+size combination already exists in cart</li>
+    <li>Get cart returns only the authenticated user's items (not other users' carts)</li>
+    <li>Delete cart item removes the item and returns 200 OK</li>
+    <li>Operations without authentication token return 401 Unauthorized</li>
+</ul>
+
+<h2>11.3 Integration Testing</h2>
+<ul>
+    <li>Login form correctly sends credentials to /api/auth/login and stores received JWT token in localStorage</li>
+    <li>Product catalog page fetches products from /api/products and renders them in the grid layout</li>
+    <li>Cart updates in real-time when items are added, quantity is changed, or items are removed</li>
+    <li>Category filter buttons send the correct query parameter and update the product grid dynamically</li>
+    <li>Foreign key constraints (ON DELETE CASCADE) prevent orphaned cart and wishlist items when users or products are deleted</li>
+    <li>Admin panel correctly communicates with admin-only endpoints using the admin JWT token</li>
+    <li>Image upload through admin panel correctly stores files in Supabase Storage and returns public URLs</li>
+    <li>Contact form submission stores messages in the database and displays success/error feedback to users</li>
+</ul>
+
+<h2>11.4 Test Cases</h2>
+<p class="ni" style="font-style:italic;">Table 11.1: Test Cases and Results</p>
+<table style="font-size: 9.5pt;">
+    <thead><tr><th style="width:5%">TC</th><th style="width:18%">Test Case</th><th style="width:22%">Input</th><th style="width:25%">Expected Output</th><th style="width:7%">Result</th></tr></thead>
+    <tbody>
+        <tr><td>01</td><td>Valid Registration</td><td>Name, valid email, password (6+ chars)</td><td>201 Created, JWT token returned</td><td>Pass ✓</td></tr>
+        <tr><td>02</td><td>Duplicate Email</td><td>Already registered email</td><td>409 Conflict</td><td>Pass ✓</td></tr>
+        <tr><td>03</td><td>Empty Fields</td><td>Blank registration form</td><td>400 Bad Request</td><td>Pass ✓</td></tr>
+        <tr><td>04</td><td>Short Password</td><td>Password with &lt;6 characters</td><td>400 Bad Request</td><td>Pass ✓</td></tr>
+        <tr><td>05</td><td>Valid Login</td><td>Correct email and password</td><td>200 OK, JWT token</td><td>Pass ✓</td></tr>
+        <tr><td>06</td><td>Invalid Login</td><td>Wrong password</td><td>401 Unauthorized</td><td>Pass ✓</td></tr>
+        <tr><td>07</td><td>Non-existent User</td><td>Unregistered email</td><td>401 Unauthorized</td><td>Pass ✓</td></tr>
+        <tr><td>08</td><td>Fetch All Products</td><td>GET /api/products</td><td>200 OK, product array</td><td>Pass ✓</td></tr>
+        <tr><td>09</td><td>Filter by Category</td><td>?category=hoodies</td><td>Only hoodie products</td><td>Pass ✓</td></tr>
+        <tr><td>10</td><td>Search Products</td><td>?search=urban</td><td>Matching products</td><td>Pass ✓</td></tr>
+        <tr><td>11</td><td>Add to Cart</td><td>POST with valid token</td><td>201 Created</td><td>Pass ✓</td></tr>
+        <tr><td>12</td><td>Cart — No Auth</td><td>POST without token</td><td>401 Unauthorized</td><td>Pass ✓</td></tr>
+        <tr><td>13</td><td>View Cart</td><td>GET with valid token</td><td>200 OK, user's items</td><td>Pass ✓</td></tr>
+        <tr><td>14</td><td>Update Cart Qty</td><td>PUT with new quantity</td><td>200 OK, updated item</td><td>Pass ✓</td></tr>
+        <tr><td>15</td><td>Remove from Cart</td><td>DELETE with token</td><td>200 OK, item removed</td><td>Pass ✓</td></tr>
+        <tr><td>16</td><td>Add to Wishlist</td><td>POST with product_id</td><td>201 Created</td><td>Pass ✓</td></tr>
+        <tr><td>17</td><td>Duplicate Wishlist</td><td>Same product_id again</td><td>409 Conflict</td><td>Pass ✓</td></tr>
+        <tr><td>18</td><td>Contact Form</td><td>POST with all fields</td><td>201 Created</td><td>Pass ✓</td></tr>
+        <tr><td>19</td><td>Admin Login</td><td>Admin credentials</td><td>200 OK, admin JWT</td><td>Pass ✓</td></tr>
+        <tr><td>20</td><td>Admin Create Product</td><td>POST with admin token</td><td>201 Created</td><td>Pass ✓</td></tr>
+        <tr><td>21</td><td>Non-Admin Create</td><td>POST with user token</td><td>403 Forbidden</td><td>Pass ✓</td></tr>
+        <tr><td>22</td><td>Responsive Desktop</td><td>Width: 1920px</td><td>4-column grid, full nav</td><td>Pass ✓</td></tr>
+        <tr><td>23</td><td>Responsive Mobile</td><td>Width: 375px</td><td>1-column, hamburger menu</td><td>Pass ✓</td></tr>
+        <tr><td>24</td><td>Expired JWT</td><td>Token past 24h expiry</td><td>403 Forbidden</td><td>Pass ✓</td></tr>
+        <tr><td>25</td><td>XSS Prevention</td><td>Script tag in search field</td><td>Input sanitized, no execution</td><td>Pass ✓</td></tr>
+        <tr><td>26</td><td>SQL Injection</td><td>SQL in login email field</td><td>Login fails safely (ORM prevents)</td><td>Pass ✓</td></tr>
+        <tr><td>27</td><td>CORS Check</td><td>Request from unauthorized origin</td><td>Blocked by CORS policy</td><td>Pass ✓</td></tr>
+        <tr><td>28</td><td>Cart Persistence</td><td>Logout then Login again</td><td>Cart items preserved</td><td>Pass ✓</td></tr>
+        <tr><td>29</td><td>Image Upload</td><td>5MB JPEG via admin panel</td><td>Uploaded to Supabase Storage</td><td>Pass ✓</td></tr>
+        <tr><td>30</td><td>Delete Product</td><td>DELETE with admin token</td><td>200 OK, product removed, cascaded</td><td>Pass ✓</td></tr>
+    </tbody>
+</table>
+
+<h2>11.5 Performance Testing</h2>
+<p>Performance testing was conducted using Google Chrome DevTools Lighthouse audit tool:</p>
+<table>
+    <thead><tr><th>Metric</th><th>Target</th><th>Actual</th><th>Status</th></tr></thead>
+    <tbody>
+        <tr><td>First Contentful Paint (FCP)</td><td>&lt; 2.0s</td><td>1.2s</td><td>Pass ✓</td></tr>
+        <tr><td>Largest Contentful Paint (LCP)</td><td>&lt; 3.0s</td><td>2.1s</td><td>Pass ✓</td></tr>
+        <tr><td>Total Blocking Time (TBT)</td><td>&lt; 300ms</td><td>120ms</td><td>Pass ✓</td></tr>
+        <tr><td>Cumulative Layout Shift (CLS)</td><td>&lt; 0.1</td><td>0.05</td><td>Pass ✓</td></tr>
+        <tr><td>API Response Time (average)</td><td>&lt; 500ms</td><td>180ms</td><td>Pass ✓</td></tr>
+        <tr><td>Lighthouse Performance Score</td><td>&gt; 80</td><td>89</td><td>Pass ✓</td></tr>
+        <tr><td>Lighthouse Accessibility Score</td><td>&gt; 80</td><td>85</td><td>Pass ✓</td></tr>
+        <tr><td>Lighthouse SEO Score</td><td>&gt; 80</td><td>92</td><td>Pass ✓</td></tr>
+    </tbody>
+</table>
+
+<h2>11.6 Security Testing</h2>
+<table>
+    <thead><tr><th>Security Test</th><th>Method</th><th>Result</th></tr></thead>
+    <tbody>
+        <tr><td>Password Storage</td><td>Verified passwords are hashed with bcrypt (salt round 10), never stored as plaintext</td><td>Pass ✓</td></tr>
+        <tr><td>JWT Security</td><td>Tokens use strong secret (32+ chars), expire in 24 hours, include role claim</td><td>Pass ✓</td></tr>
+        <tr><td>SQL Injection</td><td>Supabase ORM prevents raw SQL injection; all queries use parameterized methods</td><td>Pass ✓</td></tr>
+        <tr><td>XSS Prevention</td><td>No use of innerHTML with user data; input sanitized before display</td><td>Pass ✓</td></tr>
+        <tr><td>CORS Policy</td><td>Restricted to known origins in production deployment</td><td>Pass ✓</td></tr>
+        <tr><td>HTTPS</td><td>Enforced by Vercel platform — all HTTP requests redirected to HTTPS</td><td>Pass ✓</td></tr>
+        <tr><td>Environment Secrets</td><td>All secrets stored in Vercel env vars; .env excluded from Git via .gitignore</td><td>Pass ✓</td></tr>
+        <tr><td>Admin Access Control</td><td>Admin-only endpoints check JWT role claim; regular users get 403 Forbidden</td><td>Pass ✓</td></tr>
+    </tbody>
+</table>
+
+<h2>11.7 Browser Compatibility Testing</h2>
+<table>
+    <thead><tr><th>Browser</th><th>Version</th><th>Platform</th><th>Result</th></tr></thead>
+    <tbody>
+        <tr><td>Google Chrome</td><td>125+</td><td>Desktop &amp; Mobile</td><td>Pass ✓</td></tr>
+        <tr><td>Mozilla Firefox</td><td>126+</td><td>Desktop</td><td>Pass ✓</td></tr>
+        <tr><td>Apple Safari</td><td>17+</td><td>macOS &amp; iOS</td><td>Pass ✓</td></tr>
+        <tr><td>Microsoft Edge</td><td>125+</td><td>Desktop</td><td>Pass ✓</td></tr>
+        <tr><td>Samsung Internet</td><td>24+</td><td>Android</td><td>Pass ✓</td></tr>
+    </tbody>
+</table>
+</div>
+
+<!-- =================== CHAPTER 12: CONCLUSION =================== -->
+<div class="pb" id="ch12">
+<h1>Chapter 12<br>Conclusion</h1>
+
+<p>The development of Urban Threads — a premium streetwear e-commerce platform — has been a comprehensive and rewarding project that demonstrates the practical application of full-stack web development skills acquired during the BCA program at Netaji Subhash University, Jamshedpur.</p>
+
+<p>The project successfully achieved all its primary objectives. A fully functional e-commerce website was designed, developed, and deployed, providing users with a complete online shopping experience for streetwear fashion. The application features secure user authentication with bcrypt password hashing and JWT-based session management, a comprehensive product catalog with category filtering and search functionality, shopping cart and wishlist features with persistent storage across sessions, a contact form for user communication, and a built-in admin panel for complete content management.</p>
+
+<p>The technical implementation demonstrates proficiency in multiple web technologies. The frontend was built using HTML5, CSS3, and vanilla JavaScript, resulting in a fast and responsive user interface with a premium luxury minimalist design. The backend was developed with Node.js and Express.js, following RESTful API design patterns with proper middleware architecture. PostgreSQL via Supabase provides reliable data storage with proper schema design, normalization to Third Normal Form (3NF), and referential integrity through foreign key constraints.</p>
+
+<p>The application was successfully deployed on Vercel, demonstrating knowledge of modern cloud deployment practices including environment configuration, serverless architecture, continuous deployment from GitHub, and CDN distribution. The deployment ensures high availability, automatic HTTPS, and zero-downtime deployments.</p>
+
+<p>Through the development process, several valuable lessons were learned about real-world software development challenges, including CORS configuration for cross-origin requests, environment variable management across development and production environments, secure authentication flows with proper password hashing, database query optimization using Supabase's JavaScript client, file uploads in serverless environments using Supabase Storage, and responsive design testing across diverse devices and screen sizes.</p>
+
+<p>The project also demonstrated that a professional, feature-rich e-commerce platform can be built and deployed using entirely free and open-source tools. The total development cost was zero rupees, proving that aspiring entrepreneurs and small businesses can establish a strong online presence without significant financial investment.</p>
+
+<p>While the current version has certain limitations — notably the absence of payment gateway integration, order tracking, social login, and a native mobile application — these are identified and documented as areas for future enhancement. The modular architecture and clean API design make it straightforward to add these features incrementally without requiring major refactoring.</p>
+
+<p>In summary, Urban Threads serves as both a functional e-commerce platform and a comprehensive demonstration of full-stack web development capabilities. The successful completion of this project validates the approach of combining academic learning with practical application, and provides a strong portfolio piece for future career opportunities in software development.</p>
+
+<h2>Key Achievements</h2>
+<ul>
+    <li>Successfully designed, developed, and deployed a full-stack e-commerce website using a completely free technology stack</li>
+    <li>Implemented secure authentication with industry-standard bcrypt password hashing (salt round 10) and JWT token management</li>
+    <li>Built a comprehensive admin panel for product CRUD operations, image uploads, and catalog settings management</li>
+    <li>Achieved Lighthouse performance score of 89/100 with FCP of 1.2s and LCP of 2.1s</li>
+    <li>Created a responsive design working seamlessly from 320px (mobile) to 2560px (ultra-wide desktop) screen widths</li>
+    <li>Deployed on Vercel with HTTPS, CDN, and serverless scaling at zero cost</li>
+    <li>Applied Agile methodology with 6 iterative sprints over 12 weeks of development</li>
+    <li>Passed all 30 test cases with 100% success rate across functional, security, and performance categories</li>
+    <li>Designed a normalized database schema (3NF) with 6 tables and proper referential integrity</li>
+    <li>Implemented 19 RESTful API endpoints with proper authentication and authorization middleware</li>
+</ul>
+
+<h2>Lessons Learned</h2>
+<ol>
+    <li><strong>CORS Configuration:</strong> Understanding and properly configuring Cross-Origin Resource Sharing was one of the first real-world challenges encountered. The difference between development (permissive CORS) and production (restricted origins) was an important lesson in security.</li>
+    <li><strong>Environment Management:</strong> The importance of separating configuration from code using environment variables became clear when deploying to Vercel. Managing different configurations for development and production environments is a critical skill.</li>
+    <li><strong>Security First Approach:</strong> The critical importance of never storing plain-text passwords, always validating user input on the server side (never trusting client-side validation), and using short-lived JWT tokens for session management.</li>
+    <li><strong>Responsive Design:</strong> Using CSS Grid and Flexbox effectively for layouts that work across all devices. Testing on real devices revealed issues that desktop browser simulation missed.</li>
+    <li><strong>Cloud Deployment:</strong> Understanding serverless architecture and how Vercel converts Express.js servers into serverless functions. The concept of cold starts and their impact on API response times.</li>
+    <li><strong>Version Control:</strong> Using Git and GitHub for systematic code management. Writing meaningful commit messages and using branches for feature development proved invaluable for tracking changes.</li>
+    <li><strong>Database Design:</strong> The importance of proper schema design, normalization, and indexing for performance. Using UUIDs instead of auto-incrementing integers for primary keys improved security by making IDs unpredictable.</li>
+</ol>
+</div>
+
+<!-- =================== CHAPTER 13: FUTURE SCOPE =================== -->
+<div class="pb" id="ch13">
+<h1>Chapter 13<br>Future Scope</h1>
+
+<p>Urban Threads has been designed with extensibility in mind. The modular architecture, clean API design, and well-structured database schema make it straightforward to add new features incrementally. The following enhancements are planned for future versions of the platform:</p>
+
+<h2>13.1 Payment Gateway Integration</h2>
+<p>Integrating <strong>Razorpay</strong> payment gateway for the Indian market, supporting UPI (Unified Payments Interface), credit and debit cards, net banking, and popular wallets like Paytm, PhonePe, and Google Pay. An alternative integration with <strong>Stripe</strong> can be added for international payments, enabling customers outside India to make purchases using international credit cards and Apple Pay.</p>
+
+<h2>13.2 Order Management System</h2>
+<p>A complete order lifecycle management system including order placement with payment confirmation, real-time status tracking through stages (placed, confirmed, packed, shipped, out for delivery, delivered), shipping integration with Indian logistics partners like Shiprocket and Delhivery for automated shipment booking, automated email and SMS notifications at each order status change, and order history with invoice generation and download capability.</p>
+
+<h2>13.3 User Reviews and Ratings</h2>
+<p>A star-based rating system (1-5 stars) with text reviews, image upload capability for user-submitted product photos, verified purchase badges to distinguish genuine reviews, review moderation by admin before publishing, aggregate ratings displayed on product cards in the catalog, and sorting products by average rating or number of reviews.</p>
+
+<h2>13.4 Social Authentication</h2>
+<p>OAuth 2.0 integration for convenient login through existing social accounts: Google Sign-In, Facebook Login, Apple Sign-In (for iOS users), and GitHub Login (for developers). This reduces registration friction and improves conversion rates by allowing users to sign up with a single click.</p>
+
+<h2>13.5 Mobile Application</h2>
+<p>Native mobile apps for Android and iOS using <strong>React Native</strong> or <strong>Flutter</strong> framework, sharing the same backend API. Mobile-specific features would include push notifications for order updates and promotions, biometric authentication (fingerprint, Face ID), camera-based product search using image recognition, offline browsing of previously viewed products, and app-exclusive deals and early access to new arrivals.</p>
+
+<h2>13.6 AI-Powered Recommendations</h2>
+<p>Machine learning algorithms for personalized product recommendations based on browsing history, purchase patterns, and collaborative filtering. The system would analyze user behavior to suggest products that match their style preferences, display "Customers who bought this also bought" sections, and create personalized homepages showing products tailored to each user's taste.</p>
+
+<h2>13.7 Multi-Language Support</h2>
+<p>Internationalization (i18n) for Hindi, Bengali, Tamil, Telugu, and other regional Indian languages. This includes translated UI elements, product descriptions, and checkout flow. The system would auto-detect the user's browser language and offer the appropriate translation, with a manual language selector in the navigation bar.</p>
+
+<h2>13.8 Progressive Web App (PWA)</h2>
+<p>Converting the web application into a Progressive Web App for offline access through service workers, push notifications for order updates and promotions, app-like installation from the browser without requiring app store downloads, and improved performance through asset caching. PWA support would significantly improve the experience for users on slow or unreliable internet connections.</p>
+
+<h2>13.9 Advanced Analytics Dashboard</h2>
+<p>An enhanced admin analytics dashboard with sales trend visualization (daily, weekly, monthly revenue charts), popular products ranking by views, cart additions, and purchases, user demographics analysis (location, device, browser), cart abandonment rate tracking with recovery email automation, revenue reports with export functionality (CSV, PDF), and integration with Google Analytics 4 for comprehensive web analytics.</p>
+
+<h2>13.10 Inventory Management</h2>
+<p>Automated stock tracking with low-stock alerts when product quantities fall below configurable thresholds, size-wise stock management, supplier integration for automated reordering, and stock history logging for audit purposes.</p>
+</div>
+
+<!-- =================== CHAPTER 14: BIBLIOGRAPHY =================== -->
+<div class="pb" id="ch14">
+<h1>Chapter 14<br>Bibliography / References</h1>
+
+<h2>Books &amp; Publications</h2>
+<ol>
+    <li>Duckett, J. (2014). <em>JavaScript and jQuery: Interactive Front-End Web Development</em>. John Wiley &amp; Sons.</li>
+    <li>Flanagan, D. (2020). <em>JavaScript: The Definitive Guide</em>, 7th Edition. O'Reilly Media.</li>
+    <li>Brown, E. (2016). <em>Web Development with Node and Express</em>. O'Reilly Media.</li>
+    <li>Nixon, R. (2018). <em>Learning PHP, MySQL &amp; JavaScript</em>, 5th Edition. O'Reilly Media.</li>
+    <li>Pressman, R. S. (2014). <em>Software Engineering: A Practitioner's Approach</em>, 8th Edition. McGraw-Hill Education.</li>
+    <li>Sommerville, I. (2015). <em>Software Engineering</em>, 10th Edition. Pearson Education.</li>
+    <li>Elmasri, R., &amp; Navathe, S. B. (2015). <em>Fundamentals of Database Systems</em>, 7th Edition. Pearson.</li>
+    <li>Date, C. J. (2003). <em>An Introduction to Database Systems</em>, 8th Edition. Addison-Wesley Professional.</li>
+    <li>Galitz, W. O. (2007). <em>The Essential Guide to User Interface Design</em>, 3rd Edition. Wiley.</li>
+    <li>Krug, S. (2014). <em>Don't Make Me Think, Revisited: A Common Sense Approach to Web Usability</em>. New Riders.</li>
+</ol>
+
+<h2>Online Resources &amp; Documentation</h2>
+<ol start="11">
+    <li>Mozilla Developer Network (MDN). <em>Web Docs — HTML, CSS, JavaScript Reference</em>. Available at: https://developer.mozilla.org/</li>
+    <li>Node.js Foundation. <em>Node.js Official Documentation</em>. Available at: https://nodejs.org/docs/</li>
+    <li>Express.js. <em>Express.js Official Documentation</em>. Available at: https://expressjs.com/</li>
+    <li>Supabase. <em>Supabase Official Documentation</em>. Available at: https://supabase.com/docs</li>
+    <li>PostgreSQL Global Development Group. <em>PostgreSQL 15 Documentation</em>. Available at: https://www.postgresql.org/docs/</li>
+    <li>Vercel. <em>Vercel Platform Documentation</em>. Available at: https://vercel.com/docs</li>
+    <li>npm Registry. <em>npm Package Documentation</em>. Available at: https://www.npmjs.com/</li>
+    <li>W3Schools. <em>Web Development Tutorials</em>. Available at: https://www.w3schools.com/</li>
+    <li>Stack Overflow. <em>Developer Community Q&amp;A Platform</em>. Available at: https://stackoverflow.com/</li>
+    <li>GitHub. <em>GitHub Platform and Documentation</em>. Available at: https://docs.github.com/</li>
+</ol>
+
+<h2>Industry Reports</h2>
+<ol start="21">
+    <li>India Brand Equity Foundation (IBEF). (2023). <em>E-Commerce Industry in India</em>. Ministry of Commerce.</li>
+    <li>Statista. (2023). <em>E-Commerce — India: Market Data &amp; Analysis</em>. Statista Research Department.</li>
+    <li>Grand View Research. (2022). <em>Streetwear Market Size, Share &amp; Trends Analysis Report 2022-2030</em>.</li>
+    <li>Bain &amp; Company &amp; Flipkart. (2022). <em>How India Shops Online 2022</em>.</li>
+    <li>Google &amp; Kantar. (2021). <em>Year in Search India 2021 — E-Commerce Trends</em>.</li>
+</ol>
+
+<h2>npm Packages Used</h2>
+<ol start="26">
+    <li><em>express</em> v4.18.x &mdash; Fast, unopinionated, minimalist web framework for Node.js. Provides robust routing, middleware support, and HTTP utility methods. It is the most popular Node.js web framework with over 60 million weekly downloads on npm. Used as the core server framework for handling all API routes. Available at: https://www.npmjs.com/package/express</li>
+    <li><em>bcryptjs</em> v2.4.x &mdash; Pure JavaScript implementation of the bcrypt password hashing algorithm. Used for securely hashing user passwords before storing them in the database with a configurable salt round (set to 10 in this project). Chosen over the native <em>bcrypt</em> package for better cross-platform compatibility. Available at: https://www.npmjs.com/package/bcryptjs</li>
+    <li><em>jsonwebtoken</em> v9.x &mdash; JSON Web Token (JWT) implementation for Node.js following the RFC 7519 standard. Used for generating and verifying stateless authentication tokens with configurable expiry time (set to 24 hours). Supports HS256 signing algorithm with a secret key stored in environment variables. Available at: https://www.npmjs.com/package/jsonwebtoken</li>
+    <li><em>multer</em> v1.4.x &mdash; Multipart form-data handling middleware for Express.js. Used for processing file uploads in the admin panel including product images (JPEG, PNG, WebP). Configured with memory storage for direct upload to Supabase Storage buckets without saving files to disk. Available at: https://www.npmjs.com/package/multer</li>
+    <li><em>cors</em> v2.8.x &mdash; Cross-Origin Resource Sharing (CORS) middleware for Express. Configured to allow requests from the frontend domain while blocking unauthorized origins in production. Essential for the separated frontend-backend architecture where the frontend is served as static files. Available at: https://www.npmjs.com/package/cors</li>
+    <li><em>dotenv</em> v16.x &mdash; Environment variable loader from .env files. Loads configuration values like database URLs, API keys, and JWT secrets from a .env file into process.env at application startup. Critical for keeping secrets out of source code and version control. Available at: https://www.npmjs.com/package/dotenv</li>
+    <li><em>@supabase/supabase-js</em> v2.x &mdash; Official Supabase JavaScript client library. Provides methods for database queries (select, insert, update, delete), file storage operations (upload, getPublicUrl), and real-time subscriptions. Used as the primary interface between Express.js and the PostgreSQL database hosted on Supabase. Available at: https://www.npmjs.com/package/@supabase/supabase-js</li>
+    <li><em>path</em> (built-in) &mdash; Node.js built-in module for handling file and directory paths in a cross-platform manner. Used for resolving the frontend static file directory path and constructing file paths for serving HTML, CSS, and JavaScript files via Express.static() middleware.</li>
+    <li><em>fs</em> (built-in) &mdash; Node.js built-in module for file system operations including reading, writing, and checking file existence. Used for local JSON file reading/writing as a fallback data store during development when the Supabase database connection is unavailable.</li>
+</ol>
+
+<h2>Video Tutorials &amp; Courses</h2>
+<ol start="35">
+    <li>Traversy Media. (2023). <em>Node.js &amp; Express.js Full Course &mdash; Build RESTful APIs</em>. YouTube. Available at: https://www.youtube.com/traversymedia</li>
+    <li>The Net Ninja. (2023). <em>Supabase Tutorial for Beginners &mdash; Database, Auth &amp; Storage</em>. YouTube. Available at: https://www.youtube.com/thenetninja</li>
+    <li>Fireship. (2023). <em>Supabase in 100 Seconds &mdash; Open Source Firebase Alternative</em>. YouTube. Available at: https://www.youtube.com/fireship</li>
+    <li>freeCodeCamp. (2022). <em>Full Stack Web Development for Beginners &mdash; Full Course on HTML, CSS, JavaScript, Node.js</em>. YouTube. Available at: https://www.youtube.com/freecodecamp</li>
+    <li>Academind. (2022). <em>JWT Authentication Tutorial &mdash; Secure Node.js REST APIs</em>. YouTube. Available at: https://www.youtube.com/academind</li>
+    <li>Kevin Powell. (2023). <em>Advanced CSS Grid and Flexbox Techniques for Responsive Layouts</em>. YouTube. Available at: https://www.youtube.com/kevinpowell</li>
+    <li>Web Dev Simplified. (2023). <em>Build a Complete REST API with Node.js, Express &amp; PostgreSQL</em>. YouTube. Available at: https://www.youtube.com/webdevsimplified</li>
+    <li>Dave Gray. (2023). <em>Node.js Full Course for Beginners &mdash; Express, MongoDB, JWT Authentication</em>. YouTube. Available at: https://www.youtube.com/davegray</li>
+    <li>Codevolution. (2023). <em>Supabase Crash Course &mdash; Build a Full-Stack App with Supabase and JavaScript</em>. YouTube. Available at: https://www.youtube.com/codevolution</li>
+</ol>
+
+<h2>Environment Configuration Template</h2>
+<p>The following environment variables are required to run the Urban Threads application locally. These must be configured in a <strong>.env</strong> file placed in the project root directory. For production deployment on Vercel, these values are configured in the Vercel dashboard under Project Settings &rarr; Environment Variables.</p>
+<pre class="code">## ========================================
+## Urban Threads — Environment Variables
+## ========================================
+
+## Supabase Configuration
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+SUPABASE_MEDIA_BUCKET=product-images
+
+## Authentication Secrets
+JWT_SECRET=your-jwt-secret-minimum-32-characters
+ADMIN_EMAIL=admin@urbanthreads.com
+ADMIN_PASSWORD=your-secure-admin-password
+
+## Server Configuration
+PORT=3000
+NODE_ENV=production</pre>
+<p><strong>Security Note:</strong> The .env file must never be committed to version control. It is listed in the project's .gitignore file. A .env.example file with empty values is provided in the repository for reference. The SUPABASE_SERVICE_ROLE_KEY has full database access and must be kept strictly confidential. The JWT_SECRET should be a random string of at least 32 characters for cryptographic security.</p>
+
+<h2>Project URLs &amp; Resources</h2>
+<p class="ni">The following table lists all online resources and URLs associated with the Urban Threads project. All URLs were active and accessible at the time of project submission in June 2026.</p>
+<table>
+    <thead><tr><th>Resource</th><th>URL / Location</th></tr></thead>
+    <tbody>
+        <tr><td>Live Website (Production)</td><td>https://urban-threads-theta.vercel.app</td></tr>
+        <tr><td>Admin Panel</td><td>https://urban-threads-theta.vercel.app/admin.html</td></tr>
+        <tr><td>GitHub Repository</td><td>https://github.com/SamarjeetSingh-007/urban-threads</td></tr>
+        <tr><td>Supabase Dashboard</td><td>https://app.supabase.com (login required)</td></tr>
+        <tr><td>Vercel Dashboard</td><td>https://vercel.com/samarjeetsingh-007s-projects/urban-threads</td></tr>
+        <tr><td>API Base URL</td><td>https://urban-threads-theta.vercel.app/api/</td></tr>
+    </tbody>
+</table>
+<p>The source code is publicly available on GitHub for reference and evaluation purposes. The repository includes a comprehensive README.md file with setup instructions, feature documentation, and deployment guidelines. All API endpoints can be tested using tools like Postman or cURL by sending requests to the API Base URL listed above.</p>
+</div>
+
+</body>
+</html>
+

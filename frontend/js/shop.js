@@ -176,6 +176,7 @@ function initShop() {
     initFilters();
     initSearch();
     initSort();
+    initMobileFilters();
 
     applyAllFilters();
 }
@@ -229,6 +230,18 @@ function initFilters() {
             currentPage = 1;
             applyAllFilters();
         }
+    });
+}
+
+// Initialize mobile filter toggle
+function initMobileFilters() {
+    const toggleBtn = document.getElementById('mobile-filter-toggle');
+    const filtersSidebar = document.querySelector('.filters-sidebar');
+    
+    if (!toggleBtn || !filtersSidebar) return;
+    
+    toggleBtn.addEventListener('click', () => {
+        filtersSidebar.classList.toggle('show');
     });
 }
 

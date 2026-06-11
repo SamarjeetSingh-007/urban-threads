@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ====== PAGE SETUP — Exact Requirements ====== */
+/* Font: Times New Roman, Content: 12pt, Line Spacing: 1.5, Margins: 1in, Justified */
+@page {
+    size: A4;
+    margin: 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    margin: 1in;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: counter(page, lower-roman); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0;
+}
+.running-hdr img { height: 40px; display: block; margin: 0 auto 2pt auto; }
+.running-hdr .u-name { font-size: 11pt; font-weight: bold; color: #000; display: block; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.5pt; }
+.running-hdr .u-addr { font-size: 8.5pt; display: block; font-family: 'Times New Roman', Times, serif; }
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+
+/* ====== TYPOGRAPHY (Exact Requirements) ====== */
+h1 { font-size: 17pt; font-weight: bold; text-align: center; text-transform: uppercase; margin: 8pt 0 12pt 0; }
+h2 { font-size: 14pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+h3 { font-size: 13pt; font-weight: bold; margin: 8pt 0 4pt 0; }
+p { text-align: justify; margin-bottom: 6pt; text-indent: 0.4in; }
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 6pt; }
+li { margin-bottom: 2pt; }
+
+/* ====== TABLES ====== */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 11pt; }
+table, th, td { border: 1px solid #000; }
+th, td { padding: 3pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+.toc td, .toc th { border: none; }
+
+/* ====== FIGURES — Keep with caption, no orphan ====== */
+.fig { text-align: center; margin: 6pt 0; }
+.fig img { max-width: 100%; max-height: 4in; border: 1px solid #ccc; }
+.fig-cap { font-size: 10pt; font-style: italic; margin-top: 2pt; text-indent: 0; text-align: center; }
+
+/* ====== CODE AS PLAIN TEXT ====== */
+.code { font-family: 'Courier New', Courier, monospace; font-size: 9pt; white-space: pre-wrap; line-height: 1.25; margin: 4pt 0 6pt 0.2in; }
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 14pt; }
+.spacer-lg { height: 28pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 20pt; }
+.border-box { border: 2px solid #000; padding: 18pt; }
+
+/* ====== WIDOWS & ORPHANS ====== */
+p, li, h2, h3 { orphans: 3; widows: 3; }
+h2, h3 { page-break-after: avoid; }
+.fig { page-break-inside: avoid; }
+table { page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- RUNNING HEADER -->
+<div class="running-hdr">
+    <img src="../images/nsu_logo.png" alt="NSU" style="filter: grayscale(100%);">
+    <span class="u-name">NETAJI SUBHASH UNIVERSITY</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+
+<!-- =================== CHAPTER 10: OUTPUT SCREENS =================== -->
+<div class="pb">
+<h1>Chapter 10<br>Output Screens</h1>
+
+<p>This chapter presents the actual output screens of the Urban Threads application. All screenshots are taken from the live deployed website at <strong>https://urban-threads-theta.vercel.app</strong>.</p>
+
+<h2>10.1 Homepage</h2>
+<p>The homepage features a hero section with a full-width banner, brand tagline, and call-to-action buttons. Below the hero, featured products are displayed in a responsive grid layout with hover animations and gold accent styling.</p>
+<div class="fig">
+    <img src="../images/screenshots/homepage.png" alt="Homepage Screenshot">
+    <p class="fig-cap">Fig. 10.1: Homepage — Hero Section and Featured Products</p>
+</div>
+
+<h2>10.2 Shop / Product Catalog Page</h2>
+<p>The Shop page displays the complete product catalog with category filter buttons (All, Hoodies, Sneakers, T-Shirts, Jackets, Accessories). Products are shown in a responsive grid with image, name, price, and "Add to Cart" button.</p>
+<div class="fig">
+    <img src="../images/screenshots/shop.png" alt="Shop Page">
+    <p class="fig-cap">Fig. 10.2: Shop / Product Catalog Page with Category Filters</p>
+</div>
+
+<h2>10.3 User Login Page</h2>
+<p>The Login page provides a clean and secure interface for user authentication. It includes email and password fields with client-side validation, a gold accent login button, and a link to the registration page for new users.</p>
+<div class="fig">
+    <img src="../images/screenshots/login.png" alt="Login Page">
+    <p class="fig-cap">Fig. 10.3: User Login Page</p>
+</div>
+
+<h2>10.4 User Registration Page</h2>
+<p>The Registration page allows new users to create accounts with name, email, and password fields. It performs real-time validation for password matching and minimum length requirements.</p>
+<div class="fig">
+    <img src="../images/screenshots/signup.png" alt="Signup Page">
+    <p class="fig-cap">Fig. 10.4: User Registration (Signup) Page</p>
+</div>
+
+<h2>10.5 Shopping Cart Page</h2>
+<p>The Cart page displays items with product image, name, size, quantity selector, unit price, and subtotal. The cart summary shows the total amount and a "Proceed to Checkout" button.</p>
+<div class="fig">
+    <img src="../images/screenshots/cart.png" alt="Cart Page">
+    <p class="fig-cap">Fig. 10.5: Shopping Cart Page with Cart Summary</p>
+</div>
+
+<h2>10.6 Wishlist Page</h2>
+<p>The Wishlist page shows saved products with options to move items to cart or remove them. The wishlist is persistent across sessions for logged-in users.</p>
+<div class="fig">
+    <img src="../images/screenshots/wishlist.png" alt="Wishlist Page">
+    <p class="fig-cap">Fig. 10.6: Wishlist Page</p>
+</div>
+
+<h2>10.7 About Us Page</h2>
+<p>The About Us page presents the brand story, mission statement, and team information with an engaging visual layout using the dark premium theme.</p>
+<div class="fig">
+    <img src="../images/screenshots/about.png" alt="About Page">
+    <p class="fig-cap">Fig. 10.7: About Us Page</p>
+</div>
+
+<h2>10.8 Contact Us Page</h2>
+<p>The Contact Us page provides a form with fields for name, email, subject, and message. It also displays the store's contact information and location details.</p>
+<div class="fig">
+    <img src="../images/screenshots/contact.png" alt="Contact Page">
+    <p class="fig-cap">Fig. 10.8: Contact Us Page with Contact Form</p>
+</div>
+
+<h2>10.9 Admin Login Page</h2>
+<p>The Admin Login page provides a separate authentication interface for the store administrator. Admin credentials are configured via environment variables for security.</p>
+<div class="fig">
+    <img src="../images/screenshots/admin_login.png" alt="Admin Login Page">
+    <p class="fig-cap">Fig. 10.9: Admin Login Page</p>
+</div>
+
+<h2>10.10 Admin Dashboard — Product Management</h2>
+<p>The Admin Dashboard provides a comprehensive interface for managing the store. The left panel contains the "Add Product" form with fields for product name, category selection, price, original price, primary image URL, additional image URLs, video URLs, description, available sizes (apparel and footwear), colors, rating, and stock status. The right panel shows "All Products" in a table format with columns for ID, Product Name, Category, Price, Status, and Actions (Edit/Delete). The top section displays statistics cards showing Total Products and In Stock counts.</p>
+<div class="fig">
+    <img src="../images/screenshots/admin_dashboard.png" alt="Admin Dashboard">
+    <p class="fig-cap">Fig. 10.10: Admin Dashboard — Product Management Panel</p>
+</div>
+<p>The admin panel also includes a Settings tab for managing categories, apparel sizes, footwear sizes, and colors. These settings are used across the site — in the shop page category filters, in the product form dropdowns, and in the footer collection links.</p>
+<div class="fig">
+    <img src="../images/screenshots/admin_settings.png" alt="Admin Settings Tab">
+    <p class="fig-cap">Fig. 10.11: Admin Panel — Settings Tab (Categories, Sizes, Colors Management)</p>
+</div>
+</div>
+
+</body>
+</html>

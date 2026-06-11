@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Urban Threads — BCA Project Report</title>
+<style>
+/* ====== PAGE SETUP — Exact Requirements ====== */
+/* Font: Times New Roman, Content: 12pt, Line Spacing: 1.5, Margins: 1in, Justified */
+@page {
+    size: A4;
+    margin: 1in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+    }
+    @bottom-center {
+        content: counter(page);
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10pt;
+    }
+}
+@page cover {
+    margin: 1in;
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+@page front {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: counter(page, lower-roman); }
+}
+
+/* ====== RUNNING HEADER ====== */
+.running-hdr {
+    position: running(running-hdr);
+    text-align: center;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid #000;
+    margin-bottom: 0;
+}
+.running-hdr img { height: 40px; display: block; margin: 0 auto 2pt auto; }
+.running-hdr .u-name { font-size: 11pt; font-weight: bold; color: #000; display: block; font-family: 'Times New Roman', Times, serif; letter-spacing: 0.5pt; }
+.running-hdr .u-addr { font-size: 8.5pt; display: block; font-family: 'Times New Roman', Times, serif; }
+
+/* ====== BASE ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; color: #000; }
+
+/* ====== TYPOGRAPHY (Exact Requirements) ====== */
+h1 { font-size: 17pt; font-weight: bold; text-align: center; text-transform: uppercase; margin: 8pt 0 12pt 0; }
+h2 { font-size: 14pt; font-weight: bold; margin: 12pt 0 6pt 0; }
+h3 { font-size: 13pt; font-weight: bold; margin: 8pt 0 4pt 0; }
+p { text-align: justify; margin-bottom: 6pt; text-indent: 0.4in; }
+p.ni { text-indent: 0; }
+ul, ol { margin-left: 0.4in; margin-bottom: 6pt; }
+li { margin-bottom: 2pt; }
+
+/* ====== TABLES ====== */
+table { width: 100%; border-collapse: collapse; margin: 6pt 0; font-size: 11pt; }
+table, th, td { border: 1px solid #000; }
+th, td { padding: 3pt 4pt; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; font-weight: bold; }
+.toc td, .toc th { border: none; }
+
+/* ====== FIGURES — Keep with caption, no orphan ====== */
+.fig { text-align: center; margin: 6pt 0; }
+.fig img { max-width: 100%; max-height: 4in; border: 1px solid #ccc; }
+.fig-cap { font-size: 10pt; font-style: italic; margin-top: 2pt; text-indent: 0; text-align: center; }
+
+/* ====== CODE AS PLAIN TEXT ====== */
+.code { font-family: 'Courier New', Courier, monospace; font-size: 9pt; white-space: pre-wrap; line-height: 1.25; margin: 4pt 0 6pt 0.2in; }
+
+/* ====== PAGE BREAKS ====== */
+.pb { page-break-before: always; }
+
+/* ====== MISC ====== */
+.center { text-align: center; }
+.right { text-align: right; }
+.bold { font-weight: bold; }
+.spacer { height: 14pt; }
+.spacer-lg { height: 28pt; }
+.two-col { display: flex; justify-content: space-between; margin-top: 20pt; }
+.border-box { border: 2px solid #000; padding: 18pt; }
+
+/* ====== WIDOWS & ORPHANS ====== */
+p, li, h2, h3 { orphans: 3; widows: 3; }
+h2, h3 { page-break-after: avoid; }
+.fig { page-break-inside: avoid; }
+table { page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- RUNNING HEADER -->
+<div class="running-hdr">
+    <img src="../images/nsu_logo.png" alt="NSU" style="filter: grayscale(100%);">
+    <span class="u-name">NETAJI SUBHASH UNIVERSITY</span>
+    <span class="u-addr">Pokahri, Near Bhilai Pharai, Jamshedpur</span>
+</div>
+
+<!-- =================== CHAPTER 1: INTRODUCTION =================== -->
+<div class="pb">
+<h1>Chapter 1<br>Introduction</h1>
+
+<h2>1.1 Overview</h2>
+<p>E-commerce, or electronic commerce, refers to the buying and selling of goods and services over the internet. Over the past decade, the e-commerce sector in India has witnessed exponential growth, driven by the rise in internet users, affordable smartphone access, and evolving consumer preferences. The digital marketplace has become an integral part of the modern economy, providing businesses with the opportunity to reach customers across geographical boundaries.</p>
+<p><strong>Urban Threads</strong> is an e-commerce web application focused on premium streetwear fashion. Streetwear is a style of casual clothing that originated in the late 1980s, drawing inspiration from hip-hop culture, skateboarding, and sports. The platform offers a curated selection of streetwear products including hoodies, sneakers, t-shirts, jackets, and accessories, all presented through a premium dark-themed interface that resonates with the streetwear community.</p>
+<p>The application provides a complete shopping experience — from browsing and product discovery to cart management and user account handling. It features a modern, dark-themed UI that aligns with the premium streetwear aesthetic, and is built with performance and responsiveness in mind. The system architecture follows a client-server model, with a clear separation between the frontend user interface and the backend business logic.</p>
+<p>This project represents the culmination of the skills and knowledge acquired during the three-year BCA program at Netaji Subhash University. It encompasses various aspects of software engineering including requirements analysis, system design, database modeling, coding, testing, and deployment.</p>
+
+<h2>1.2 E-Commerce in India</h2>
+<p>The Indian e-commerce industry has undergone a remarkable transformation over the past fifteen years. Starting from humble beginnings with platforms like Flipkart and Snapdeal, the industry has grown into a multi-billion dollar ecosystem. The COVID-19 pandemic further accelerated the shift to online shopping, with millions of new users adopting digital commerce for the first time.</p>
+<p>According to IBEF (India Brand Equity Foundation), the Indian e-commerce market was valued at approximately $84 billion in 2021 and is expected to reach $200 billion by 2027, growing at a CAGR of approximately 27%. The fashion and apparel segment accounts for roughly 29% of the total e-commerce market share, making it the second-largest category after electronics.</p>
+<p>The Digital India initiative has led to increased internet penetration, especially in semi-urban and rural areas. The proliferation of affordable smartphones has made internet access available to over 800 million Indians. The introduction of UPI (Unified Payments Interface) has simplified digital transactions, removing a significant barrier to online commerce.</p>
+<p>The fashion e-commerce segment has particularly benefited from the growing aspirations of India's young population. With a median age of 28 years, India has one of the youngest demographics in the world. This young, tech-savvy population is increasingly turning to online platforms for fashion shopping, driven by social media influence, convenience, and the ability to compare prices across platforms. However, despite this growth, there remains a significant gap in the market for specialized, niche fashion platforms — particularly in the streetwear segment.</p>
+
+<h2>1.3 Streetwear Fashion Industry</h2>
+<p>Streetwear is a fashion movement that originated in the late 1980s and early 1990s in urban America. It draws heavy inspiration from hip-hop culture, skateboarding, surfing, and Japanese street fashion. The global streetwear market was valued at approximately $185 billion in 2021 and is projected to reach $450 billion by 2030, according to Grand View Research.</p>
+<p>In India, the streetwear culture has been growing steadily, driven by the influence of global pop culture, social media, and the increasing exposure of Indian youth to international fashion trends through platforms like Instagram, YouTube, and TikTok. Indian streetwear brands like Bewakoof, The Souled Store, and Rare Rabbit have emerged, but the market still lacks a dedicated platform that offers a premium, curated streetwear shopping experience comparable to international platforms like StockX, GOAT, or END Clothing.</p>
+<p>The streetwear consumer is typically a young individual aged 18-35 who values self-expression, cultural relevance, and brand authenticity. Understanding the streetwear culture and its consumer base is crucial for designing an effective e-commerce platform that embodies the visual and cultural essence of this fashion segment.</p>
+
+<h2>1.4 Motivation</h2>
+<p>The motivation behind developing Urban Threads came from observing the gap between large generic e-commerce platforms and the niche streetwear community. While platforms like Amazon and Flipkart offer a wide range of products, they lack the curated, brand-focused experience that streetwear enthusiasts look for. Dedicated streetwear websites from international brands are often inaccessible to Indian consumers due to high shipping costs and limited availability.</p>
+<p>As a student of computer applications with a personal interest in fashion and web development, I saw this as an opportunity to combine both interests and build something practical that addresses a real market need. The project was also motivated by the desire to gain practical, hands-on experience with modern web development technologies and to build a portfolio-worthy project that demonstrates competence in full-stack development.</p>
+
+<h2>1.5 Scope of the Project</h2>
+<p>The scope of this project covers the design, development, and deployment of a fully functional e-commerce website encompassing both the customer-facing frontend and the administrative backend.</p>
+<p class="ni"><strong>Features Included:</strong> User Registration and Login, Product Browsing with Category Filtering, Product Search, Shopping Cart Management, Wishlist, Contact Form, Admin Panel with Product CRUD, Image Upload, Category/Size/Color Settings, Responsive Design, and Cloud Deployment on Vercel.</p>
+<p class="ni"><strong>Features Excluded:</strong> Payment gateway integration, order tracking with logistics, social login (OAuth), product reviews/ratings, multi-language support, and native mobile applications. These are covered in the Future Scope chapter.</p>
+
+<h2>1.6 Comparative Analysis of Existing Platforms</h2>
+<p>Before commencing development, a study of existing platforms was conducted to understand the landscape and identify opportunities for differentiation.</p>
+<table>
+    <thead><tr><th>Feature</th><th>Amazon</th><th>Myntra</th><th>StockX</th><th>Urban Threads</th></tr></thead>
+    <tbody>
+        <tr><td>Streetwear Focus</td><td>No</td><td>Partial</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>INR Pricing</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        <tr><td>India Shipping</td><td>Yes</td><td>Yes</td><td>Limited</td><td>Yes</td></tr>
+        <tr><td>Dark Theme UI</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Curated Catalog</td><td>No</td><td>Partial</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Admin Panel</td><td>Seller Hub</td><td>Seller Hub</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Open Source</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Cost to Build</td><td>High</td><td>High</td><td>High</td><td>₹0 (Free)</td></tr>
+    </tbody>
+</table>
+<p>The analysis clearly shows that Urban Threads fills a unique gap — combining the curated streetwear experience of international platforms with India-friendly pricing and a free, open-source technology stack.</p>
+</div>
+
+<!-- =================== CHAPTER 2: PROBLEM STATEMENT =================== -->
+<div class="pb">
+<h1>Chapter 2<br>Problem Statement</h1>
+
+<p>In the current market scenario, there is a noticeable lack of dedicated e-commerce platforms catering specifically to the Indian streetwear fashion segment. The following key problems were identified during the analysis phase:</p>
+
+<h3>Problem 1: Lack of Niche Focus</h3>
+<p>General e-commerce platforms like Amazon and Flipkart mix streetwear products with thousands of other categories, making it extremely difficult for streetwear enthusiasts to discover curated collections. Users have to navigate through multiple levels of categorization, sponsored listings, and irrelevant results to find relevant products. This dilutes the shopping experience and leads to customer frustration.</p>
+
+<h3>Problem 2: Poor User Experience for Fashion Consumers</h3>
+<p>Many existing fashion websites suffer from cluttered interfaces, excessive advertisements, slow load times, and unintuitive navigation. The visual design of these platforms does not resonate with the aesthetic sensibilities of the streetwear community, which values minimalist, bold, and culturally relevant design. A generic white-themed interface fails to capture the essence of streetwear culture.</p>
+
+<h3>Problem 3: Limited Accessibility to International Brands</h3>
+<p>International streetwear platforms like StockX, GOAT, and Supreme offer the curated experience that Indian consumers desire but are largely inaccessible. Barriers include the lack of INR pricing (requiring currency conversion), high international shipping costs ($30-50 per order), customs duties (40-60% extra cost), long delivery times (2-4 weeks), and limited payment options (no UPI or Indian wallets).</p>
+
+<h3>Problem 4: Technical Barriers for Small Businesses</h3>
+<p>Small and emerging streetwear brands in India face significant technical barriers when trying to establish an online presence. The cost of premium e-commerce solutions like Shopify ($29-299/month) or WooCommerce hosting can be prohibitive for startups operating on limited budgets. This creates a barrier to entry for small businesses that want to sell streetwear online.</p>
+
+<h2>Formal Problem Statement</h2>
+<p style="text-indent:0; padding:10pt; border:1px solid #000; background:#f9f9f9; margin:10pt 0;"><em>"There exists a significant gap in the Indian e-commerce market for a dedicated, culturally authentic streetwear fashion platform that provides Indian consumers with a curated shopping experience featuring INR pricing, fast performance, and a premium visual identity, built using free and open-source technologies that are accessible to small businesses and entrepreneurs."</em></p>
+
+<h2>Proposed Solution</h2>
+<p>To address the identified problems, this project proposes the development of <strong>Urban Threads</strong> — a dedicated premium streetwear e-commerce platform. The platform provides a curated product catalog focused exclusively on streetwear, a premium dark-themed UI with gold accents that reflects the streetwear aesthetic, complete e-commerce functionality including cart, wishlist, and admin panel, INR pricing with India-specific product information, a lightweight vanilla JavaScript frontend for fast performance, a robust Node.js + Express.js backend with RESTful API design, PostgreSQL database via Supabase for reliable data storage, and free cloud deployment on Vercel for high availability.</p>
+</div>
+
+<!-- =================== CHAPTER 3: OBJECTIVES =================== -->
+<div class="pb">
+<h1>Chapter 3<br>Objectives of the Project</h1>
+
+<h2>3.1 Primary Objectives</h2>
+<ol>
+    <li><strong>To design and develop a fully functional e-commerce website</strong> dedicated to premium streetwear fashion, providing users with a complete online shopping experience from product discovery to cart management.</li>
+    <li><strong>To implement secure user authentication</strong> using industry-standard practices including password hashing with bcrypt (salt round 10), JWT-based session management with configurable token expiry, and middleware-based access control.</li>
+    <li><strong>To create an intuitive product catalog</strong> with category-based filtering (Hoodies, Sneakers, T-Shirts, Jackets, Accessories), keyword search functionality, and detailed product pages with image galleries.</li>
+    <li><strong>To develop shopping cart and wishlist features</strong> that allow users to manage their selections conveniently with real-time quantity updates, size selection, and persistent storage across sessions.</li>
+    <li><strong>To build a comprehensive admin panel</strong> for the store administrator to manage products (CRUD operations), upload product images, configure categories, sizes, and colors, and oversee user accounts.</li>
+    <li><strong>To ensure responsive design</strong> so the website works seamlessly across desktops (1920px), tablets (768px), and mobile phones (320px) using CSS Grid and Flexbox.</li>
+</ol>
+
+<h2>3.2 Secondary Objectives</h2>
+<ol start="7">
+    <li><strong>To deploy the application on Vercel</strong> ensuring high availability, fast load times through global CDN, automatic scaling via serverless architecture, and HTTPS security.</li>
+    <li><strong>To apply modern web development practices</strong> including semantic HTML5, CSS3 animations, RESTful API design, middleware-based request processing, and modular code organization.</li>
+    <li><strong>To implement a contact form</strong> allowing users to submit queries and feedback directly to the store administration through the website.</li>
+    <li><strong>To design a robust database schema</strong> using PostgreSQL through Supabase, following normalization principles (1NF, 2NF, 3NF) and implementing proper foreign key relationships.</li>
+</ol>
+
+<h2>3.3 Learning Objectives</h2>
+<ol start="11">
+    <li><strong>To gain practical experience</strong> in full-stack web development covering the entire spectrum from frontend UI design to backend API development, database management, and cloud deployment.</li>
+    <li><strong>To understand and apply the Software Development Life Cycle (SDLC)</strong> methodology in a real-world project, following Agile principles with iterative development sprints.</li>
+    <li><strong>To develop problem-solving skills</strong> by resolving real-world challenges such as CORS (Cross-Origin Resource Sharing) configuration, serverless deployment constraints, file upload in cloud environments, and performance optimization.</li>
+    <li><strong>To build a portfolio-worthy project</strong> demonstrating competence in modern web technologies (Node.js, Express.js, PostgreSQL, JavaScript) suitable for showcasing to potential employers in the software development industry.</li>
+</ol>
+</div>
+
+<!-- =================== CHAPTER 4: SYSTEM ANALYSIS =================== -->
+<div class="pb">
+<h1>Chapter 4<br>System Analysis</h1>
+
+<h2>4.1 Study of Existing System</h2>
+<p>Amazon and Flipkart are the two largest e-commerce platforms in India. While they offer an extensive product range covering electronics, fashion, groceries, and more, their interfaces are cluttered with sponsored listings and streetwear products are mixed with thousands of unrelated items. Finding specific streetwear items requires navigating through multiple filter layers, making the experience tedious for niche shoppers.</p>
+<p>Myntra and AJIO are dedicated fashion platforms but serve all fashion segments equally without dedicated sections for streetwear. Their focus on mainstream fashion means that streetwear products are underrepresented in their catalogs and discovery algorithms.</p>
+<p>International platforms like StockX and GOAT offer curated streetwear experiences but do not cater to the Indian market — they lack INR pricing, charge high international shipping fees ($30-50), impose customs duties (40-60%), and have delivery times of 2-4 weeks.</p>
+
+<h3>Limitations of Existing Systems:</h3>
+<ul>
+    <li>No dedicated platform for Indian streetwear enthusiasts</li>
+    <li>Generic UI designs that do not reflect streetwear culture</li>
+    <li>Cluttered product listings in large marketplaces</li>
+    <li>High costs for accessing international streetwear platforms</li>
+    <li>Lack of community-driven features and brand identity</li>
+    <li>Complex seller onboarding processes for small brands</li>
+</ul>
+
+<h2>4.2 Proposed System</h2>
+<p>The proposed system addresses these limitations with the following features:</p>
+<ul>
+    <li><strong>Curated Product Catalog:</strong> Only streetwear products in five categories — Hoodies, Sneakers, T-Shirts, Jackets, and Accessories.</li>
+    <li><strong>Premium Dark-Themed UI:</strong> Dark color palette (#0a0a0a background, gold #c9a96e accents) with modern typography (Inter, Playfair Display) and smooth hover animations.</li>
+    <li><strong>INR Pricing:</strong> All prices in Indian Rupees with India-specific product information.</li>
+    <li><strong>Fast Performance:</strong> Vanilla JavaScript frontend loading in under 2 seconds, no heavy framework overhead.</li>
+    <li><strong>Secure Authentication:</strong> bcrypt-hashed passwords (salt round 10) and JWT-based session management.</li>
+    <li><strong>Admin Dashboard:</strong> Built-in admin panel for product CRUD, image upload, category/size/color configuration, and user management.</li>
+    <li><strong>Cloud Deployment:</strong> Deployed on Vercel for high availability, HTTPS, CDN, and auto-scaling.</li>
+</ul>
+
+<h2>4.3 SWOT Analysis</h2>
+<table>
+    <thead><tr><th style="width:50%">Strengths</th><th>Weaknesses</th></tr></thead>
+    <tbody><tr>
+        <td><ul style="margin-left:12pt"><li>Focused streetwear niche</li><li>Premium dark-themed UI</li><li>Lightweight — no heavy frameworks</li><li>Free technology stack (₹0 cost)</li><li>Secure auth (bcrypt + JWT)</li><li>Cloud-deployed with auto-scaling</li><li>Built-in admin panel</li></ul></td>
+        <td><ul style="margin-left:12pt"><li>No payment gateway yet</li><li>No order tracking system</li><li>English language only</li><li>No social media login</li><li>Single developer</li><li>No mobile application</li></ul></td>
+    </tr></tbody>
+</table>
+<table>
+    <thead><tr><th style="width:50%">Opportunities</th><th>Threats</th></tr></thead>
+    <tbody><tr>
+        <td><ul style="margin-left:12pt"><li>Growing streetwear market in India</li><li>Increasing internet penetration</li><li>Young demographic (median age 28)</li><li>Brand partnership potential</li><li>Mobile app expansion</li><li>Social media integration</li></ul></td>
+        <td><ul style="margin-left:12pt"><li>Established platforms adding streetwear</li><li>International platforms expanding to India</li><li>Rapid changes in fashion trends</li><li>Security threats and cyber attacks</li><li>Dependency on third-party services</li></ul></td>
+    </tr></tbody>
+</table>
+
+<h2>4.4 Feasibility Study</h2>
+
+<h3>4.4.1 Technical Feasibility</h3>
+<p>The project uses widely adopted, mature technologies — Node.js (v18+), Express.js (v4), PostgreSQL (via Supabase), and standard HTML/CSS/JavaScript. All tools are open-source and freely available. Documentation is extensive and community support is strong. The project is <strong>technically feasible</strong>.</p>
+
+<h3>4.4.2 Economic Feasibility</h3>
+<table>
+    <thead><tr><th>Item</th><th>Cost</th></tr></thead>
+    <tbody>
+        <tr><td>Node.js, Express.js, JavaScript</td><td>Free (Open Source)</td></tr>
+        <tr><td>Supabase (Database, Auth, Storage)</td><td>Free Tier (500 MB)</td></tr>
+        <tr><td>Vercel (Hosting &amp; Deployment)</td><td>Free Tier (100 GB bandwidth)</td></tr>
+        <tr><td>VS Code (IDE)</td><td>Free (Microsoft)</td></tr>
+        <tr><td>Git &amp; GitHub</td><td>Free</td></tr>
+        <tr><td>SSL Certificate</td><td>Free (via Vercel)</td></tr>
+        <tr><td>Domain Name</td><td>Free (Vercel subdomain)</td></tr>
+        <tr><td><strong>Total Development Cost</strong></td><td><strong>₹0 (Zero)</strong></td></tr>
+    </tbody>
+</table>
+<p>The project is <strong>economically feasible</strong> — the entire platform can be built and deployed at zero cost.</p>
+
+<h3>4.4.3 Operational Feasibility</h3>
+<p>The system has an intuitive, user-friendly interface that requires no technical knowledge to navigate. The admin panel provides a simple web-based interface for product management. No special training or hardware is required to operate the system. The project is <strong>operationally feasible</strong>.</p>
+
+<h3>4.4.4 Schedule Feasibility</h3>
+<p>The project was developed over 12 weeks following Agile methodology with 6 sprints of 2 weeks each. This timeline was sufficient to complete all planned features. The project is <strong>schedule feasible</strong>.</p>
+
+<h2>4.5 Existing vs Proposed System</h2>
+<table>
+    <thead><tr><th>Parameter</th><th>Existing System</th><th>Proposed System</th></tr></thead>
+    <tbody>
+        <tr><td>Focus</td><td>Generic / All categories</td><td>Streetwear fashion only</td></tr>
+        <tr><td>User Interface</td><td>Generic, white-themed</td><td>Premium, dark-themed with gold accents</td></tr>
+        <tr><td>Target Audience</td><td>General consumers</td><td>Streetwear enthusiasts (18-35)</td></tr>
+        <tr><td>Product Discovery</td><td>Complex multi-level filters</td><td>Simple category-based browsing</td></tr>
+        <tr><td>Pricing</td><td>INR (domestic) / USD (intl)</td><td>INR only</td></tr>
+        <tr><td>Performance</td><td>Moderate (heavy frameworks)</td><td>Fast (vanilla JS, &lt;2s load)</td></tr>
+        <tr><td>Authentication</td><td>Multiple options</td><td>Email/Password with JWT</td></tr>
+        <tr><td>Admin Access</td><td>Complex seller dashboards</td><td>Simple built-in admin panel</td></tr>
+        <tr><td>Cost to Build</td><td>High (commercial tools)</td><td>Zero (open-source stack)</td></tr>
+        <tr><td>Deployment</td><td>Paid cloud infrastructure</td><td>Free (Vercel serverless)</td></tr>
+    </tbody>
+</table>
+
+<h2>4.6 Development Methodology — Agile Model</h2>
+<p>The project was developed following the <strong>Agile Software Development Methodology</strong> with iterative development over 12 weeks in 6 sprints:</p>
+<ul>
+    <li><strong>Sprint 1 (Weeks 1-2):</strong> Requirements gathering, technology selection, database schema design, project setup and Git initialization</li>
+    <li><strong>Sprint 2 (Weeks 3-4):</strong> Express.js server setup, user authentication with bcrypt/JWT, product CRUD API endpoints</li>
+    <li><strong>Sprint 3 (Weeks 5-6):</strong> Homepage UI, product catalog page, product detail page, responsive CSS with dark theme</li>
+    <li><strong>Sprint 4 (Weeks 7-8):</strong> Shopping cart functionality, wishlist feature, login/signup pages, contact form with database storage</li>
+    <li><strong>Sprint 5 (Weeks 9-10):</strong> Admin panel development — authentication, product CRUD, image upload via Supabase Storage, category/size/color management, user listing</li>
+    <li><strong>Sprint 6 (Weeks 11-12):</strong> Testing (unit, integration, system), bug fixes, UI polishing, performance optimization, Vercel deployment and configuration</li>
+</ul>
+</div>
+</body>
+</html>

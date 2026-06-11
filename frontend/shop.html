@@ -144,14 +144,19 @@
                             <input type="text" id="product-search" placeholder="Search products...">
                             <i class="fas fa-search"></i>
                         </div>
-                        <div class="sort-controls">
-                            <select id="sort-select">
-                                <option value="default">Sort by Default</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="name">Name: A to Z</option>
-                                <option value="newest">Newest First</option>
-                            </select>
+                        <div class="shop-actions-right" style="display: flex; gap: 1rem; align-items: center;">
+                            <button class="mobile-filter-toggle" id="mobile-filter-toggle">
+                                <i class="fas fa-filter"></i> Filters
+                            </button>
+                            <div class="sort-controls">
+                                <select id="sort-select">
+                                    <option value="default">Sort by Default</option>
+                                    <option value="price-low">Price: Low to High</option>
+                                    <option value="price-high">Price: High to Low</option>
+                                    <option value="name">Name: A to Z</option>
+                                    <option value="newest">Newest First</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
