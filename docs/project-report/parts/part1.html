@@ -32,6 +32,10 @@
     @top-center { content: element(running-hdr); }
     @bottom-center { content: counter(page, lower-roman); }
 }
+@page front-unnumbered {
+    @top-center { content: element(running-hdr); }
+    @bottom-center { content: none; }
+}
 
 /* ====== RUNNING HEADER ====== */
 .running-hdr {
@@ -216,7 +220,7 @@ p, li { orphans: 3; widows: 3; }
 <!-- ============== INTERNSHIP PAGES ============== -->
 <div class="pb" style="page: front;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Certificate — to be attached separately]</p></div>
 <div class="pb" style="page: front;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Letter — to be attached separately]</p></div>
-<div class="pb" style="page: front;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Certificate (Soumyodeep Das) — to be attached separately]</p></div>
+<div class="pb" style="page: front-unnumbered; counter-increment: page -1;"><div class="spacer-lg"></div><div class="spacer-lg"></div><div class="spacer-lg"></div><p class="ni center" style="color:#bbb;">[This page is reserved for Internship Certificate (Soumyodeep Das) — to be attached separately]</p></div>
 
 <!-- ============== DECLARATION ============== -->
 <div class="pb" style="page: front;">

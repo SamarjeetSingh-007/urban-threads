@@ -41,6 +41,16 @@
     }
     @bottom-center { content: counter(page); }
 }
+@page front-unnumbered {
+    margin-top: 1.85in;
+    @top-center {
+        content: element(running-hdr);
+        width: 100%;
+        vertical-align: top;
+        padding-top: 10pt;
+    }
+    @bottom-center { content: none; }
+}
 
 /* ====== RUNNING HEADER ====== */
 .running-hdr {
@@ -323,7 +333,7 @@ tr { page-break-inside: auto; }
     <h1 style="margin-bottom: 8pt;">Internship Letter</h1>
     <img src="images/internship_letter.jpg" alt="Internship Letter" class="full-page-img">
 </div>
-<div class="pb" style="page: front;" id="intern-cert-soumyodeep">
+<div class="pb" style="page: front-unnumbered; counter-increment: page -1;" id="intern-cert-soumyodeep">
     <h1 style="margin-bottom: 8pt;">Internship Certificate (Soumyodeep Das)</h1>
     <img src="images/soumyodeep_internship.jpg" alt="Internship Certificate - Soumyodeep Das" class="full-page-img">
 </div>
