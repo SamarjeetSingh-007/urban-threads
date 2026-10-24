@@ -12,13 +12,16 @@ const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'replace-this-secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'urban-threads-jwt-production-secret-2026';
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'admin@urbanthreads.com').toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin12345';
 
+const DEFAULT_SUPABASE_URL = 'https://xxnhqlsaxqysandnzojv.supabase.co';
+const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4bmhxbHNheHF5c2FuZG56b2p2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTc4NTc3NSwiZXhwIjoyMDkxMzYxNzc1fQ.Fi-HPH2U1d1RbxwMnsWWE0DitWF-YP6azV4tF6_zY7g';
+
 const SUPABASE_MODE = (process.env.USE_SUPABASE || 'auto').toLowerCase();
-const SUPABASE_URL = process.env.SUPABASE_URL || '';
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || DEFAULT_SUPABASE_KEY;
 const HAS_SUPABASE_KEYS = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
 const USE_SUPABASE = SUPABASE_MODE === 'true'
     ? HAS_SUPABASE_KEYS
@@ -38,11 +41,16 @@ const supabase = HAS_SUPABASE_KEYS
 let SUPABASE_PRODUCTS_HAS_VIDEO_COLUMN = true;
 let SUPABASE_PRODUCTS_HAS_VIDEOS_COLUMN = true;
 
-const DATA_DIR = path.join(__dirname, 'backend', 'data');
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DATA_DIR = IS_VERCEL
+    ? path.join('/tmp', 'backend', 'data')
+    : path.join(__dirname, 'backend', 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 const FRONTEND_DIR = path.join(__dirname, 'frontend');
 const FRONTEND_PRODUCTS_PATH = path.join(FRONTEND_DIR, 'js', 'products.js');
-const UPLOADS_ROOT_DIR = path.join(__dirname, 'uploads', 'products');
+const UPLOADS_ROOT_DIR = IS_VERCEL
+    ? path.join('/tmp', 'uploads', 'products')
+    : path.join(__dirname, 'uploads', 'products');
 const LOCAL_UPLOAD_IMAGE_DIR = path.join(UPLOADS_ROOT_DIR, 'images');
 const LOCAL_UPLOAD_VIDEO_DIR = path.join(UPLOADS_ROOT_DIR, 'videos');
 const SUPABASE_MEDIA_BUCKET = String(process.env.SUPABASE_MEDIA_BUCKET || 'urban-threads-media').trim() || 'urban-threads-media';
@@ -2112,16 +2120,26 @@ app.use(express.static(FRONTEND_DIR, {
 
 async function bootstrap() {
     if (SUPABASE_MODE === 'true' && !HAS_SUPABASE_KEYS) {
-        throw new Error('USE_SUPABASE=true but SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing in .env.');
+        throw new Error('USE_SUPABASE=true but SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing.');
     }
 
     if (USE_SUPABASE) {
         await verifySupabaseSchema();
         await verifySupabaseStateSchema();
-        await ensureSupabaseMediaBucket();
-        await migrateLegacySupabaseStateToRelationalTables();
-    } else if (process.env.VERCEL) {
-        console.warn('Running on Vercel without Supabase — local JSON database is not available (read-only filesystem). Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel environment variables.');
+        try {
+            await ensureSupabaseMediaBucket();
+        } catch (mediaBucketErr) {
+            console.warn('Non-fatal media bucket check warning:', mediaBucketErr.message);
+        }
+        try {
+            await migrateLegacySupabaseStateToRelationalTables();
+        } catch (migrationErr) {
+            console.warn('Non-fatal legacy state migration warning:', migrationErr.message);
+        }
+    } else if (IS_VERCEL) {
+        console.warn('Running on Vercel in local-json mode (using /tmp). For persistent storage across serverless instances, set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel project settings.');
+        ensureDatabase();
+        ensureLocalUploadDirs();
     } else {
         ensureDatabase();
         ensureLocalUploadDirs();
@@ -2139,22 +2157,30 @@ let bootstrapPromise = null;
 
 function ensureBootstrapped() {
     if (!bootstrapPromise) {
-        bootstrapPromise = bootstrap();
+        bootstrapPromise = bootstrap().catch((error) => {
+            bootstrapPromise = null; // Reset so subsequent requests can retry
+            throw error;
+        });
     }
 
     return bootstrapPromise;
 }
 
-if (process.env.VERCEL) {
-    module.exports = async (req, res) => {
-        try {
-            await ensureBootstrapped();
-            return app(req, res);
-        } catch (error) {
-            console.error('Startup failed:', error.message);
-            return res.status(500).json({ message: 'Startup failed.' });
-        }
-    };
+async function vercelHandler(req, res) {
+    try {
+        await ensureBootstrapped();
+        return app(req, res);
+    } catch (error) {
+        console.error('Startup failed:', error);
+        return res.status(500).json({
+            message: error.message || 'Startup failed.',
+            details: error.stack ? error.stack.split('\n').slice(0, 3).join(' ') : undefined
+        });
+    }
+}
+
+if (process.env.VERCEL || require.main !== module) {
+    module.exports = vercelHandler;
 } else {
     ensureBootstrapped().then(({ database }) => {
         app.listen(PORT, () => {
